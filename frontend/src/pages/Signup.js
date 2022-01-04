@@ -74,7 +74,7 @@ const Signup = () => {
 		try {
 			const newUserData = await mongoDB.createUser(userData);
 			login(newUserData.token, newUserData.user);
-			history.push('/home');
+			history.push('/materials');
 		} catch (err) {
 			console.log(err);
 			try {

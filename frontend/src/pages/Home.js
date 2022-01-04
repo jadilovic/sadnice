@@ -149,7 +149,7 @@ const Home = () => {
 								</Tabs>
 							</AppBar>
 							<TabPanel value={value} index={0}>
-								<CreateTask statuses={statuses} refreshTasks={displayTasks} />
+								{/* <CreateTask statuses={statuses} refreshTasks={displayTasks} /> */}
 							</TabPanel>
 							<TabPanel value={value} index={1}>
 								<PieChartTasks
@@ -164,11 +164,11 @@ const Home = () => {
 					)}
 					{/* CREATE TASK */}
 					<Grid container spacing={1} padding={1}>
-						{screen.dynamicWidth > 900 && (
+						{/* {screen.dynamicWidth > 900 && (
 							<Grid item sm={12} lg={4}>
 								<CreateTask statuses={statuses} refreshTasks={displayTasks} />
 							</Grid>
-						)}
+						)} */}
 						{/* TASKS STATS */}
 						{screen.dynamicWidth > 900 && (
 							<>

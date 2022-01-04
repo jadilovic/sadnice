@@ -42,7 +42,7 @@ const Products = () => {
 					<Box sx={{ pt: 3 }}>
 						<Grid container spacing={3}>
 							{products.map((product, index) => (
-								<Grid item key={index} lg={4} md={6} xs={12}>
+								<Grid item key={index} lg={3} md={6} xs={12}>
 									<MaterialCard
 										product={product}
 										shoppingCart={shoppingCart}

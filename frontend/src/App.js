@@ -22,7 +22,7 @@ import CreateProduct from './pages/CreateProduct';
 import Iframely from './pages/Iframe';
 
 const App = () => {
-	const [darkMode, setDarkMode] = useState(true);
+	const [darkMode, setDarkMode] = useState(false);
 	const theme = createTheme({
 		palette: {
 			mode: `${darkMode ? 'dark' : 'light'}`,

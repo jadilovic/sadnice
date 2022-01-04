@@ -70,7 +70,7 @@ const Login = () => {
 		try {
 			const loggedIn = await mongoDB.userLogin(userData);
 			login(loggedIn.token, loggedIn.user);
-			history.push('/home');
+			history.push('/materials');
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
