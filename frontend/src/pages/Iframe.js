@@ -17,8 +17,8 @@ export default function MediaControlCard() {
 		<Card sx={{ display: 'flex' }}>
 			<Box
 				sx={{
-					paddingTop: 20,
-					paddingLeft: 30,
+					paddingTop: 30,
+					paddingLeft: 40,
 					display: 'flex',
 					flexDirection: 'column',
 				}}
