@@ -19,6 +19,7 @@ import Restricted from './pages/Restricted';
 import Products from './pages/Products';
 import CheckOut from './pages/CheckOut';
 import CreateProduct from './pages/CreateProduct';
+import ProductPage from './pages/ProductPage';
 import Iframely from './pages/Iframe';
 
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
 				<Switch>
 					<Route component={Login} path="/" exact />
 					<Route component={Signup} path="/signup" exact />
+					<Route component={ProductPage} path="/product" exact />
 					<Route component={CheckOut} path="/checkout" exact />
 					<Route component={Address} path="/address" exact />
 					<PrivateRoute component={Home} path="/home" exact />

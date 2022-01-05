@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import {
 	Avatar,
 	Box,
@@ -10,6 +10,7 @@ import {
 	Button,
 	ButtonGroup,
 	CardMedia,
+	CardActionArea,
 } from '@mui/material';
 import image from '../images/bildit.png';
 import { styled } from '@mui/material/styles';
@@ -58,84 +59,90 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 }));
 
 const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
-	const [itemAmount, setItemAmount] = useState(0);
-	const [open, setOpen] = useState(false);
+	// const [itemAmount, setItemAmount] = useState(0);
+	// const [open, setOpen] = useState(false);
 	const history = useHistory();
 
 	useEffect(() => {
-		const currentShoppingCart = JSON.parse(
-			localStorage.getItem('shopping_cart')
-		);
-		if (currentShoppingCart) {
-			setShoppingCart(currentShoppingCart);
-		}
+		// const currentShoppingCart = JSON.parse(
+		// 	localStorage.getItem('shopping_cart')
+		// );
+		// if (currentShoppingCart) {
+		// 	setShoppingCart(currentShoppingCart);
+		// }
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+	// const handleClickOpen = () => {
+	// 	setOpen(true);
+	// };
 
-	const handleContinueShopping = () => {
-		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
-		setOpen(false);
-	};
+	// const handleContinueShopping = () => {
+	// 	localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
+	// 	setOpen(false);
+	// };
 
-	const increase = () => {
-		setItemAmount(itemAmount + 1);
-	};
+	// const increase = () => {
+	// 	setItemAmount(itemAmount + 1);
+	// };
 
-	const decrease = () => {
-		if (itemAmount > 0) {
-			setItemAmount(itemAmount - 1);
-		}
-	};
+	// const decrease = () => {
+	// 	if (itemAmount > 0) {
+	// 		setItemAmount(itemAmount - 1);
+	// 	}
+	// };
 
-	const order = (itemId) => {
-		if (itemAmount < 1) {
-			return null;
-		}
-		const newItem = {
-			id: itemId,
-			amount: itemAmount,
-		};
-		const itemIndex = shoppingCart.findIndex(
-			(element) => element.id === itemId
-		);
-		if (itemIndex > -1) {
-			shoppingCart[itemIndex].amount =
-				shoppingCart[itemIndex].amount + itemAmount;
-		} else {
-			shoppingCart.push(newItem);
-		}
-		setShoppingCart([...shoppingCart]);
-		setItemAmount(0);
-		handleClickOpen();
-	};
+	// const order = (itemId) => {
+	// 	if (itemAmount < 1) {
+	// 		return null;
+	// 	}
+	// 	const newItem = {
+	// 		id: itemId,
+	// 		amount: itemAmount,
+	// 	};
+	// 	const itemIndex = shoppingCart.findIndex(
+	// 		(element) => element.id === itemId
+	// 	);
+	// 	if (itemIndex > -1) {
+	// 		shoppingCart[itemIndex].amount =
+	// 			shoppingCart[itemIndex].amount + itemAmount;
+	// 	} else {
+	// 		shoppingCart.push(newItem);
+	// 	}
+	// 	setShoppingCart([...shoppingCart]);
+	// 	setItemAmount(0);
+	// 	handleClickOpen();
+	// };
 
-	const handleCheckout = () => {
-		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
-		history.push('/checkout');
+	// const handleCheckout = () => {
+	// 	localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
+	// 	history.push('/checkout');
+	// };
+
+	const handleProduct = (productId) => {
+		localStorage.setItem('product_id', productId); //store product id
+		history.push('/product');
 	};
 
 	return (
 		<CardWrapper border={false} content={false}>
-			<CardMedia>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						maxHeight: 200,
-					}}
-				>
-					<img
-						//	style={{ height: '100%', width: '100%' }}
-						alt="Product"
-						src={product.imageUrl}
-						variant="rounded"
-					/>
-				</Box>
-			</CardMedia>
-			<CardContent sx={{ minHeight: 120 }}>
+			<CardActionArea onClick={() => handleProduct(product._id)}>
+				<CardMedia>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							maxHeight: 200,
+						}}
+					>
+						<img
+							//	style={{ height: '100%', width: '100%' }}
+							alt="Product"
+							src={product.imageUrl}
+							variant="rounded"
+						/>
+					</Box>
+				</CardMedia>
+				{/* <CardContent sx={{ minHeight: 120 }}>
 				<Typography
 					align="center"
 					color="textPrimary"
@@ -144,47 +151,56 @@ const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
 				>
 					{product.title}
 				</Typography>
-				<Typography align="left" color="textPrimary" variant="p">
+				 <Typography align="left" color="textPrimary" variant="p">
 					{product.description}
 				</Typography>
-			</CardContent>
-			<Box sx={{ flexGrow: 1 }} />
-			<Divider />
-			<Box sx={{ p: 2 }}>
-				<Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
-					<Grid
-						item
-						sx={{
-							alignItems: 'center',
-							display: 'flex',
-						}}
-					>
-						<ButtonGroup variant="contained">
+			</CardContent> */}
+				<Box sx={{ flexGrow: 1 }} />
+				<Divider />
+				<Box sx={{ p: 2 }}>
+					<Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
+						<Grid
+							item
+							sx={{
+								alignItems: 'center',
+								display: 'flex',
+							}}
+						>
+							<Typography
+								align="center"
+								color="textPrimary"
+								gutterBottom
+								variant="body1"
+							>
+								{product.title}
+							</Typography>
+							{/* <ButtonGroup variant="contained">
 							<Button onClick={decrease}>-</Button>
 							<Box m="auto" paddingLeft={2}>
 								{itemAmount}
 							</Box>
 							<Button onClick={increase}>+</Button>
-						</ButtonGroup>
-					</Grid>
-					<Grid
-						item
-						sx={{
-							alignItems: 'center',
-							display: 'flex',
-						}}
-					>
-						<Button
-							onClick={() => order(product._id)}
-							variant="contained"
-							startIcon={<ShoppingCartIcon />}
+						</ButtonGroup> */}
+						</Grid>
+						<Grid
+							item
+							sx={{
+								alignItems: 'center',
+								display: 'flex',
+							}}
 						>
-							Order
-						</Button>
+							<Button
+								//	onClick={() => order(product._id)}
+								onClick={() => handleProduct(product._id)}
+								variant="contained"
+								//	startIcon={<ShoppingCartIcon />}
+							>
+								Detaljno
+							</Button>
+						</Grid>
 					</Grid>
-				</Grid>
-			</Box>
-			<div>
+				</Box>
+				{/* <div>
 				<Dialog
 					open={open}
 					onClose={handleContinueShopping}
@@ -218,7 +234,8 @@ const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
 						</Button>
 					</DialogActions>
 				</Dialog>
-			</div>
+			</div> */}
+			</CardActionArea>
 		</CardWrapper>
 	);
 };

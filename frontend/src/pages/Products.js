@@ -19,6 +19,12 @@ const Products = () => {
 	};
 
 	useEffect(() => {
+		const currentShoppingCart = JSON.parse(
+			localStorage.getItem('shopping_cart')
+		);
+		if (currentShoppingCart) {
+			setShoppingCart(currentShoppingCart);
+		}
 		getProducts();
 	}, []);
 	console.log(shoppingCart);
@@ -45,8 +51,8 @@ const Products = () => {
 								<Grid item key={index} lg={3} md={6} xs={12}>
 									<MaterialCard
 										product={product}
-										shoppingCart={shoppingCart}
-										setShoppingCart={setShoppingCart}
+										//	shoppingCart={shoppingCart}
+										//	setShoppingCart={setShoppingCart}
 									/>
 								</Grid>
 							))}
