@@ -23,12 +23,12 @@ const useAxiosProducts = () => {
 		});
 	};
 
-	const getTask = async (taskId) => {
+	const getProduct = async (productId) => {
 		const headers = {
 			Authorization: `Bearer ${getUserToken()}`,
 		};
 		return axios
-			.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
+			.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/products/${productId}`, {
 				headers,
 			})
 			.then((res) => {
@@ -127,7 +127,7 @@ const useAxiosProducts = () => {
 	return {
 		getAllProducts,
 		deleteTask,
-		getTask,
+		getProduct,
 		updateTask,
 		getRoles,
 		deleteCloudinaryImage,
