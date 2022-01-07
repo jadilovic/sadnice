@@ -51,7 +51,7 @@ const CheckOut = () => {
 		if (products.length > 0) {
 			calculateTotal(shoppingCart);
 		}
-	}, [shoppingCart]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [shoppingCart, products]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		const localStorageShoppingCart = JSON.parse(
@@ -89,6 +89,8 @@ const CheckOut = () => {
 		setShoppingCart([...shoppingCart]);
 		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart));
 	};
+
+	console.log(shoppingCart);
 
 	if (products.length < 1) {
 		return <LoadingPage />;

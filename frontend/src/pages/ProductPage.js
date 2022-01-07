@@ -25,6 +25,7 @@ import useAxiosProducts from '../utils/useAxiosProducts';
 import LoadingPage from '../components/LoadingPage';
 import UserWindow from '../utils/UserWindow';
 import CssBaseline from '@mui/material/CssBaseline';
+import MaterialsListToolbar from '../components/Materials-list-toolbar';
 
 const CardWrapper = styled(Card)(({ theme }) => ({
 	backgroundColor: theme.palette.primary.main,
@@ -62,9 +63,10 @@ const CardWrapper = styled(Card)(({ theme }) => ({
 	},
 }));
 
-const MaterialCard = ({ shoppingCart, setShoppingCart }) => {
+const MaterialCard = () => {
 	const [product, setProduct] = useState(null);
 	const [itemAmount, setItemAmount] = useState(0);
+	const [shoppingCart, setShoppingCart] = useState([]);
 	const [open, setOpen] = useState(false);
 	const history = useHistory();
 	const productsDB = useAxiosProducts();
@@ -93,6 +95,7 @@ const MaterialCard = ({ shoppingCart, setShoppingCart }) => {
 	const handleContinueShopping = () => {
 		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
 		setOpen(false);
+		history.push('/materials');
 	};
 
 	const increase = () => {
@@ -152,6 +155,7 @@ const MaterialCard = ({ shoppingCart, setShoppingCart }) => {
 					paddingRight: 2,
 				}}
 			>
+				<MaterialsListToolbar shoppingCart={shoppingCart} />
 				<CardWrapper border={false} content={false}>
 					<CardMedia>
 						<img
