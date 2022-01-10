@@ -5,14 +5,19 @@ import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { ButtonGroup, Button } from '@mui/material';
 import { IconButton, Chip } from '@mui/material';
-import Paper from '@mui/material/Paper';
+import {
+	Paper,
+	Card,
+	CardMedia,
+	CardActions,
+	CardContent,
+} from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import EmptyCart from '../pages/EmptyCart';
 import UserWindow from '../utils/UserWindow';
 // import products from '../data/products';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TotalOrder from '../components/TotalOrder';
 import LoadingPage from '../components/LoadingPage';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -56,7 +61,6 @@ const Item = styled(Paper)(({ theme }) => ({
 	width: '100%',
 	textAlign: 'center',
 	color: theme.palette.text.secondary,
-	paddingTop: 18,
 }));
 
 const CheckOut = () => {
@@ -140,316 +144,253 @@ const CheckOut = () => {
 			sx={{
 				flexGrow: 1,
 				paddingTop: 10,
-				paddingLeft: screen.dynamicWidth < 600 ? 1 : 24,
-				paddingRight: 1,
+				paddingLeft: screen.dynamicWidth < 600 ? 2 : 24,
+				paddingRight: 2,
 			}}
 		>
-			<TableContainer component={Paper}>
-				<Table sx={{ minWidth: 700 }} aria-label="spanning table">
-					<TableHead>
-						<TableRow>
-							<TableCell align="center" colSpan={3}>
-								Details
-							</TableCell>
-							<TableCell align="right">Price</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell>Desc</TableCell>
-							<TableCell align="right">Qty.</TableCell>
-							<TableCell align="right">Unit</TableCell>
-							<TableCell align="right">Sum</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{rows.map((row) => (
-							<TableRow key={row.desc}>
-								<TableCell>{row.desc}</TableCell>
-								<TableCell align="right">{row.qty}</TableCell>
-								<TableCell align="right">{row.unit}</TableCell>
-								<TableCell align="right">{ccyFormat(row.price)}</TableCell>
-							</TableRow>
-						))}
-
-						<TableRow>
-							<TableCell rowSpan={3} />
-							<TableCell colSpan={2}>Subtotal</TableCell>
-							<TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell>Tax</TableCell>
-							<TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-								0
-							)} %`}</TableCell>
-							<TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell colSpan={2}>Total</TableCell>
-							<TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</TableContainer>
 			<Stack spacing={1} alignItems="center" paddingBottom={2}>
 				<Chip
 					style={{ minWidth: 300, minHeight: 40, fontSize: 19 }}
 					size="medium"
-					label="Your shopping cart"
+					label="Vaša korpa sadnica"
 					color="default"
 				/>
 			</Stack>
 			{screen.dynamicWidth > 900 && (
-				<Stack direction="row" paddingBottom={2}>
-					<Item style={{ maxWidth: 90 }}>
-						<Typography align="left" color="textPrimary" variant="body1">
-							Remove
-						</Typography>
-					</Item>
-					<Item style={{ maxWidth: 120 }}>
-						<Typography align="center" color="textPrimary" variant="body1">
-							Photo
-						</Typography>
-					</Item>
-					<Item>
-						<Typography align="left" color="textPrimary" variant="body1">
-							Product
-						</Typography>
-					</Item>
-					<Item>
-						<Typography align="left" color="textPrimary" variant="body1">
-							Price
-						</Typography>
-					</Item>
-					<Item>
-						<Typography align="left" color="textPrimary" variant="body1">
-							Amount
-						</Typography>
-					</Item>
-					<Item>
-						<Typography align="left" color="textPrimary" variant="body1">
-							Total
-						</Typography>
-					</Item>
-				</Stack>
+				<TableContainer component={Paper}>
+					<Table sx={{ minWidth: 600 }} aria-label="spanning table">
+						<TableHead>
+							<TableRow>
+								<TableCell align="center">Obriši</TableCell>
+								<TableCell align="center">Slika</TableCell>
+								<TableCell align="left">Naziv</TableCell>
+								<TableCell align="center">Cijena</TableCell>
+								<TableCell align="center">Količina</TableCell>
+								<TableCell align="left">Ukupno</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{shoppingCart.map((product, index) => {
+								const productDetails = getProductObject(product.id);
+								return (
+									<TableRow key={index}>
+										<TableCell align="center">
+											<IconButton
+												onClick={() => removeItem(index)}
+												size="small"
+												color="secondary"
+												aria-label="delete"
+											>
+												<DeleteIcon />
+											</IconButton>
+										</TableCell>
+										<TableCell align="center">
+											<Box
+												component="img"
+												sx={{
+													minHeight: 60,
+													maxHeight: 60,
+													width: '70%',
+												}}
+												alt="prodcut photo"
+												src={`${productDetails.imageUrl}`}
+											/>
+										</TableCell>
+										<TableCell align="left">{productDetails.title}</TableCell>
+										<TableCell align="right">
+											{productDetails.price} KM
+										</TableCell>
+										<TableCell align="center">
+											<ButtonGroup size="small" variant="contained">
+												<Button onClick={() => decrease(index)}>-</Button>
+												<Box m="auto">{product.amount}</Box>
+												<Button onClick={() => increase(index)}>+</Button>
+											</ButtonGroup>
+										</TableCell>
+										<TableCell align="center">
+											{`${product.amount * productDetails.price} KM`}
+										</TableCell>
+									</TableRow>
+								);
+							})}
+							<TableRow>
+								<TableCell rowSpan={3} />
+								<TableCell rowSpan={3} />
+								<TableCell rowSpan={3} />
+								<TableCell rowSpan={3} />
+								<TableCell align="left">Ukupna cijena sadnica:</TableCell>
+								<TableCell align="center">{totalOrder} KM</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell align="left">Dostava:</TableCell>
+								<TableCell align="center">10 KM</TableCell>
+							</TableRow>
+							<TableRow>
+								<TableCell align="left">Sve ukupno:</TableCell>
+								<TableCell align="center">{totalOrder + 10} KM</TableCell>
+							</TableRow>
+						</TableBody>
+					</Table>
+				</TableContainer>
 			)}
-			{screen.dynamicWidth > 900 &&
-				shoppingCart.map((product, index) => {
-					const productDetails = getProductObject(product.id);
-					return (
-						<Stack direction="row" paddingBottom={2} key={index}>
-							<Item style={{ paddingTop: 25, maxWidth: 90 }}>
-								<IconButton
-									onClick={() => removeItem(index)}
-									size="small"
-									color="secondary"
-									aria-label="delete"
-								>
-									<DeleteIcon />
-								</IconButton>
-							</Item>
-							<Item style={{ paddingTop: 15, maxWidth: 120 }}>
-								<Box
-									component="img"
-									sx={{
-										minHeight: 60,
-										maxHeight: 60,
-										width: '70%',
-									}}
-									alt="The house from the offer."
-									src={`${productDetails.imageUrl}`}
-									//	src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
-								/>
-							</Item>
-							<Item>
-								<Typography
-									paddingTop={1}
-									align="left"
-									color="textPrimary"
-									variant="body1"
-								>
-									{productDetails.title}
-								</Typography>
-							</Item>
-							<Item>
-								<Typography
-									paddingTop={1}
-									align="center"
-									color="textPrimary"
-									variant="body1"
-								>
-									{productDetails.price} KM
-								</Typography>
-							</Item>
-							<Item style={{ paddingTop: 22 }}>
-								<ButtonGroup variant="contained">
-									<Button onClick={() => decrease(index)}>-</Button>
-									<Box m="auto">
-										<Typography
-											align="center"
-											color="textPrimary"
-											variant="body1"
-										>
-											{product.amount}
-										</Typography>
-									</Box>
-									<Button onClick={() => increase(index)}>+</Button>
-								</ButtonGroup>
-							</Item>
-							<Item>
-								<Typography
-									paddingTop={1}
-									align="center"
-									color="textPrimary"
-									variant="body1"
-								>
-									{`${product.amount * productDetails.price} KM`}
-								</Typography>
-							</Item>
-						</Stack>
-					);
-				})}
 			{screen.dynamicWidth <= 900 &&
 				shoppingCart.map((product, index) => {
 					const productDetails = getProductObject(product.id);
 					return (
 						<Box key={index} paddingBottom={2}>
-							<Stack direction="row">
-								<Item>
-									<Typography align="left" color="textPrimary" variant="body1">
-										Remove:
-									</Typography>
-								</Item>
-								<Item style={{ maxWidth: 90 }}>
-									<IconButton
-										onClick={() => removeItem(index)}
-										size="small"
-										color="secondary"
-										aria-label="delete"
-									>
-										<DeleteIcon />
-									</IconButton>
-								</Item>
-								<Item style={{ paddingTop: 6 }}>
-									<Box
-										component="img"
-										sx={{
-											height: 100,
-											width: 150,
-										}}
-										alt="The house from the offer."
-										src={`${productDetails.imageUrl}`}
-										// src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
-									/>
-								</Item>
-							</Stack>
-							<Stack direction="row">
-								<Item>
-									<Typography align="left" color="textPrimary" variant="body1">
-										Product:
-									</Typography>
-								</Item>
-								<Item>
-									<Typography
-										align="center"
-										color="textPrimary"
-										variant="body1"
-									>
-										{productDetails.title}
-									</Typography>
-								</Item>
-							</Stack>
-							<Stack direction="row">
-								<Item>
-									<Typography align="left" color="textPrimary" variant="body1">
-										Price:
-									</Typography>
-								</Item>
-								<Item>
-									<Typography
-										align="center"
-										color="textPrimary"
-										variant="body1"
-									>
-										{productDetails.price}
-									</Typography>
-								</Item>
-							</Stack>
-							<Stack direction="row">
-								<Item>
-									<Typography align="left" color="textPrimary" variant="body1">
-										Amount:
-									</Typography>
-								</Item>
-								<Item>
-									<ButtonGroup variant="contained">
-										<Button onClick={() => decrease(index)}>-</Button>
-										<Box m="auto">
+							<Card>
+								<CardMedia
+									component="img"
+									alt="product photo"
+									height="140"
+									src={`${productDetails.imageUrl}`}
+								/>
+								<CardContent>
+									<Grid container spacing={2}>
+										<Grid item xs={6}>
+											<Typography
+												align="left"
+												color="textPrimary"
+												variant="body1"
+											>
+												Product:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
 											<Typography
 												align="center"
 												color="textPrimary"
 												variant="body1"
 											>
-												{product.amount}
+												{productDetails.title}
 											</Typography>
-										</Box>
-										<Button onClick={() => increase(index)}>+</Button>
-									</ButtonGroup>
-								</Item>
-							</Stack>
-							<Stack direction="row">
-								<Item>
-									<Typography align="left" color="textPrimary" variant="body1">
-										Total:
-									</Typography>
-								</Item>
-								<Item>
-									<Typography
-										align="center"
-										color="textPrimary"
-										variant="body1"
-									>{`${product.amount * productDetails.price}`}</Typography>
-								</Item>
-							</Stack>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography
+												align="left"
+												color="textPrimary"
+												variant="body1"
+											>
+												Price:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography
+												align="center"
+												color="textPrimary"
+												variant="body1"
+											>
+												{productDetails.price} KM
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography
+												paddingTop={0.5}
+												align="left"
+												color="textPrimary"
+												variant="body1"
+											>
+												Amount:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Box
+												display="flex"
+												flexDirection="column"
+												alignItems="center"
+												justifyContent="center"
+											>
+												<ButtonGroup size="small" variant="contained">
+													<Button onClick={() => decrease(index)}>-</Button>
+													<Box m="auto">
+														<Typography
+															align="center"
+															color="textPrimary"
+															variant="body1"
+														>
+															{product.amount}
+														</Typography>
+													</Box>
+													<Button onClick={() => increase(index)}>+</Button>
+												</ButtonGroup>
+											</Box>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography
+												align="left"
+												color="textPrimary"
+												variant="body1"
+											>
+												Total:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography
+												align="center"
+												color="textPrimary"
+												variant="body1"
+											>
+												{`${product.amount * productDetails.price}`} KM
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography
+												paddingTop={0.5}
+												align="left"
+												color="textPrimary"
+												variant="body1"
+											>
+												Remove:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Box
+												display="flex"
+												flexDirection="column"
+												alignItems="center"
+												justifyContent="center"
+											>
+												<IconButton
+													onClick={() => removeItem(index)}
+													size="small"
+													color="secondary"
+													aria-label="delete"
+												>
+													<DeleteIcon />
+												</IconButton>
+											</Box>
+										</Grid>
+									</Grid>
+								</CardContent>
+							</Card>
 						</Box>
 					);
 				})}
-			<Grid container spacing={2}>
-				{screen.dynamicWidth > 900 && (
-					<Grid item xs={12} sm={12} md={6}>
-						<Item>
-							<Button
-								onClick={() => history.push('/materials')}
-								variant="contained"
-								color="warning"
-							>
-								Continue shopping
-							</Button>
-						</Item>
-					</Grid>
-				)}
+			<Grid container spacing={1}>
 				<Grid item xs={12} sm={12} md={6}>
-					<TotalOrder totalOrder={totalOrder} />
-					<Button
-						onClick={() => history.push('/address')}
-						fullWidth
-						variant="contained"
-						color="success"
-					>
-						Confirm purchase and add shipping address
-					</Button>
+					<Item>
+						<Button
+							onClick={() => history.push('/materials')}
+							fullWidth
+							variant="contained"
+							color="warning"
+						>
+							Nastavi kupovinu
+						</Button>
+					</Item>
 				</Grid>
-				{screen.dynamicWidth <= 900 && (
-					<Grid item xs={12} sm={12} md={6}>
-						<Item>
-							<Button
-								onClick={() => history.push('/materials')}
-								variant="contained"
-								color="warning"
-							>
-								Continue shopping
-							</Button>
-						</Item>
-					</Grid>
-				)}
+				<Grid item xs={12} sm={12} md={6}>
+					<Item>
+						<Button
+							onClick={() => history.push('/address')}
+							fullWidth
+							variant="contained"
+							color="success"
+						>
+							Potvrdi narudžbu
+						</Button>
+					</Item>
+				</Grid>
 			</Grid>
 		</Box>
 	);
