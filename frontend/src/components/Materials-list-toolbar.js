@@ -11,11 +11,54 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useHistory } from 'react-router-dom';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import InputBase from '@mui/material/InputBase';
+
+const Search = styled('div')(({ theme }) => ({
+	position: 'relative',
+	borderRadius: theme.shape.borderRadius,
+	backgroundColor: alpha(theme.palette.common.white, 0.15),
+	'&:hover': {
+		backgroundColor: alpha(theme.palette.common.white, 0.25),
+	},
+	marginLeft: 0,
+	width: '100%',
+	[theme.breakpoints.up('sm')]: {
+		marginLeft: theme.spacing(1),
+		width: 'auto',
+	},
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+	padding: theme.spacing(0, 2),
+	height: '100%',
+	position: 'absolute',
+	pointerEvents: 'none',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+	color: 'inherit',
+	'& .MuiInputBase-input': {
+		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
+		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			width: '12ch',
+			'&:focus': {
+				width: '20ch',
+			},
+		},
+	},
+}));
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
 	'& .MuiBadge-badge': {
@@ -45,45 +88,23 @@ const MaterialsListToolbar = (props) => {
 					//	m: -1,
 				}}
 			>
-				{/* <Typography sx={{ m: 1 }} variant="h5">
-					Products
-				</Typography> */}
-				<Paper
-					component="form"
-					style={{ justifyContent: 'center' }}
-					sx={{
-						display: 'flex',
-						alignItems: 'center',
-						// width: '100%',
-						height: 45,
-					}}
+				<Button
+					variant="outlined"
+					color="inherit"
+					// onClick={onOpenFilter}
 				>
-					<Button
-						style={{ minWidth: 100 }}
-						variant="outlined"
-						color="inherit"
-						// onClick={onOpenFilter}
-					>
-						Filters&nbsp;
-					</Button>
-				</Paper>
-				<Card>
-					<TextField
-						size="small"
-						fullWidth
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<SvgIcon fontSize="small" color="action">
-										<SearchIcon />
-									</SvgIcon>
-								</InputAdornment>
-							),
-						}}
-						placeholder="Search product"
-						variant="outlined"
+					<FilterListIcon />
+				</Button>
+				<Search>
+					<SearchIconWrapper>
+						<SearchIcon />
+					</SearchIconWrapper>
+					<StyledInputBase
+						placeholder="Search…"
+						inputProps={{ 'aria-label': 'search' }}
 					/>
-				</Card>
+				</Search>
+
 				<Box>
 					<IconButton
 						onClick={() => history.push('/checkout')}

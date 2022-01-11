@@ -4,7 +4,7 @@ import {
 	Avatar,
 	Box,
 	CardContent,
-	Divider,
+	Modal,
 	Grid,
 	Typography,
 	Button,
@@ -26,48 +26,17 @@ import LoadingPage from '../components/LoadingPage';
 import UserWindow from '../utils/UserWindow';
 import CssBaseline from '@mui/material/CssBaseline';
 import MaterialsListToolbar from '../components/Materials-list-toolbar';
-
-const CardWrapper = styled(Card)(({ theme }) => ({
-	backgroundColor: theme.palette.primary.main,
-	color: '#fff',
-	overflow: 'hidden',
-	position: 'relative',
-	'&:after': {
-		content: '""',
-		position: 'absolute',
-		width: 210,
-		height: 210,
-		background: theme.palette.secondary[800],
-		borderRadius: '50%',
-		top: -85,
-		right: -95,
-		[theme.breakpoints.down('sm')]: {
-			top: -105,
-			right: -140,
-		},
-	},
-	'&:before': {
-		content: '""',
-		position: 'absolute',
-		width: 210,
-		height: 210,
-		background: theme.palette.secondary[800],
-		borderRadius: '50%',
-		top: -125,
-		right: -15,
-		opacity: 0.5,
-		[theme.breakpoints.down('sm')]: {
-			top: -155,
-			right: -70,
-		},
-	},
-}));
+import CardHeader from '@mui/material/CardHeader';
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import CollectionsIcon from '@mui/icons-material/Collections';
 
 const MaterialCard = () => {
 	const [product, setProduct] = useState(null);
 	const [itemAmount, setItemAmount] = useState(0);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [open, setOpen] = useState(false);
+	const [openImages, setOpenImages] = useState(false);
 	const history = useHistory();
 	const productsDB = useAxiosProducts();
 	const screen = UserWindow();
@@ -134,16 +103,16 @@ const MaterialCard = () => {
 		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
 		history.push('/checkout');
 	};
-
-	console.log(product);
+	const handleOpenImages = () => setOpenImages(true);
+	const handleCloseImages = () => setOpenImages(false);
+	console.log(openImages);
 
 	if (!product) {
 		return <LoadingPage />;
 	}
 
 	return (
-		<Container component="main" maxWidth="md">
-			<CssBaseline />
+		<>
 			<Box
 				component="main"
 				sx={{
@@ -155,111 +124,123 @@ const MaterialCard = () => {
 					paddingRight: 2,
 				}}
 			>
-				<MaterialsListToolbar shoppingCart={shoppingCart} />
-				<CardWrapper border={false} content={false}>
-					<CardMedia>
-						<img
-							style={{
-								maxHeight: 300,
-								height: '100%',
-								width: '100%',
-							}}
-							alt="Product"
-							src={product.imageUrl}
-							variant="rounded"
+				<Container component="main" maxWidth="md">
+					<MaterialsListToolbar shoppingCart={shoppingCart} />
+					<Card>
+						<CardHeader
+							avatar={<Avatar src={product.imageUrl} alt="Product photo" />}
+							action={
+								<IconButton onClick={handleOpenImages} aria-label="settings">
+									<CollectionsIcon fontSize="medium" />
+								</IconButton>
+							}
+							title={product.title}
+							subheader={`Cijena: ${product.price} KM`}
 						/>
-					</CardMedia>
-					<CardContent sx={{ minHeight: 120 }}>
-						<Typography
-							align="center"
-							color="textPrimary"
-							gutterBottom
-							variant="body1"
-						>
-							{product.title}
-						</Typography>
-						<Typography align="left" color="textPrimary" variant="p">
-							{product.description}
-						</Typography>
-					</CardContent>
-					<Box sx={{ flexGrow: 1 }} />
-					<Divider />
-					<Box sx={{ p: 2 }}>
-						<Grid
-							container
-							spacing={2}
-							sx={{ justifyContent: 'space-between' }}
-						>
+						<CardMedia
+							component="img"
+							height="194"
+							//	image="/static/images/cards/paella.jpg"
+							src={product.imageUrl}
+							alt="Paella dish"
+						/>
+						<CardContent>
+							<Typography variant="body2" color="text.secondary">
+								This impressive paella is a perfect party dish and a fun meal to
+								cook together with your guests. Add 1 cup of frozen peas along
+								with the mussels, if you like.
+							</Typography>
+						</CardContent>
+						<CardActions disableSpacing>
 							<Grid
-								item
-								sx={{
-									alignItems: 'center',
-									display: 'flex',
-								}}
+								container
+								spacing={2}
+								sx={{ justifyContent: 'space-between' }}
 							>
-								<ButtonGroup variant="contained">
-									<Button onClick={decrease}>-</Button>
-									<Box m="auto" paddingLeft={2}>
-										{itemAmount}
-									</Box>
-									<Button onClick={increase}>+</Button>
-								</ButtonGroup>
+								<Grid
+									item
+									sx={{
+										alignItems: 'center',
+										display: 'flex',
+									}}
+								>
+									<ButtonGroup variant="contained">
+										<Button onClick={decrease}>-</Button>
+										<Box m="auto" paddingLeft={2}>
+											{itemAmount}
+										</Box>
+										<Button onClick={increase}>+</Button>
+									</ButtonGroup>
+								</Grid>
+								<Grid
+									item
+									sx={{
+										alignItems: 'center',
+										display: 'flex',
+									}}
+								>
+									<Button
+										onClick={() => order(product._id)}
+										variant="contained"
+										//	startIcon={<ShoppingCartIcon />}
+									>
+										Dodaj u korpu
+									</Button>
+								</Grid>
 							</Grid>
-							<Grid
-								item
-								sx={{
-									alignItems: 'center',
-									display: 'flex',
-								}}
-							>
-								<Button
-									onClick={() => order(product._id)}
-									variant="contained"
-									startIcon={<ShoppingCartIcon />}
-								>
-									Order
-								</Button>
-							</Grid>
-						</Grid>
-					</Box>
-					<div>
-						<Dialog
-							open={open}
-							onClose={handleContinueShopping}
-							aria-labelledby="alert-dialog-title"
-							aria-describedby="alert-dialog-description"
-						>
-							<DialogTitle color="yellow" id="alert-dialog-title">
-								{`'${product.title}' has been added to your shopping cart!`}
-							</DialogTitle>
-							<DialogContent>
-								<DialogContentText id="alert-dialog-description">
-									You can continue shopping and add more items to your shopping
-									cart or proceed to checkout.
-								</DialogContentText>
-							</DialogContent>
-							<DialogActions>
-								<Button
-									variant="outlined"
-									color="warning"
-									onClick={handleContinueShopping}
-								>
-									Continue Shopping
-								</Button>
-								<Button
-									variant="outlined"
-									color="success"
-									onClick={handleCheckout}
-									autoFocus
-								>
-									Go To Checkout
-								</Button>
-							</DialogActions>
-						</Dialog>
-					</div>
-				</CardWrapper>
+						</CardActions>
+					</Card>
+				</Container>
 			</Box>
-		</Container>
+			<div>
+				<Dialog
+					open={open}
+					onClose={handleContinueShopping}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+				>
+					<DialogTitle color="yellow" id="alert-dialog-title">
+						{`'${product.title}' has been added to your shopping cart!`}
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							You can continue shopping and add more items to your shopping cart
+							or proceed to checkout.
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button
+							variant="outlined"
+							color="warning"
+							onClick={handleContinueShopping}
+						>
+							Continue Shopping
+						</Button>
+						<Button
+							variant="outlined"
+							color="success"
+							onClick={handleCheckout}
+							autoFocus
+						>
+							Go To Checkout
+						</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
+			<div>
+				<Dialog open={openImages} onClose={handleCloseImages}>
+					<DialogTitle id="alert-dialog-title">
+						{product.title}, {product.price} KM
+					</DialogTitle>
+					<DialogContent>
+						<img src={product.imageUrl} alt="product link" />
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleCloseImages}>Zatvori</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
+		</>
 	);
 };
 

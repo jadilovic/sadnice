@@ -5,18 +5,11 @@ import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { ButtonGroup, Button } from '@mui/material';
 import { IconButton, Chip } from '@mui/material';
-import {
-	Paper,
-	Card,
-	CardMedia,
-	CardActions,
-	CardContent,
-} from '@mui/material';
+import { Paper, Card, CardMedia, CardContent } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import EmptyCart from '../pages/EmptyCart';
 import UserWindow from '../utils/UserWindow';
-// import products from '../data/products';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LoadingPage from '../components/LoadingPage';
 import Table from '@mui/material/Table';
@@ -25,35 +18,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
-const TAX_RATE = 0.07;
-
-function ccyFormat(num) {
-	return `${num.toFixed(2)}`;
-}
-
-function priceRow(qty, unit) {
-	return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-	const price = priceRow(qty, unit);
-	return { desc, qty, unit, price };
-}
-
-function subtotal(items) {
-	return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-	createRow('Paperclips (Box)', 100, 1.15),
-	createRow('Paper (Case)', 10, 45.99),
-	createRow('Waste Basket', 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+import TotalOrder from '../components/TotalOrder';
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -366,7 +331,12 @@ const CheckOut = () => {
 						</Box>
 					);
 				})}
-			<Grid container spacing={1}>
+			{screen.dynamicWidth <= 900 && (
+				<Box paddingBottom={2}>
+					<TotalOrder totalOrder={totalOrder} />
+				</Box>
+			)}
+			<Grid container>
 				<Grid item xs={12} sm={12} md={6}>
 					<Item>
 						<Button
