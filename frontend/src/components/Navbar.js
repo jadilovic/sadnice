@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 // import bildit from '../images/bildit.png';
-import jagodicasto from '../images/jagodicasto.jpg';
+import seedling from '../images/seedling.png';
 import UserMenu from './UserMenu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -155,7 +155,7 @@ const Navbar = (props) => {
 						<Link underline="none" href="/home" color="white">
 							<img
 								style={{ width: '100%', height: 40 }}
-								src={jagodicasto}
+								src={seedling}
 								alt="bild-it logo"
 							/>
 						</Link>

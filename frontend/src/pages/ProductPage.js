@@ -128,7 +128,7 @@ const MaterialCard = () => {
 			<Box
 				component="main"
 				sx={{
-					marginTop: 9,
+					marginTop: 7,
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
