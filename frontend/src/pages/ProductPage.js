@@ -24,17 +24,27 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useAxiosProducts from '../utils/useAxiosProducts';
 import LoadingPage from '../components/LoadingPage';
 import UserWindow from '../utils/UserWindow';
-import CssBaseline from '@mui/material/CssBaseline';
+import { Badge } from '@mui/material';
 import MaterialsListToolbar from '../components/Materials-list-toolbar';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import CollectionsIcon from '@mui/icons-material/Collections';
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+	'& .MuiBadge-badge': {
+		right: -3,
+		top: 13,
+		border: `2px solid ${theme.palette.background.paper}`,
+		padding: '0 4px',
+	},
+}));
+
 const MaterialCard = () => {
 	const [product, setProduct] = useState(null);
 	const [itemAmount, setItemAmount] = useState(0);
 	const [shoppingCart, setShoppingCart] = useState([]);
+	const [shoppingCartLength, setShoppingCartLength] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [openImages, setOpenImages] = useState(false);
 	const history = useHistory();
@@ -52,6 +62,7 @@ const MaterialCard = () => {
 		);
 		if (currentShoppingCart) {
 			setShoppingCart(currentShoppingCart);
+			setShoppingCartLength(currentShoppingCart.length);
 		}
 		const localStorageProductId = localStorage.getItem('product_id'); //get product id
 		getProduct(localStorageProductId);
@@ -95,6 +106,7 @@ const MaterialCard = () => {
 			shoppingCart.push(newItem);
 		}
 		setShoppingCart([...shoppingCart]);
+		setShoppingCartLength(shoppingCart.length);
 		setItemAmount(0);
 		handleClickOpen();
 	};
@@ -125,25 +137,86 @@ const MaterialCard = () => {
 				}}
 			>
 				<Container component="main" maxWidth="md">
-					<MaterialsListToolbar shoppingCart={shoppingCart} />
-					<Card>
+					<Card style={{ marginTop: 5, minHeight: 600 }}>
 						<CardHeader
 							avatar={<Avatar src={product.imageUrl} alt="Product photo" />}
 							action={
-								<IconButton onClick={handleOpenImages} aria-label="settings">
-									<CollectionsIcon fontSize="medium" />
-								</IconButton>
+								<>
+									<IconButton onClick={handleOpenImages} aria-label="settings">
+										<CollectionsIcon fontSize="medium" />
+									</IconButton>
+									<IconButton
+										onClick={() => history.push('/checkout')}
+										aria-label="cart"
+									>
+										<StyledBadge
+											badgeContent={shoppingCartLength}
+											color="secondary"
+										>
+											<ShoppingCartIcon />
+										</StyledBadge>
+									</IconButton>
+								</>
 							}
 							title={product.title}
 							subheader={`Cijena: ${product.price} KM`}
 						/>
-						<CardMedia
-							component="img"
-							height="194"
-							//	image="/static/images/cards/paella.jpg"
-							src={product.imageUrl}
-							alt="Paella dish"
-						/>
+						<Grid container spacing={1}>
+							<Grid
+								item
+								sx={{
+									alignItems: 'center',
+									display: 'flex',
+								}}
+								lg={4}
+								md={12}
+								xs={12}
+							>
+								<CardMedia
+									component="img"
+									height="194"
+									//	image="/static/images/cards/paella.jpg"
+									src={product.imageUrl}
+									alt="Paella dish"
+								/>
+							</Grid>
+							<Grid
+								item
+								sx={{
+									alignItems: 'center',
+									display: 'flex',
+								}}
+								lg={4}
+								md={6}
+								xs={6}
+							>
+								<CardMedia
+									component="img"
+									height="194"
+									//	image="/static/images/cards/paella.jpg"
+									src={product.imageUrl}
+									alt="Paella dish"
+								/>
+							</Grid>
+							<Grid
+								item
+								sx={{
+									alignItems: 'center',
+									display: 'flex',
+								}}
+								lg={4}
+								md={6}
+								xs={6}
+							>
+								<CardMedia
+									component="img"
+									height="194"
+									//	image="/static/images/cards/paella.jpg"
+									src={product.imageUrl}
+									alt="Paella dish"
+								/>
+							</Grid>
+						</Grid>
 						<CardContent>
 							<Typography variant="body2" color="text.secondary">
 								This impressive paella is a perfect party dish and a fun meal to

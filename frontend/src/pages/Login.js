@@ -14,7 +14,8 @@ import Page from '../components/Page';
 import { styled } from '@mui/material/styles';
 import { Card } from '@mui/material';
 import MHidden from '../components/MHidden';
-import back from '../images/back.jpg';
+// import back from '../images/back.jpg';
+import jagodicasto from '../images/jagodicasto.jpg';
 
 const RootStyle = styled(Page)(({ theme }) => ({
 	[theme.breakpoints.up('md')]: {
@@ -93,7 +94,7 @@ const Login = () => {
 					<Typography variant="h6" sx={{ px: 5, mt: 5, mb: 5 }}>
 						Hi, Welcome Back
 					</Typography>
-					<img src={back} alt="login" />
+					<img src={jagodicasto} alt="login" />
 				</SectionStyle>
 			</MHidden>
 			<Container maxWidth="sm">

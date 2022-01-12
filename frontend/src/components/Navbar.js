@@ -5,7 +5,8 @@ import { AppBar } from '@mui/material';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import bildit from '../images/bildit.png';
+// import bildit from '../images/bildit.png';
+import jagodicasto from '../images/jagodicasto.jpg';
 import UserMenu from './UserMenu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -152,11 +153,15 @@ const Navbar = (props) => {
 						paddingTop={1.25}
 					>
 						<Link underline="none" href="/home" color="white">
-							<img src={bildit} alt="bild-it logo" />
+							<img
+								style={{ width: '100%', height: 40 }}
+								src={jagodicasto}
+								alt="bild-it logo"
+							/>
 						</Link>
 					</Typography>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Learning Platform
+						Sadnice
 					</Typography>
 					<Typography>
 						<IconButton
