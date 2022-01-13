@@ -24,7 +24,7 @@ const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
 					component="img"
 					height="140"
 					//	image="/static/images/cards/contemplative-reptile.jpg"
-					alt="green iguana"
+					alt="seedling image"
 					src={product.imageUrl}
 				/>
 				<CardContent>

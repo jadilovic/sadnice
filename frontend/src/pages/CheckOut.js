@@ -108,7 +108,7 @@ const CheckOut = () => {
 		<Box
 			sx={{
 				flexGrow: 1,
-				paddingTop: 10,
+				paddingTop: 9,
 				paddingLeft: screen.dynamicWidth < 600 ? 2 : 24,
 				paddingRight: 2,
 			}}
@@ -118,7 +118,7 @@ const CheckOut = () => {
 					style={{ minWidth: 300, minHeight: 40, fontSize: 19 }}
 					size="medium"
 					label="Vaša korpa sadnica"
-					color="default"
+					color="primary"
 				/>
 			</Stack>
 			{screen.dynamicWidth > 900 && (

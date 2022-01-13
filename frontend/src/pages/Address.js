@@ -43,7 +43,7 @@ const Address = () => {
 			component="main"
 			sx={{
 				flexGrow: 1,
-				paddingTop: 10,
+				paddingTop: 9,
 				paddingLeft: screen.dynamicWidth < 600 ? 0 : 22,
 				paddingRight: 0,
 			}}
@@ -53,7 +53,7 @@ const Address = () => {
 					<Chip
 						style={{ minWidth: 300, minHeight: 40, fontSize: 19 }}
 						size="medium"
-						label="Complete your order"
+						label="Zaključite vašu narudžbu"
 						color="primary"
 					/>
 				</Stack>

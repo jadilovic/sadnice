@@ -13,8 +13,6 @@ import { login, isAuthenticated } from '../auth/Authentication';
 import Page from '../components/Page';
 import { styled } from '@mui/material/styles';
 import { Card } from '@mui/material';
-import MHidden from '../components/MHidden';
-// import back from '../images/back.jpg';
 import jagodicasto from '../images/jagodicasto.jpg';
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -25,12 +23,12 @@ const RootStyle = styled(Page)(({ theme }) => ({
 }));
 
 const SectionStyle = styled(Card)(({ theme }) => ({
+	marginTop: 25,
 	width: '100%',
-	maxWidth: 464,
+	maxWidth: 900,
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'center',
-	margin: theme.spacing(2, 0, 2, 2),
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -46,7 +44,9 @@ function Copyright(props) {
 	return (
 		<Typography variant="body2" align="center" {...props}>
 			{'Copyright © '}
-			<a href="https://mui.com/">BILD-IT Web Training</a>
+			<a href="https://mui.com/">
+				Porodično poljoprivredno gazdinstvo Adilović
+			</a>
 			{` ${new Date().getFullYear()}.`}
 		</Typography>
 	);
@@ -89,14 +89,28 @@ const Login = () => {
 	return (
 		<RootStyle title="Login | BILD-IT Web Training">
 			<CssBaseline />
-			<MHidden width="mdDown">
+			<Container maxWidth="sm">
 				<SectionStyle>
-					<Typography variant="h6" sx={{ px: 5, mt: 5, mb: 5 }}>
-						Hi, Welcome Back
-					</Typography>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+					>
+						<Typography sx={{ px: 5, mt: 3, mb: 3 }}>
+							Dobrodošli na stranice porodičnog poljoprivrednog gazdinstva
+							Adilović!
+						</Typography>
+						<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 5 }}>
+							<Link style={{ color: '#648381' }} to="/signup" variant="body2">
+								{'Ulaz za goste'}
+							</Link>
+						</Typography>
+					</Box>
 					<img src={jagodicasto} alt="login" />
 				</SectionStyle>
-			</MHidden>
+			</Container>
 			<Container maxWidth="sm">
 				<ContentStyle>
 					<Box
@@ -111,7 +125,7 @@ const Login = () => {
 							<LockOutlinedIcon />
 						</Avatar>
 						<Typography component="h1" variant="h5">
-							Login
+							Prijava
 						</Typography>
 						<Box
 							component="form"
@@ -156,7 +170,7 @@ const Login = () => {
 								variant="contained"
 								sx={{ mt: 3, mb: 2 }}
 							>
-								Sign In
+								Prijava za registrovane korisnike
 							</Button>
 							<Grid container>
 								<Grid item xs={12}>
@@ -165,7 +179,7 @@ const Login = () => {
 										to="/signup"
 										variant="body2"
 									>
-										{"Don't have an account? Sign Up"}
+										{'Niste naš registrovan korisnik? Registruj se!'}
 									</Link>
 								</Grid>
 							</Grid>

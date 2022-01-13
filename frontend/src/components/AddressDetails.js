@@ -35,7 +35,7 @@ export const AddressDetails = (props) => {
 					variant="h6"
 					component="div"
 				>
-					Add shipping address
+					Adresa dostave
 				</Typography>
 				<Divider />
 				<CardContent>
@@ -43,7 +43,7 @@ export const AddressDetails = (props) => {
 						<Grid item md={12} xs={12}>
 							<TextField
 								fullWidth
-								label="First name"
+								label="Ime"
 								name="firstName"
 								onChange={handleChange}
 								required
@@ -54,7 +54,7 @@ export const AddressDetails = (props) => {
 						<Grid item md={12} xs={12}>
 							<TextField
 								fullWidth
-								label="Last name"
+								label="Prezime"
 								name="lastName"
 								onChange={handleChange}
 								required

@@ -132,8 +132,8 @@ const MaterialCard = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					paddingLeft: screen.dynamicWidth < 600 ? 2 : 24,
-					paddingRight: 2,
+					paddingLeft: screen.dynamicWidth < 600 ? 1 : 24,
+					paddingRight: 1,
 				}}
 			>
 				<Container component="main" maxWidth="md">
@@ -161,7 +161,7 @@ const MaterialCard = () => {
 							title={product.title}
 							subheader={`Cijena: ${product.price} KM`}
 						/>
-						<Grid container spacing={1}>
+						<Grid container spacing={0.5}>
 							<Grid
 								item
 								sx={{
