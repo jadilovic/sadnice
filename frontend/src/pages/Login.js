@@ -14,6 +14,7 @@ import Page from '../components/Page';
 import { styled } from '@mui/material/styles';
 import { Card } from '@mui/material';
 import jagodicasto from '../images/jagodicasto.jpg';
+import UserWindow from '../utils/UserWindow';
 
 const RootStyle = styled(Page)(({ theme }) => ({
 	[theme.breakpoints.up('md')]: {
@@ -56,6 +57,7 @@ const Login = () => {
 	const history = useHistory();
 	const mongoDB = useAxiosRequest();
 	const [error, setError] = useState(null);
+	const screen = UserWindow();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -83,112 +85,122 @@ const Login = () => {
 	};
 
 	if (isAuthenticated()) {
-		history.push('/home');
+		history.push('/materials');
 	}
 
 	return (
-		<RootStyle title="Login | BILD-IT Web Training">
-			<CssBaseline />
-			<Container maxWidth="sm">
-				<SectionStyle>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
-						<Typography sx={{ px: 5, mt: 3, mb: 3 }}>
-							Dobrodošli na stranice porodičnog poljoprivrednog gazdinstva
-							Adilović!
-						</Typography>
-						<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 5 }}>
-							<Link style={{ color: '#648381' }} to="/signup" variant="body2">
-								{'Ulaz za goste'}
-							</Link>
-						</Typography>
-					</Box>
-					<img src={jagodicasto} alt="login" />
-				</SectionStyle>
-			</Container>
-			<Container maxWidth="sm">
-				<ContentStyle>
-					<Box
-						sx={{
-							marginTop: 7,
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
-						<Avatar sx={{ m: 1, bgcolor: '#C33C54' }}>
-							<LockOutlinedIcon />
-						</Avatar>
-						<Typography component="h1" variant="h5">
-							Prijava
-						</Typography>
+		<Box
+			sx={{
+				paddingLeft: screen.dynamicWidth < 600 ? 0 : 22,
+			}}
+		>
+			<RootStyle title="Login | BILD-IT Web Training">
+				<CssBaseline />
+				<Container maxWidth="sm">
+					<SectionStyle>
 						<Box
-							component="form"
-							onSubmit={handleSubmit}
-							noValidate
-							sx={{ mt: 1 }}
+							sx={{
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+							}}
 						>
-							{error && (
-								<Box
-									sx={{
-										paddingTop: 2,
-										paddingBottom: 2,
-										bgcolor: 'background.paper',
-									}}
+							<Typography sx={{ px: 5, mt: 3, mb: 3 }}>
+								Dobrodošli na stranice porodičnog poljoprivrednog gazdinstva
+								Adilović!
+							</Typography>
+							<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 5 }}>
+								<Link
+									style={{ color: '#648381' }}
+									to="/materials"
+									variant="body2"
 								>
-									<Alert severity="error">{error}</Alert>
-								</Box>
-							)}
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								autoFocus
-							/>
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-							/>
-							<Button
-								type="submit"
-								fullWidth
-								variant="contained"
-								sx={{ mt: 3, mb: 2 }}
-							>
-								Prijava za registrovane korisnike
-							</Button>
-							<Grid container>
-								<Grid item xs={12}>
-									<Link
-										style={{ color: '#648381' }}
-										to="/signup"
-										variant="body2"
-									>
-										{'Niste naš registrovan korisnik? Registruj se!'}
-									</Link>
-								</Grid>
-							</Grid>
+									{'Ulaz za goste'}
+								</Link>
+							</Typography>
 						</Box>
-					</Box>
-					<Copyright sx={{ mt: 8, mb: 4 }} />
-				</ContentStyle>
-			</Container>
-		</RootStyle>
+						<img src={jagodicasto} alt="login" />
+					</SectionStyle>
+				</Container>
+				<Container maxWidth="sm">
+					<ContentStyle>
+						<Box
+							sx={{
+								marginTop: 5,
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'center',
+							}}
+						>
+							<Avatar sx={{ m: 1, bgcolor: '#C33C54' }}>
+								<LockOutlinedIcon />
+							</Avatar>
+							<Typography component="h1" variant="h5">
+								Prijava
+							</Typography>
+							<Box
+								component="form"
+								onSubmit={handleSubmit}
+								noValidate
+								sx={{ mt: 1 }}
+							>
+								{error && (
+									<Box
+										sx={{
+											paddingTop: 2,
+											paddingBottom: 2,
+											bgcolor: 'background.paper',
+										}}
+									>
+										<Alert severity="error">{error}</Alert>
+									</Box>
+								)}
+								<TextField
+									margin="normal"
+									required
+									fullWidth
+									id="email"
+									label="Email Address"
+									name="email"
+									autoComplete="email"
+									autoFocus
+								/>
+								<TextField
+									margin="normal"
+									required
+									fullWidth
+									name="password"
+									label="Password"
+									type="password"
+									id="password"
+									autoComplete="current-password"
+								/>
+								<Button
+									type="submit"
+									fullWidth
+									variant="contained"
+									sx={{ mt: 3, mb: 2 }}
+								>
+									Prijava za registrovane korisnike
+								</Button>
+								<Grid container>
+									<Grid item xs={12}>
+										<Link
+											style={{ color: '#648381' }}
+											to="/signup"
+											variant="body2"
+										>
+											{'Niste naš registrovan korisnik? Registruj se!'}
+										</Link>
+									</Grid>
+								</Grid>
+							</Box>
+						</Box>
+						<Copyright sx={{ mt: 8, mb: 4 }} />
+					</ContentStyle>
+				</Container>
+			</RootStyle>
+		</Box>
 	);
 };
 

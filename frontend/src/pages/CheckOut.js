@@ -211,8 +211,8 @@ const CheckOut = () => {
 									src={`${productDetails.imageUrl}`}
 								/>
 								<CardContent>
-									<Grid container spacing={2}>
-										<Grid item xs={6}>
+									<Grid container>
+										<Grid item xs={6} spacing={2}>
 											<Typography
 												align="left"
 												color="textPrimary"

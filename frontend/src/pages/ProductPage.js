@@ -25,7 +25,6 @@ import useAxiosProducts from '../utils/useAxiosProducts';
 import LoadingPage from '../components/LoadingPage';
 import UserWindow from '../utils/UserWindow';
 import { Badge } from '@mui/material';
-import MaterialsListToolbar from '../components/Materials-list-toolbar';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';

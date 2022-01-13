@@ -53,12 +53,12 @@ export default function Restricted() {
 					/>
 
 					<Button
-						to="/home"
+						to="/materials"
 						size="large"
 						variant="contained"
 						component={RouterLink}
 					>
-						Go to Home
+						Go start page
 					</Button>
 				</Box>
 			</Container>

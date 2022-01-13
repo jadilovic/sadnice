@@ -92,9 +92,9 @@ const Signup = () => {
 		}
 	};
 
-	if (isAuthenticated()) {
-		history.push('/home');
-	}
+	// if (isAuthenticated()) {
+	// 	history.push('/');
+	// }
 
 	return (
 		<Container component="main" maxWidth="xs">

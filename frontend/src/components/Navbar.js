@@ -43,39 +43,43 @@ const Navbar = (props) => {
 			section: 'Users',
 			icon: <PeopleOutlineIcon />,
 			linkToSection: '/users',
-			permission: 'teacher',
+			permission: 'admin',
 		},
 		{
 			section: 'Materials',
 			icon: <LibraryBooksIcon />,
 			linkToSection: '/materials',
-			permission: 'student',
+			permission: 'guest',
 		},
 		{
 			section: 'Stats',
 			icon: <QueryStatsIcon />,
 			linkToSection: '/stats',
-			permission: 'teacher',
+			permission: 'guest',
 		},
 		{
 			section: 'Create Product',
 			icon: <CategoryIcon />,
 			linkToSection: '/products',
-			permission: 'teacher',
+			permission: 'admin',
 		},
 		{
 			section: 'Tasks',
 			icon: <FormatListNumberedIcon />,
 			linkToSection: '/tasks',
-			permission: 'student',
+			permission: 'member',
 		},
 	];
 	let role = '';
 	if (isAuthenticated()) {
 		role = getUserData().role;
-		if (role === 'student') {
-			drawerMenu = drawerMenu.filter((menu) => menu.permission === 'student');
+		if (role === 'member') {
+			drawerMenu = drawerMenu.filter(
+				(menu) => menu.permission === 'member' || menu.permission === 'guest'
+			);
 		}
+	} else {
+		drawerMenu = drawerMenu.filter((menu) => menu.permission === 'guest');
 	}
 
 	const handleClickAway = () => {
@@ -135,24 +139,24 @@ const Navbar = (props) => {
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
 			>
 				<Toolbar>
-					{authenticated && (
-						<IconButton
-							color="inherit"
-							aria-label="open drawer"
-							edge="start"
-							onClick={handleDrawerToggle}
-							sx={{ mr: 2, display: { sm: 'none' } }}
-						>
-							<MenuIcon />
-						</IconButton>
-					)}
+					{/* {authenticated && ( */}
+					<IconButton
+						color="inherit"
+						aria-label="open drawer"
+						edge="start"
+						onClick={handleDrawerToggle}
+						sx={{ mr: 2, display: { sm: 'none' } }}
+					>
+						<MenuIcon />
+					</IconButton>
+					{/* )} */}
 					<Typography
 						variant="h6"
 						component="div"
 						paddingRight={2}
 						paddingTop={1.25}
 					>
-						<Link underline="none" href="/home" color="white">
+						<Link underline="none" href="/materials" color="white">
 							<img
 								style={{ width: '100%', height: 40 }}
 								src={seedling}
@@ -175,59 +179,61 @@ const Navbar = (props) => {
 					{authenticated ? (
 						<UserMenu />
 					) : (
-						<Typography variant="h6" component="div">
-							{''}
-						</Typography>
+						<Link underline="none" href="/" color="white">
+							<Typography variant="h6" component="div">
+								{'Prijava'}
+							</Typography>
+						</Link>
 					)}
 				</Toolbar>
 			</AppBar>
-			{authenticated && (
-				<ClickAwayListener onClickAway={handleClickAway}>
-					<Drawer
-						variant="persistent"
-						sx={{
+			{/* {authenticated && ( */}
+			<ClickAwayListener onClickAway={handleClickAway}>
+				<Drawer
+					variant="persistent"
+					sx={{
+						width: drawerWidth,
+						flexShrink: 0,
+						[`& .MuiDrawer-paper`]: {
 							width: drawerWidth,
-							flexShrink: 0,
-							[`& .MuiDrawer-paper`]: {
-								width: drawerWidth,
-								boxSizing: 'border-box',
-							},
-						}}
-						open={drawerOpen}
-						onClose={handleDrawerToggle}
-						ModalProps={{
-							keepMounted: true, // Better open performance on mobile.
-						}}
-					>
-						<Toolbar />
-						<Box sx={{ overflow: 'auto' }}>
-							<List>
-								{drawerMenu.map((menuItem, index) => (
-									<ListItem
-										onClick={() => handleMenuClick(menuItem.linkToSection)}
-										button
-										key={index}
-									>
-										<ListItemIcon>{menuItem.icon}</ListItemIcon>
-										<ListItemText primary={menuItem.section} />
-									</ListItem>
-								))}
-							</List>
-							<Divider />
-							<List>
-								{['All mail', 'Trash', 'Spam'].map((text, index) => (
-									<ListItem button key={text}>
-										<ListItemIcon>
-											{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-										</ListItemIcon>
-										<ListItemText primary={text} />
-									</ListItem>
-								))}
-							</List>
-						</Box>
-					</Drawer>
-				</ClickAwayListener>
-			)}
+							boxSizing: 'border-box',
+						},
+					}}
+					open={drawerOpen}
+					onClose={handleDrawerToggle}
+					ModalProps={{
+						keepMounted: true, // Better open performance on mobile.
+					}}
+				>
+					<Toolbar />
+					<Box sx={{ overflow: 'auto' }}>
+						<List>
+							{drawerMenu.map((menuItem, index) => (
+								<ListItem
+									onClick={() => handleMenuClick(menuItem.linkToSection)}
+									button
+									key={index}
+								>
+									<ListItemIcon>{menuItem.icon}</ListItemIcon>
+									<ListItemText primary={menuItem.section} />
+								</ListItem>
+							))}
+						</List>
+						<Divider />
+						<List>
+							{['All mail', 'Trash', 'Spam'].map((text, index) => (
+								<ListItem button key={text}>
+									<ListItemIcon>
+										{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+									</ListItemIcon>
+									<ListItemText primary={text} />
+								</ListItem>
+							))}
+						</List>
+					</Box>
+				</Drawer>
+			</ClickAwayListener>
+			{/* )} */}
 		</Box>
 	);
 };

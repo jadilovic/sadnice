@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Users from './pages/Users';
 import Signup from './pages/Signup';
-import Home from './pages/Home';
+// import Home from './pages/Home';
 import Edit from './pages/Edit';
 import UserProfile from './pages/UserProfile';
 import Error from './pages/Error';
 import Address from './pages/Address';
 import PrivateRoute from './components/PrivateRoute';
-import TeacherRoute from './components/TeacherRoute';
+import AdminRoute from './components/AdminRoute';
 import Navbar from './components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -48,13 +48,13 @@ const App = () => {
 					<Route component={ProductPage} path="/product" exact />
 					<Route component={CheckOut} path="/checkout" exact />
 					<Route component={Address} path="/address" exact />
-					<PrivateRoute component={Home} path="/home" exact />
-					<PrivateRoute component={Products} path="/materials" exact />
+					{/* <PrivateRoute component={Home} path="/home" exact /> */}
+					<Route component={Products} path="/materials" exact />
 					<PrivateRoute component={CreateProduct} path="/products" exact />
-					<TeacherRoute component={Iframely} path="/stats" exact />
-					<TeacherRoute component={Edit} path="/edit" exact />
-					<TeacherRoute component={Users} path="/users" exact />
-					<TeacherRoute component={UserProfile} path="/profile" exact />
+					<AdminRoute component={Iframely} path="/stats" exact />
+					<AdminRoute component={Edit} path="/edit" exact />
+					<AdminRoute component={Users} path="/users" exact />
+					<AdminRoute component={UserProfile} path="/profile" exact />
 					<PrivateRoute component={Restricted} path="/restricted" />
 					<Route component={Error} path="/*" />
 				</Switch>

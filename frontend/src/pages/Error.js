@@ -41,7 +41,7 @@ export default function Error() {
 					/>
 					<div style={{ paddingTop: 20 }}>
 						<Button
-							to="/home"
+							to="/materials"
 							size="large"
 							variant="contained"
 							component={RouterLink}

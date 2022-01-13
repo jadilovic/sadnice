@@ -41,7 +41,7 @@ app.use(cors());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/tasks', authenticateUser, tasksRouter);
 app.use('/api/v1/users', authenticateUser, usersRouter);
-app.use('/api/v1/products', authenticateUser, productsRouter);
+app.use('/api/v1/products', productsRouter);
 
 // added for heroku
 app.get('/*', (req, res) => {

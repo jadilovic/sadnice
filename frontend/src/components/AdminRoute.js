@@ -13,7 +13,7 @@ const TeacherRoute = ({ component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={(props) =>
-				isAuthenticated() && role === 'teacher' ? (
+				isAuthenticated() && role === 'admin' ? (
 					<Component {...props} />
 				) : (
 					<Redirect to="/restricted" />
