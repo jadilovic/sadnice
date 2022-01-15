@@ -28,6 +28,12 @@ import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import CategoryIcon from '@mui/icons-material/Category';
+import raspberry1 from '../images/raspberry-icon.png';
+import raspberry2 from '../images/raspberry.png';
+import currant from '../images/currant.png';
+import blackberry from '../images/blackberry.png';
+import gooseberry from '../images/gooseberry.png';
+import berries from '../images/berries.png';
 
 const drawerWidth = 180;
 
@@ -40,32 +46,70 @@ const Navbar = (props) => {
 	const [menuClicked, setMenuClicked] = useState(false);
 	let drawerMenu = [
 		{
-			section: 'Users',
+			section: 'Home',
+			icon: berries,
+			linkToSection: '/materials',
+			permission: 'guest',
+		},
+		{
+			section: 'Maline',
+			icon: raspberry1,
+			linkToSection: '/maline',
+			permission: 'guest',
+		},
+		{
+			section: 'Ribizle',
+			icon: currant,
+			linkToSection: '/materials',
+			permission: 'guest',
+		},
+		{
+			section: 'Kupine',
+			icon: blackberry,
+			linkToSection: '/stats',
+			permission: 'guest',
+		},
+		{
+			section: 'Ogrozdi',
+			icon: gooseberry,
+			linkToSection: '/products',
+			permission: 'admin',
+		},
+		{
+			section: 'Tayberry',
+			icon: raspberry2,
+			linkToSection: '/tasks',
+			permission: 'member',
+		},
+		{
+			section: 'Ostalo',
+			icon: raspberry2,
+			linkToSection: '/tasks',
+			permission: 'member',
+		},
+	];
+	let drawerAdmin = [
+		{
+			section: 'Korisnici',
 			icon: <PeopleOutlineIcon />,
 			linkToSection: '/users',
 			permission: 'admin',
 		},
 		{
-			section: 'Materials',
-			icon: <LibraryBooksIcon />,
-			linkToSection: '/materials',
-			permission: 'guest',
-		},
-		{
-			section: 'Stats',
-			icon: <QueryStatsIcon />,
+			section: 'Narudžbe',
+			icon: <FormatListNumberedIcon />,
 			linkToSection: '/stats',
-			permission: 'guest',
+			permission: 'admin',
 		},
 		{
-			section: 'Create Product',
-			icon: <CategoryIcon />,
+			section: 'Nove Sadnice',
+			icon: <LibraryBooksIcon />,
 			linkToSection: '/products',
 			permission: 'admin',
 		},
 		{
 			section: 'Tasks',
-			icon: <FormatListNumberedIcon />,
+			icon: <QueryStatsIcon />,
 			linkToSection: '/tasks',
 			permission: 'member',
 		},
@@ -214,19 +258,22 @@ const Navbar = (props) => {
 									button
 									key={index}
 								>
-									<ListItemIcon>{menuItem.icon}</ListItemIcon>
+									{/* <ListItemIcon>{menuItem.icon}</ListItemIcon> */}
+									<img
+										style={{ width: '30px', height: '30px', marginRight: 25 }}
+										src={menuItem.icon}
+										alt="icon instead"
+									/>
 									<ListItemText primary={menuItem.section} />
 								</ListItem>
 							))}
 						</List>
 						<Divider />
 						<List>
-							{['All mail', 'Trash', 'Spam'].map((text, index) => (
-								<ListItem button key={text}>
-									<ListItemIcon>
-										{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-									</ListItemIcon>
-									<ListItemText primary={text} />
+							{drawerAdmin.map((item, index) => (
+								<ListItem button key={item.section}>
+									<ListItemIcon>{item.icon}</ListItemIcon>
+									<ListItemText primary={item.section} />
 								</ListItem>
 							))}
 						</List>
