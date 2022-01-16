@@ -7,7 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const ImageUploader = (props) => {
 	const { url, setUrl } = props;
-	const [publicId, setPublicId] = useState('');
+	const [publicId, setPublicId] = useState([]);
+	const buttons = [1, 2, 3];
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const cloudinaryDB = useAxiosProducts();
 
@@ -15,7 +16,7 @@ const ImageUploader = (props) => {
 		const lastSlash = imageUrl.lastIndexOf('/');
 		const lastDot = imageUrl.lastIndexOf('.');
 		const extractedValue = imageUrl.substring(lastSlash + 1, lastDot);
-		setPublicId(extractedValue);
+		setPublicId([...publicId, extractedValue]);
 	};
 
 	const uploadImage = (e) => {
@@ -30,61 +31,85 @@ const ImageUploader = (props) => {
 		})
 			.then((resp) => resp.json())
 			.then((data) => {
-				setUrl(data.url);
+				// url.push(data.url)
+				setUrl([...url, data.url]);
 				extractPublicId(data.url);
 			})
 			.catch((err) => console.log(err));
 	};
 
-	const discardImage = () => {
-		cloudinaryDB.deleteCloudinaryImage(publicId);
-		setUrl('');
+	const discardImage = (imageIndex) => {
+		cloudinaryDB.deleteCloudinaryImage(publicId[imageIndex]);
+		url.splice(imageIndex, 1);
+		publicId.splice(imageIndex, 1);
+		setPublicId([...publicId]);
+		setUrl([...url]);
 	};
+
+	console.log('urls : ', url);
+	console.log('ids : ', publicId);
 
 	return (
 		<Container maxWidth="xs">
-			{url ? (
-				<Box>
-					<Card sx={{ maxHeight: 255 }}>
-						<CardMedia>
-							<img
-								onLoad={() => setImageLoaded(true)}
-								src={url.replace('upload/', 'upload/w_600/')}
-								style={{ height: '100%', width: '100%' }}
-								alt="not found"
-							/>
-							{!imageLoaded && (
-								<Stack
-									style={{ display: 'flex', justifyContent: 'center' }}
-									sx={{ color: 'grey.500' }}
-									spacing={2}
-									direction="row"
+			{buttons.map((number, index) => {
+				return (
+					<div key={index}>
+						{url[index] ? (
+							<Box style={{ marginTop: 10 }}>
+								<Card sx={{ maxHeight: 255 }}>
+									<CardMedia>
+										<img
+											onLoad={() => setImageLoaded(true)}
+											src={url[index].replace('upload/', 'upload/w_600/')}
+											style={{ height: '100%', width: '100%' }}
+											alt="not found"
+										/>
+										{!imageLoaded && (
+											<Stack
+												style={{
+													display: 'flex',
+													justifyContent: 'center',
+												}}
+												sx={{ color: 'grey.500' }}
+												spacing={2}
+												direction="row"
+											>
+												<CircularProgress color="secondary" />
+												<CircularProgress color="success" />
+												<CircularProgress color="inherit" />
+											</Stack>
+										)}
+									</CardMedia>
+								</Card>
+								<Button
+									size="small"
+									style={{ marginTop: 2 }}
+									fullWidth
+									onClick={() => discardImage(index)}
+									variant="contained"
+									color="warning"
+									component="label"
 								>
-									<CircularProgress color="secondary" />
-									<CircularProgress color="success" />
-									<CircularProgress color="inherit" />
-								</Stack>
-							)}
-						</CardMedia>
-					</Card>
-					<Button
-						size="small"
-						style={{ marginTop: 2 }}
-						fullWidth
-						onClick={() => discardImage()}
-						variant="contained"
-						color="warning"
-						component="label"
-					>
-						Discard this image
-					</Button>
-				</Box>
-			) : (
-				<Button fullWidth variant="contained" component="label" color="success">
-					Select Image
-					<input type="file" hidden onChange={(e) => uploadImage(e)} />
-				</Button>
-			)}
+									{`Discard image ${number}`}
+								</Button>
+							</Box>
+						) : (
+							<div style={{ margin: 5 }}>
+								<Button
+									key={index}
+									fullWidth
+									variant="contained"
+									component="label"
+									color="success"
+								>
+									{`Select image ${number}`}
+									<input type="file" hidden onChange={(e) => uploadImage(e)} />
+								</Button>
+							</div>
+						)}
+					</div>
+				);
+			})}
 		</Container>
 	);
 };

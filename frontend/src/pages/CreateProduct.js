@@ -36,7 +36,8 @@ const CreateProduct = () => {
 	const mongoDB = useAxiosRequest();
 	const [error, setError] = useState(null);
 	const [fieldErrors, setFieldErrors] = useState({});
-	const [imageUrl, setImageUrl] = useState('');
+	// const [imageUrl, setImageUrl] = useState('');
+	const [imageUrl, setImageUrl] = useState([]);
 	const screen = UserWindow();
 	const [age, setAge] = useState(1);
 	const [category, setCategory] = useState('Malina');

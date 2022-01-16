@@ -34,6 +34,8 @@ import gooseberry from '../images/gooseberry.png';
 import berries from '../images/berries.png';
 import fruits from '../images/fruits.png';
 import strawberry from '../images/strawberry.png';
+import aronia from '../images/aronia.png';
+import goji from '../images/goji.png';
 
 const drawerWidth = 180;
 
@@ -89,13 +91,13 @@ const Navbar = (props) => {
 		},
 		{
 			section: 'Aronija',
-			icon: gooseberry,
+			icon: aronia,
 			linkToSection: '/materials',
 			permission: 'guest',
 		},
 		{
 			section: 'Gođi',
-			icon: tayberry,
+			icon: goji,
 			linkToSection: '/materials',
 			permission: 'guest',
 		},

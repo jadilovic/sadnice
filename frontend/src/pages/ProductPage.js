@@ -46,6 +46,7 @@ const MaterialCard = () => {
 	const [shoppingCartLength, setShoppingCartLength] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [openImages, setOpenImages] = useState(false);
+	const [count, setCount] = useState(0);
 	const history = useHistory();
 	const productsDB = useAxiosProducts();
 	const screen = UserWindow();
@@ -116,6 +117,13 @@ const MaterialCard = () => {
 	};
 	const handleOpenImages = () => setOpenImages(true);
 	const handleCloseImages = () => setOpenImages(false);
+	const imageCount = () => {
+		if (count < 2) {
+			setCount(count + 1);
+		} else {
+			setCount(0);
+		}
+	};
 	console.log(product);
 
 	if (!product) {
@@ -138,7 +146,7 @@ const MaterialCard = () => {
 				<Container component="main" maxWidth="md">
 					<Card style={{ marginTop: 5, minHeight: 600 }}>
 						<CardHeader
-							avatar={<Avatar src={product.imageUrl} alt="Product photo" />}
+							avatar={<Avatar src={product.imageUrl[0]} alt="Product photo" />}
 							action={
 								<>
 									<IconButton onClick={handleOpenImages} aria-label="settings">
@@ -175,7 +183,7 @@ const MaterialCard = () => {
 									component="img"
 									height="194"
 									//	image="/static/images/cards/paella.jpg"
-									src={product.imageUrl}
+									src={product.imageUrl[0]}
 									alt="Paella dish"
 								/>
 							</Grid>
@@ -193,7 +201,7 @@ const MaterialCard = () => {
 									component="img"
 									height="194"
 									//	image="/static/images/cards/paella.jpg"
-									src={product.imageUrl}
+									src={product.imageUrl[1]}
 									alt="Paella dish"
 								/>
 							</Grid>
@@ -211,7 +219,7 @@ const MaterialCard = () => {
 									component="img"
 									height="194"
 									//	image="/static/images/cards/paella.jpg"
-									src={product.imageUrl}
+									src={product.imageUrl[2]}
 									alt="Paella dish"
 								/>
 							</Grid>
@@ -307,8 +315,8 @@ const MaterialCard = () => {
 					<DialogTitle id="alert-dialog-title">
 						{product.title}, {product.price} KM
 					</DialogTitle>
-					<DialogContent>
-						<img src={product.imageUrl} alt="product link" />
+					<DialogContent onClick={imageCount}>
+						<img src={product.imageUrl[count]} alt="product link" />
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleCloseImages}>Zatvori</Button>

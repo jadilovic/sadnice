@@ -34,11 +34,10 @@ export default function Restricted() {
 					}}
 				>
 					<Typography variant="h5" paragraph>
-						Yor shopping cart is empty!
+						Vaša korpa je prazna!
 					</Typography>
 					<Typography sx={{ color: 'text.secondary' }}>
-						Return to your previous page or go to Home page by clicking the
-						button below.
+						Mozete se vratiti na prethodnu stranici ili kliknuti na Sadnice.
 					</Typography>
 
 					<Box
@@ -59,7 +58,7 @@ export default function Restricted() {
 						variant="contained"
 						component={RouterLink}
 					>
-						Go to products
+						Sadnice
 					</Button>
 				</Box>
 			</Container>

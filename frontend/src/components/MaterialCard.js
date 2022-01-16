@@ -25,7 +25,7 @@ const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
 					height="140"
 					//	image="/static/images/cards/contemplative-reptile.jpg"
 					alt="seedling image"
-					src={product.imageUrl}
+					src={product.imageUrl[0]}
 				/>
 				<CardContent>
 					<Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>

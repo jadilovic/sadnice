@@ -158,7 +158,7 @@ const CheckOut = () => {
 													width: '70%',
 												}}
 												alt="prodcut photo"
-												src={`${productDetails.imageUrl}`}
+												src={`${productDetails.imageUrl[0]}`}
 											/>
 										</TableCell>
 										<TableCell align="left">{productDetails.title}</TableCell>

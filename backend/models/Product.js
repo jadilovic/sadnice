@@ -18,12 +18,17 @@ const ProductSchema = mongoose.Schema(
 				'Product description can be maximum 200 characters long',
 			],
 		},
-		imageUrl: {
-			type: String,
-			required: [true, 'Please select image'],
-			minlength: [15, 'Image URL must be minimum 15 characters long'],
-			maxlength: [150, 'Image URL can be maximum 150 characters long'],
-		},
+		imageUrl: [
+			{
+				type: String,
+			},
+		],
+		// imageUrl: {
+		// 	type: String,
+		// 	required: [true, 'Please select image'],
+		// 	minlength: [15, 'Image URL must be minimum 15 characters long'],
+		// 	maxlength: [150, 'Image URL can be maximum 150 characters long'],
+		// },
 		price: {
 			type: Number,
 			required: [true, 'Please enter product price'],
