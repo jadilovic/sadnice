@@ -17,8 +17,6 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import UserWindow from '../utils/UserWindow';
@@ -27,13 +25,15 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import CategoryIcon from '@mui/icons-material/Category';
-import raspberry1 from '../images/raspberry-icon.png';
-import raspberry2 from '../images/raspberry.png';
+import PersonIcon from '@mui/icons-material/Person';
+import raspberry from '../images/raspberry.png';
+import tayberry from '../images/tayberry.png';
 import currant from '../images/currant.png';
 import blackberry from '../images/blackberry.png';
 import gooseberry from '../images/gooseberry.png';
 import berries from '../images/berries.png';
+import fruits from '../images/fruits.png';
+import strawberry from '../images/strawberry.png';
 
 const drawerWidth = 180;
 
@@ -52,43 +52,67 @@ const Navbar = (props) => {
 			permission: 'guest',
 		},
 		{
-			section: 'Maline',
-			icon: raspberry1,
-			linkToSection: '/maline',
+			section: 'Malina',
+			icon: raspberry,
+			linkToSection: '/materials',
 			permission: 'guest',
 		},
 		{
-			section: 'Ribizle',
+			section: 'Ribizla',
 			icon: currant,
 			linkToSection: '/materials',
 			permission: 'guest',
 		},
 		{
-			section: 'Kupine',
+			section: 'Kupina',
 			icon: blackberry,
-			linkToSection: '/stats',
+			linkToSection: '/materials',
 			permission: 'guest',
 		},
 		{
-			section: 'Ogrozdi',
+			section: 'Ogrozd',
 			icon: gooseberry,
-			linkToSection: '/products',
-			permission: 'admin',
+			linkToSection: '/materials',
+			permission: 'guest',
 		},
 		{
 			section: 'Tayberry',
-			icon: raspberry2,
-			linkToSection: '/tasks',
-			permission: 'member',
+			icon: tayberry,
+			linkToSection: '/materials',
+			permission: 'guest',
+		},
+		{
+			section: 'Jagoda',
+			icon: strawberry,
+			linkToSection: '/materials',
+			permission: 'guest',
+		},
+		{
+			section: 'Aronija',
+			icon: gooseberry,
+			linkToSection: '/materials',
+			permission: 'guest',
+		},
+		{
+			section: 'Gođi',
+			icon: tayberry,
+			linkToSection: '/materials',
+			permission: 'guest',
 		},
 		{
 			section: 'Ostalo',
-			icon: raspberry2,
-			linkToSection: '/tasks',
-			permission: 'member',
+			icon: fruits,
+			linkToSection: '/materials',
+			permission: 'guest',
 		},
 	];
 	let drawerAdmin = [
+		{
+			section: 'Profil',
+			icon: <PersonIcon />,
+			linkToSection: '/users',
+			permission: 'member',
+		},
 		{
 			section: 'Korisnici',
 			icon: <PeopleOutlineIcon />,
@@ -102,7 +126,7 @@ const Navbar = (props) => {
 			permission: 'admin',
 		},
 		{
-			section: 'Nove Sadnice',
+			section: 'Sadnice',
 			icon: <LibraryBooksIcon />,
 			linkToSection: '/products',
 			permission: 'admin',
@@ -118,12 +142,10 @@ const Navbar = (props) => {
 	if (isAuthenticated()) {
 		role = getUserData().role;
 		if (role === 'member') {
-			drawerMenu = drawerMenu.filter(
-				(menu) => menu.permission === 'member' || menu.permission === 'guest'
-			);
+			drawerAdmin = drawerAdmin.filter((menu) => menu.permission === 'member');
 		}
 	} else {
-		drawerMenu = drawerMenu.filter((menu) => menu.permission === 'guest');
+		drawerAdmin = [];
 	}
 
 	const handleClickAway = () => {
@@ -168,10 +190,11 @@ const Navbar = (props) => {
 		}
 	};
 
-	const handleMenuClick = (menuLink) => {
+	const handleMenuClick = (menuLink, category) => {
 		if (screen.dynamicWidth < 600) {
 			setDrawerOpen(false);
 		}
+		localStorage.setItem('category', category);
 		history.push(menuLink);
 	};
 
@@ -254,7 +277,9 @@ const Navbar = (props) => {
 						<List>
 							{drawerMenu.map((menuItem, index) => (
 								<ListItem
-									onClick={() => handleMenuClick(menuItem.linkToSection)}
+									onClick={() =>
+										handleMenuClick(menuItem.linkToSection, menuItem.section)
+									}
 									button
 									key={index}
 								>
@@ -271,7 +296,13 @@ const Navbar = (props) => {
 						<Divider />
 						<List>
 							{drawerAdmin.map((item, index) => (
-								<ListItem button key={item.section}>
+								<ListItem
+									button
+									key={index}
+									onClick={() =>
+										handleMenuClick(item.linkToSection, item.section)
+									}
+								>
 									<ListItemIcon>{item.icon}</ListItemIcon>
 									<ListItemText primary={item.section} />
 								</ListItem>

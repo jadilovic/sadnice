@@ -1,4 +1,5 @@
 const categories = [
+	'Aronija',
 	'Malina',
 	'Ribizla',
 	'Ogrozd',

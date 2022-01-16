@@ -3,13 +3,13 @@ import { getUserToken } from '../auth/Authentication';
 
 const useAxiosProducts = () => {
 	// GET FILTER REQUEST
-	const getAllProducts = async (ageFilters, kindFilters) => {
+	const getAllProducts = async (ageFilters, categoryFilters) => {
 		let querystring = '?';
 		ageFilters.forEach((age) => {
-			querystring = querystring.concat(`avatarIcon=${age}&`);
+			querystring = querystring.concat(`age=${age}&`);
 		});
-		kindFilters.forEach((kind) => {
-			querystring = querystring.concat(`currentStatus=${kind}&`);
+		categoryFilters.forEach((category) => {
+			querystring = querystring.concat(`category=${category}&`);
 		});
 		//	console.log('querystring: ', querystring);
 		return axios({

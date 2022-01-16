@@ -13,9 +13,11 @@ const Products = () => {
 	const [products, setProducts] = useState([]);
 	const productsDB = useAxiosProducts();
 
-	const getProducts = async () => {
-		const products = await productsDB.getAllProducts([], []);
+	const getProducts = async (age, category) => {
+		const products = await productsDB.getAllProducts([age], [category]);
 		setProducts(products);
+		localStorage.removeItem('category');
+		console.log('finished loading', category);
 	};
 
 	useEffect(() => {
@@ -25,9 +27,22 @@ const Products = () => {
 		if (currentShoppingCart) {
 			setShoppingCart(currentShoppingCart);
 		}
-		getProducts();
-	}, []);
-	console.log(shoppingCart);
+		let category = localStorage.getItem('category')
+			? localStorage.getItem('category')
+			: '';
+		if (
+			category === 'Home' ||
+			category === 'Sadnice' ||
+			category === 'Narudžbe' ||
+			category === 'Profile'
+		) {
+			category = '';
+		}
+		const age = localStorage.getItem('age') ? localStorage.getItem('age') : '';
+		getProducts(age, category);
+	}, [localStorage.getItem('category')]);
+
+	console.log(localStorage.getItem('category'));
 
 	if (products.length < 1) {
 		return <LoadingPage />;

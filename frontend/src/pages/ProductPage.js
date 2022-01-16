@@ -116,7 +116,7 @@ const MaterialCard = () => {
 	};
 	const handleOpenImages = () => setOpenImages(true);
 	const handleCloseImages = () => setOpenImages(false);
-	console.log(openImages);
+	console.log(product);
 
 	if (!product) {
 		return <LoadingPage />;
@@ -220,7 +220,10 @@ const MaterialCard = () => {
 							<Typography variant="body2" color="text.secondary">
 								This impressive paella is a perfect party dish and a fun meal to
 								cook together with your guests. Add 1 cup of frozen peas along
-								with the mussels, if you like.
+								with the mussels, if you like.{' '}
+								{`Starost sadnice: ${product.age} ${
+									product.age > 1 ? 'godine' : 'godina'
+								}`}
 							</Typography>
 						</CardContent>
 						<CardActions disableSpacing>

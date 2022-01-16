@@ -18,7 +18,54 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-	const products = await Product.find({});
+	// const products = await Product.find({});
+	let ageFilters = [];
+	let categoryFilters = [];
+	// console.log('req.query: ', req.query);
+	if (req.query.age) {
+		if (Array.isArray(req.query.age)) {
+			ageFilters = req.query.age.map((age) => {
+				return { ['age']: age };
+			});
+		} else {
+			ageFilters.push({ ['age']: req.query.age });
+		}
+	}
+	if (req.query.category) {
+		if (Array.isArray(req.query.category)) {
+			categoryFilters = req.query.category.map((category) => {
+				return { ['category']: category };
+			});
+		} else {
+			categoryFilters.push({ ['category']: req.query.category });
+		}
+	}
+
+	const products = await Product.find(
+		{
+			$and: [
+				{
+					$or: ageFilters.length > 0 ? ageFilters : [{}],
+				},
+				{
+					$or: categoryFilters.length > 0 ? categoryFilters : [{}],
+				},
+			],
+			//	createdBy: req.user.userId,
+		}
+		// {
+		// 	currentStatus: 1,
+		// 	name: 1,
+		// 	description: 1,
+		// 	updatedAt: 1,
+		// 	createdAt: 1,
+		// 	avatarIcon: 1,
+		// 	avatarColor: 1,
+		// }
+	);
+	// .sort({
+	// 	createdAt: -1,
+	// });
 	res.status(StatusCodes.OK).json({ products, length: products.length });
 };
 
@@ -35,6 +82,7 @@ const getProduct = async (req, res) => {
 			imageUrl: 1,
 			price: 1,
 			available: 1,
+			age: 1,
 		}
 	);
 	if (!product) {
@@ -46,11 +94,11 @@ const getProduct = async (req, res) => {
 const deleteCloudinaryImage = async (req, res) => {
 	console.log('cloudinary');
 	const {
-		user: { userId },
+		//	user: { userId },
 		params: { id: publicId },
 	} = req;
 	cloudinary.uploader.destroy(publicId, function (result) {
-		console.log(result);
+		console.log('deleted: ', result);
 		res.status(StatusCodes.OK).json({ result });
 	});
 	/*

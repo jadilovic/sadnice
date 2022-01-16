@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, Card, CardMedia } from '@mui/material';
 import { Box } from '@mui/system';
-import useAxiosRequest from '../utils/useAxiosRequest';
+import useAxiosProducts from '../utils/useAxiosProducts';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -9,7 +9,7 @@ const ImageUploader = (props) => {
 	const { url, setUrl } = props;
 	const [publicId, setPublicId] = useState('');
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const cloudinaryDB = useAxiosRequest();
+	const cloudinaryDB = useAxiosProducts();
 
 	const extractPublicId = (imageUrl) => {
 		const lastSlash = imageUrl.lastIndexOf('/');

@@ -204,25 +204,25 @@ const useAxiosRequest = () => {
 		}
 	};
 
-	const deleteCloudinaryImage = async (publicId) => {
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
-		try {
-			await axios
-				.delete(
-					`${process.env.REACT_APP_SERVER_URL}/api/v1/products/images/${publicId}`,
-					{
-						headers,
-					}
-				)
-				.then((res) => {
-					console.log('image deleted: ', res.data);
-				});
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
+	// const deleteCloudinaryImage = async (publicId) => {
+	// 	const headers = {
+	// 		Authorization: `Bearer ${getUserToken()}`,
+	// 	};
+	// 	try {
+	// 		await axios
+	// 			.delete(
+	// 				`${process.env.REACT_APP_SERVER_URL}/api/v1/products/images/${publicId}`,
+	// 				{
+	// 					headers,
+	// 				}
+	// 			)
+	// 			.then((res) => {
+	// 				console.log('image deleted: ', res.data);
+	// 			});
+	// 	} catch (err) {
+	// 		console.log(err.response);
+	// 	}
+	// };
 
 	const createProduct = async (newProduct) => {
 		await axios({
@@ -274,7 +274,7 @@ const useAxiosRequest = () => {
 		getRoles,
 		getUser,
 		updateUser,
-		deleteCloudinaryImage,
+		// deleteCloudinaryImage,
 		createProduct,
 		//	filterTasks,
 	};

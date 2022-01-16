@@ -245,8 +245,8 @@ const CreateProduct = () => {
 						</Grid>
 					</Grid>
 				</Box>
+				<Copyright sx={{ mt: 5 }} />
 			</Box>
-			<Copyright sx={{ mt: 5 }} />
 		</Container>
 	);
 };
