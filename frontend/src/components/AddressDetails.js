@@ -28,7 +28,7 @@ export const AddressDetails = (props) => {
 	console.log(props.userAddress);
 	return (
 		<form onSubmit={handleSubmit} autoComplete="off">
-			<Card>
+			<Card style={{ marginRight: 20 }}>
 				<Typography
 					style={{ paddingTop: 15, textAlign: 'center' }}
 					gutterBottom

@@ -34,7 +34,7 @@ const Products = () => {
 			category === 'Home' ||
 			category === 'Sadnice' ||
 			category === 'Narudžbe' ||
-			category === 'Profile'
+			category === 'Profil'
 		) {
 			category = '';
 		}

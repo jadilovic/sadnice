@@ -4,6 +4,7 @@ import { AddressOrder } from '../components/AddressOrder';
 import { AddressDetails } from '../components/AddressDetails';
 import UserWindow from '../utils/UserWindow';
 import TotalOrder from '../components/TotalOrder';
+import LoadingPage from '../components/LoadingPage';
 
 const Address = () => {
 	const screen = UserWindow();
@@ -18,6 +19,7 @@ const Address = () => {
 		phone: '',
 		email: '',
 	});
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const localStorageShoppingCart = JSON.parse(
@@ -31,10 +33,11 @@ const Address = () => {
 			setUserAddress({ ...userAddress, ...localStorageUser });
 		}
 		setTotalOrder(Number(localStorage.getItem('total_order')));
+		setLoading(false);
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	if (!userAddress.firstName) {
-		return <div>Loading</div>;
+	if (loading) {
+		return <LoadingPage />;
 	}
 
 	console.log(shoppingCart);
@@ -49,7 +52,7 @@ const Address = () => {
 			}}
 		>
 			<Container maxWidth="lg">
-				<Stack spacing={1} alignItems="center" paddingBottom={2}>
+				<Stack alignItems="center" paddingBottom={2}>
 					<Chip
 						style={{ minWidth: 300, minHeight: 40, fontSize: 19 }}
 						size="medium"
@@ -57,7 +60,7 @@ const Address = () => {
 						color="primary"
 					/>
 				</Stack>
-				<Grid container spacing={2}>
+				<Grid container>
 					<Grid item lg={6} md={6} xs={12}>
 						<AddressDetails
 							userAddress={userAddress}

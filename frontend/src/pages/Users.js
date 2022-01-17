@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
+import roles from '../data/roles';
 
 // {
 // 	field: 'fullName',
@@ -24,7 +25,6 @@ const Users = () => {
 	const screen = UserWindow();
 	const mongoDB = useAxiosRequest();
 	const [users, setUsers] = useState([]);
-	const [roles, setRoles] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	const data = useLocalStorageHook();
@@ -35,13 +35,13 @@ const Users = () => {
 	};
 
 	const getColor = (selectedRole) => {
-		const role = roles.find((role) => role.value === selectedRole);
-		return role.color;
+		const role = roles.find((role) => role.name === selectedRole);
+		return role.hex;
 	};
 
 	const columns = [
 		{ field: '_id', hide: true, flex: 1 },
-		{ field: 'firstName', headerName: 'First name', flex: 1 },
+		{ field: 'firstName', headerName: 'First name' },
 		{ field: 'lastName', headerName: 'Last name', flex: 1 },
 		{
 			field: 'email',
@@ -55,7 +55,10 @@ const Users = () => {
 			renderCell: (cellValues) => {
 				return (
 					<Chip
-						style={{ backgroundColor: getColor(cellValues.row.role) }}
+						style={{
+							minWidth: 80,
+							backgroundColor: getColor(cellValues.row.role),
+						}}
 						label={cellValues.row.role}
 					/>
 				);
@@ -86,26 +89,13 @@ const Users = () => {
 			const dbUsers = await mongoDB.getAllUsers([], []);
 			setUsers(dbUsers);
 			setLoading(false);
-			// setFilteredTasks(dbTasks);
-			// getTaskStatuses();
-			// setSelectedFilters('');
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
-
-	const getRoles = async () => {
-		try {
-			const dbRoles = await mongoDB.getRoles();
-			setRoles(dbRoles);
-			displayUsers();
 		} catch (err) {
 			console.log(err.response);
 		}
 	};
 
 	useEffect(() => {
-		getRoles();
+		displayUsers();
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (loading) {

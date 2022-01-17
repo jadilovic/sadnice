@@ -14,6 +14,7 @@ import {
 	Alert,
 } from '@mui/material';
 import LoadingPage from '../components/LoadingPage';
+import roles from '../data/roles';
 
 const UserProfile = () => {
 	const history = useHistory();
@@ -27,7 +28,6 @@ const UserProfile = () => {
 	});
 	const [error, setError] = useState('');
 	const [fieldErrors, setFieldErrors] = useState({});
-	const [roles, setRoles] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const mongoDB = useAxiosRequest();
 
@@ -38,21 +38,11 @@ const UserProfile = () => {
 		});
 	};
 
-	const getRoles = async () => {
-		try {
-			const dbRoles = await mongoDB.getRoles();
-			setRoles(dbRoles);
-			setLoading(false);
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
-
 	const getUserObject = async (userId) => {
 		try {
 			const editingUserObject = await mongoDB.getUser(userId);
 			setUserValues({ ...userValues, ...editingUserObject.user });
-			getRoles();
+			setLoading(false);
 		} catch (error) {
 			console.log('get task object error: ', error);
 		}
@@ -64,8 +54,8 @@ const UserProfile = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getColor = (selectedRole) => {
-		const role = roles.find((role) => role.value === selectedRole);
-		return role.color;
+		const role = roles.find((role) => role.name === selectedRole);
+		return role.hex;
 	};
 
 	const settingErrors = (errors) => {
@@ -230,11 +220,11 @@ const UserProfile = () => {
 								>
 									{roles.map((role) => (
 										<option
-											style={{ backgroundColor: role.color }}
-											key={role.value}
-											value={role.value}
+											style={{ backgroundColor: role.hex }}
+											key={role.name}
+											value={role.name}
 										>
-											{role.label}
+											{role.name}
 										</option>
 									))}
 								</TextField>

@@ -282,25 +282,29 @@ const MaterialCard = () => {
 					aria-labelledby="alert-dialog-title"
 					aria-describedby="alert-dialog-description"
 				>
-					<DialogTitle color="yellow" id="alert-dialog-title">
+					<DialogTitle
+						style={{ backgroundColor: 'darkgray' }}
+						color="yellow"
+						id="alert-dialog-title"
+					>
 						{`'${product.title}' has been added to your shopping cart!`}
 					</DialogTitle>
-					<DialogContent>
+					<DialogContent style={{ backgroundColor: 'darkgray' }}>
 						<DialogContentText id="alert-dialog-description">
 							You can continue shopping and add more items to your shopping cart
 							or proceed to checkout.
 						</DialogContentText>
 					</DialogContent>
-					<DialogActions>
+					<DialogActions style={{ backgroundColor: 'darkgray' }}>
 						<Button
-							variant="outlined"
+							variant="contained"
 							color="warning"
 							onClick={handleContinueShopping}
 						>
 							Continue Shopping
 						</Button>
 						<Button
-							variant="outlined"
+							variant="contained"
 							color="success"
 							onClick={handleCheckout}
 							autoFocus

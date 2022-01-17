@@ -208,11 +208,11 @@ const CheckOut = () => {
 									component="img"
 									alt="product photo"
 									height="140"
-									src={`${productDetails.imageUrl}`}
+									src={`${productDetails.imageUrl[0]}`}
 								/>
 								<CardContent>
 									<Grid container>
-										<Grid item xs={6} spacing={2}>
+										<Grid item xs={6}>
 											<Typography
 												align="left"
 												color="textPrimary"
@@ -230,7 +230,7 @@ const CheckOut = () => {
 												{productDetails.title}
 											</Typography>
 										</Grid>
-										<Grid item xs={6}>
+										<Grid item xs={6} paddingTop={0.5}>
 											<Typography
 												align="left"
 												color="textPrimary"
@@ -239,7 +239,7 @@ const CheckOut = () => {
 												Price:
 											</Typography>
 										</Grid>
-										<Grid item xs={6}>
+										<Grid item xs={6} paddingTop={0.5}>
 											<Typography
 												align="center"
 												color="textPrimary"
@@ -248,7 +248,7 @@ const CheckOut = () => {
 												{productDetails.price} KM
 											</Typography>
 										</Grid>
-										<Grid item xs={6}>
+										<Grid item xs={6} paddingTop={1}>
 											<Typography
 												paddingTop={0.5}
 												align="left"
@@ -258,7 +258,7 @@ const CheckOut = () => {
 												Amount:
 											</Typography>
 										</Grid>
-										<Grid item xs={6}>
+										<Grid item xs={6} paddingTop={1}>
 											<Box
 												display="flex"
 												flexDirection="column"
@@ -280,7 +280,7 @@ const CheckOut = () => {
 												</ButtonGroup>
 											</Box>
 										</Grid>
-										<Grid item xs={6}>
+										<Grid item xs={6} paddingTop={1}>
 											<Typography
 												align="left"
 												color="textPrimary"
@@ -289,7 +289,7 @@ const CheckOut = () => {
 												Total:
 											</Typography>
 										</Grid>
-										<Grid item xs={6}>
+										<Grid item xs={6} paddingTop={1}>
 											<Typography
 												align="center"
 												color="textPrimary"

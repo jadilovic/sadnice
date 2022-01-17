@@ -112,7 +112,7 @@ const Navbar = (props) => {
 		{
 			section: 'Profil',
 			icon: <PersonIcon />,
-			linkToSection: '/users',
+			linkToSection: '/profile',
 			permission: 'member',
 		},
 		{

@@ -1,5 +1,4 @@
 import { Box, Card } from '@mui/material';
-import products from '../data/products';
 import LoadingPage from '../components/LoadingPage';
 import { useState, useEffect } from 'react';
 import useAxiosProducts from '../utils/useAxiosProducts';
@@ -29,8 +28,8 @@ export const AddressOrder = (props) => {
 			sx={{
 				marginTop: 2,
 				display: 'flex',
-				flexDirection: { xs: 'column', md: 'column', lg: 'row' },
-				alignItems: 'center',
+				flexDirection: { xs: 'row', md: 'row', lg: 'row' },
+				// alignItems: 'center',
 				overflow: 'hidden',
 				borderRadius: '12px',
 				boxShadow: 1,
@@ -48,24 +47,25 @@ export const AddressOrder = (props) => {
 				}}
 				alt="The house from the offer."
 				// src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
-				src={product.imageUrl}
+				src={product.imageUrl[0]}
 			/>
 			<Box
 				sx={{
+					paddingTop: 1,
 					display: 'flex',
 					flexDirection: 'column',
-					alignItems: { xs: 'center', md: 'center', lg: 'flex-start' },
-					marginLeft: { xs: 0, md: 0, lg: 3 },
+					alignItems: { xs: 'flex-start', md: 'flex-start', lg: 'flex-start' },
+					marginLeft: { xs: 12, md: 12, lg: 12 },
 					minWidth: { md: 350 },
 				}}
 			>
 				<Box component="span" sx={{ fontSize: 16, mt: 1 }}>
 					{product.title}
 				</Box>
-				<Box component="span" sx={{ color: 'primary.main', fontSize: 22 }}>
+				<Box component="span" sx={{ color: 'primary.main', fontSize: 18 }}>
 					{`${product.price} KM`}
 				</Box>
-				<Box component="span" sx={{ color: 'primary.main', fontSize: 15 }}>
+				<Box component="span" sx={{ color: 'primary.main', fontSize: 16 }}>
 					{`Amount: ${item.amount}`}
 				</Box>
 			</Box>

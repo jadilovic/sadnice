@@ -176,8 +176,12 @@ const CreateProduct = () => {
 									label="Category"
 									onChange={changeCategory}
 								>
-									{categories.map((category) => {
-										return <MenuItem value={category}>{category}</MenuItem>;
+									{categories.map((category, index) => {
+										return (
+											<MenuItem key={index} value={category}>
+												{category}
+											</MenuItem>
+										);
 									})}
 								</Select>
 							</FormControl>

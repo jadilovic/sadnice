@@ -9,7 +9,7 @@ const TotalOrder = (props) => {
 		<Card>
 			<CardContent>
 				<Grid container spacing={2}>
-					<Grid item xs={6} spacing={2}>
+					<Grid item xs={6}>
 						<Typography align="left">Sadnica ukupno:</Typography>
 					</Grid>
 					<Grid item xs={6}>
