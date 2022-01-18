@@ -36,6 +36,34 @@ const UserSchema = new mongoose.Schema({
 		minlength: [3, 'Role must be minimum 3 characters long'],
 		maxlength: [20, 'Role can be maximum 20 characters long'],
 	},
+	address: {
+		type: String,
+		minlength: [6, 'Address must be minimum 6 characters long'],
+		maxlength: [30, 'Address can be maximum 30 characters long'],
+	},
+	city: {
+		type: String,
+		minlength: [3, 'City must be minimum 3 characters long'],
+		maxlength: [30, 'City can be maximum 30 characters long'],
+	},
+	postNumber: {
+		type: String,
+		minlength: [6, 'Post Number must be minimum 6 characters long'],
+		maxlength: [6, 'Post Number can be maximum 6 characters long'],
+	},
+	phone: {
+		type: String,
+		validate: {
+			validator: function (v) {
+				return /[0-9]{9,10}/.test(v);
+			},
+			message: (props) => `${props.value} is not a valid phone number!`,
+		},
+	},
+	isActive: {
+		type: Boolean,
+		default: true,
+	},
 });
 
 UserSchema.pre('save', async function (next) {

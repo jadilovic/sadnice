@@ -20,11 +20,13 @@ const UserProfile = () => {
 	const history = useHistory();
 	const screen = UserWindow();
 	const [userValues, setUserValues] = useState({
-		firstName: 'Katarina',
-		lastName: 'Smith',
-		email: 'demo@devias.io',
-		phone: '',
-		country: 'USA',
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: null,
+		address: null,
+		city: null,
+		postNumber: null,
 	});
 	const [error, setError] = useState('');
 	const [fieldErrors, setFieldErrors] = useState({});
@@ -41,16 +43,17 @@ const UserProfile = () => {
 	const getUserObject = async (userId) => {
 		try {
 			const editingUserObject = await mongoDB.getUser(userId);
+			console.log(editingUserObject.user);
 			setUserValues({ ...userValues, ...editingUserObject.user });
 			setLoading(false);
 		} catch (error) {
-			console.log('get task object error: ', error);
+			console.log('get user object error: ', error);
 		}
 	};
 
 	useEffect(() => {
-		const userId = localStorage.getItem('currentUserId');
-		getUserObject(userId);
+		const user = JSON.parse(localStorage.getItem('user'));
+		getUserObject(user._id);
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getColor = (selectedRole) => {
@@ -63,7 +66,10 @@ const UserProfile = () => {
 			firstName: { error: false, msg: '' },
 			lastName: { error: false, msg: '' },
 			email: { error: false, msg: '' },
-			password: { error: false, msg: '' },
+			city: { error: false, msg: '' },
+			phone: { error: false, msg: '' },
+			address: { error: false, msg: '' },
+			postNumber: { error: false, msg: '' },
 		};
 		let errorsList = errors.replace('ValidationError: ', '');
 		errorsList = errorsList.split(', ');
@@ -81,9 +87,11 @@ const UserProfile = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		console.log(userValues);
 		// remove not used values
-		delete userValues.phone;
-		delete userValues.country;
+		if (!userValues.phone) {
+			delete userValues.phone;
+		}
 		try {
 			const editedUser = await mongoDB.updateUser(userValues);
 			console.log('edited user values : ', editedUser);
@@ -123,8 +131,8 @@ const UserProfile = () => {
 			<form autoComplete="off" noValidate onSubmit={handleSubmit}>
 				<Card>
 					<CardHeader
-						subheader={`${userValues.firstName} ${userValues.lastName}`}
-						title="Profile"
+						//	subheader={`${userValues.firstName} ${userValues.lastName}`}
+						title="Profil korisnika"
 					/>
 					{error && (
 						<Box
@@ -145,7 +153,7 @@ const UserProfile = () => {
 									error={fieldErrors?.firstName?.error ? true : false}
 									helperText={fieldErrors?.firstName?.msg}
 									fullWidth
-									label="First name"
+									label="Ime"
 									name="firstName"
 									onChange={handleChange}
 									required
@@ -158,7 +166,7 @@ const UserProfile = () => {
 									error={fieldErrors?.lastName?.error ? true : false}
 									helperText={fieldErrors?.lastName?.msg}
 									fullWidth
-									label="Last name"
+									label="Prezime"
 									name="lastName"
 									onChange={handleChange}
 									required
@@ -171,7 +179,7 @@ const UserProfile = () => {
 									error={fieldErrors?.email?.error ? true : false}
 									helperText={fieldErrors?.email?.msg}
 									fullWidth
-									label="Email Address"
+									label="Email"
 									name="email"
 									onChange={handleChange}
 									required
@@ -181,23 +189,52 @@ const UserProfile = () => {
 							</Grid>
 							<Grid item md={6} xs={12}>
 								<TextField
+									error={fieldErrors?.phone?.error ? true : false}
+									helperText={fieldErrors?.phone?.msg}
 									fullWidth
-									label="Phone Number"
+									label="Broj telefona"
 									name="phone"
 									onChange={handleChange}
-									type="number"
-									//	value={userValues.phone}
+									value={userValues.phone}
 									variant="outlined"
 								/>
 							</Grid>
 							<Grid item md={6} xs={12}>
 								<TextField
+									error={fieldErrors?.address?.error ? true : false}
+									helperText={fieldErrors?.address?.msg}
 									fullWidth
-									label="Country"
-									name="country"
+									label="Adresa"
+									name="address"
 									onChange={handleChange}
 									required
-									//	value={userValues.country}
+									value={userValues.address}
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item md={6} xs={12}>
+								<TextField
+									error={fieldErrors?.city?.error ? true : false}
+									helperText={fieldErrors?.city?.msg}
+									fullWidth
+									label="Grad"
+									name="city"
+									onChange={handleChange}
+									required
+									value={userValues.city}
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item md={6} xs={12}>
+								<TextField
+									error={fieldErrors?.postNumber?.error ? true : false}
+									helperText={fieldErrors?.postNumber?.msg}
+									fullWidth
+									label="Broj pošte"
+									name="postNumber"
+									onChange={handleChange}
+									required
+									value={userValues.postNumber}
 									variant="outlined"
 								/>
 							</Grid>

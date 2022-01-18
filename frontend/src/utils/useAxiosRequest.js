@@ -68,14 +68,24 @@ const useAxiosRequest = () => {
 	};
 
 	const updateUser = async (editedUser) => {
-		const { _id, email, firstName, lastName, role } = editedUser;
+		const {
+			_id,
+			email,
+			firstName,
+			lastName,
+			role,
+			phone,
+			address,
+			city,
+			postNumber,
+		} = editedUser;
 		const headers = {
 			Authorization: `Bearer ${getUserToken()}`,
 		};
 		return axios
 			.patch(
 				`${process.env.REACT_APP_SERVER_URL}/api/v1/users/${_id}`,
-				{ email, firstName, lastName, role },
+				{ email, firstName, lastName, role, phone, address, city, postNumber },
 				{
 					headers,
 				}
