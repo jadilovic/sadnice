@@ -28,7 +28,12 @@ export const AddressDetails = (props) => {
 	console.log(props.userAddress);
 	return (
 		<form onSubmit={handleSubmit} autoComplete="off">
-			<Card style={{ marginRight: 20 }}>
+			<Card
+				sx={{
+					marginBottom: 2,
+					borderRadius: '12px',
+				}}
+			>
 				<Typography
 					style={{ paddingTop: 15, textAlign: 'center' }}
 					gutterBottom
@@ -128,7 +133,7 @@ export const AddressDetails = (props) => {
 					}}
 				>
 					<Button type="submit" fullWidth color="success" variant="contained">
-						Confirm purchase and shipping address
+						Potvrdi narudžbu i adresu
 					</Button>
 				</Box>
 			</Card>

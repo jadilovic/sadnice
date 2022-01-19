@@ -357,7 +357,7 @@ const CheckOut = () => {
 							variant="contained"
 							color="success"
 						>
-							Potvrdi narudžbu
+							Dodaj Adresu
 						</Button>
 					</Item>
 				</Grid>

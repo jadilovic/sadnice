@@ -68,10 +68,10 @@ const Address = () => {
 						/>
 					</Grid>
 					<Grid item lg={6} md={6} xs={12}>
-						<TotalOrder totalOrder={totalOrder} />
 						{shoppingCart.map((item, index) => {
 							return <AddressOrder key={index} item={item} />;
 						})}
+						<TotalOrder totalOrder={totalOrder} />
 					</Grid>
 				</Grid>
 			</Container>

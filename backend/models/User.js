@@ -48,8 +48,8 @@ const UserSchema = new mongoose.Schema({
 	},
 	postNumber: {
 		type: String,
-		minlength: [6, 'Post Number must be minimum 6 characters long'],
-		maxlength: [6, 'Post Number can be maximum 6 characters long'],
+		minlength: [5, 'Post Number must be minimum 5 characters long'],
+		maxlength: [5, 'Post Number can be maximum 5 characters long'],
 	},
 	phone: {
 		type: String,

@@ -26,7 +26,8 @@ export const AddressOrder = (props) => {
 	return (
 		<Card
 			sx={{
-				marginTop: 2,
+				marginBottom: 2,
+				marginLeft: { sm: 0, md: 2, lg: 2 },
 				display: 'flex',
 				flexDirection: { xs: 'row', md: 'row', lg: 'row' },
 				// alignItems: 'center',
@@ -55,8 +56,8 @@ export const AddressOrder = (props) => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: { xs: 'flex-start', md: 'flex-start', lg: 'flex-start' },
-					marginLeft: { xs: 12, md: 12, lg: 12 },
-					minWidth: { md: 350 },
+					marginLeft: { xs: 5, md: 5, lg: 5 },
+					//	minWidth: { md: 350 },
 				}}
 			>
 				<Box component="span" sx={{ fontSize: 16, mt: 1 }}>
@@ -66,7 +67,7 @@ export const AddressOrder = (props) => {
 					{`${product.price} KM`}
 				</Box>
 				<Box component="span" sx={{ color: 'primary.main', fontSize: 16 }}>
-					{`Amount: ${item.amount}`}
+					{`Komada: ${item.amount}`}
 				</Box>
 			</Box>
 		</Card>
