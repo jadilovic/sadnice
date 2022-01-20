@@ -48,14 +48,13 @@ const App = () => {
 					<Route component={ProductPage} path="/product" exact />
 					<Route component={CheckOut} path="/checkout" exact />
 					<Route component={Address} path="/address" exact />
-					{/* <PrivateRoute component={Home} path="/home" exact /> */}
 					<Route component={Products} path="/materials" exact />
-					<PrivateRoute component={CreateProduct} path="/products" exact />
+					<PrivateRoute component={UserProfile} path="/profile" exact />
+					<PrivateRoute component={Restricted} path="/restricted" exact />
+					<AdminRoute component={CreateProduct} path="/products" exact />
 					<AdminRoute component={Iframely} path="/stats" exact />
-					<AdminRoute component={Edit} path="/edit" exact />
+					{/* <AdminRoute component={Edit} path="/edit" exact /> */}
 					<AdminRoute component={Users} path="/users" exact />
-					<AdminRoute component={UserProfile} path="/profile" exact />
-					<PrivateRoute component={Restricted} path="/restricted" />
 					<Route component={Error} path="/*" />
 				</Switch>
 			</Router>

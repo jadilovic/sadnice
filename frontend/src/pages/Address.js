@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Container, Grid, Stack, Chip } from '@mui/material';
-import { AddressOrder } from '../components/AddressOrder';
+import { OrderItem } from '../components/OrderItem';
 import { AddressDetails } from '../components/AddressDetails';
 import UserWindow from '../utils/UserWindow';
 import TotalOrder from '../components/TotalOrder';
@@ -10,7 +10,7 @@ const Address = () => {
 	const screen = UserWindow();
 	const [totalOrder, setTotalOrder] = useState(0);
 	const [shoppingCart, setShoppingCart] = useState([]);
-	const [userAddress, setUserAddress] = useState({
+	const [orderAddress, setOrderAddress] = useState({
 		firstName: '',
 		lastName: '',
 		address: '',
@@ -26,13 +26,9 @@ const Address = () => {
 			localStorage.getItem('shopping_cart')
 		);
 		setShoppingCart(localStorageShoppingCart);
-		const localStorageUser = JSON.parse(localStorage.getItem('user'));
-		if (!localStorageUser) {
-			setUserAddress({ ...userAddress, ...localStorageUser });
-		} else {
-			setUserAddress({ ...userAddress, ...localStorageUser });
-		}
 		setTotalOrder(Number(localStorage.getItem('total_order')));
+		const localStorageUser = JSON.parse(localStorage.getItem('user'));
+		setOrderAddress({ ...orderAddress, ...localStorageUser });
 		setLoading(false);
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -63,13 +59,13 @@ const Address = () => {
 				<Grid container>
 					<Grid item lg={6} md={6} xs={12}>
 						<AddressDetails
-							userAddress={userAddress}
-							setUserAddress={setUserAddress}
+							orderAddress={orderAddress}
+							setOrderAddress={setOrderAddress}
 						/>
 					</Grid>
 					<Grid item lg={6} md={6} xs={12}>
 						{shoppingCart.map((item, index) => {
-							return <AddressOrder key={index} item={item} />;
+							return <OrderItem key={index} item={item} />;
 						})}
 						<TotalOrder totalOrder={totalOrder} />
 					</Grid>

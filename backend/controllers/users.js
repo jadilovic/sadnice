@@ -24,6 +24,7 @@ const getUser = async (req, res) => {
 			city: 1,
 			phone: 1,
 			postNumber: 1,
+			isActive: 1,
 		}
 	);
 	if (!user) {
@@ -63,8 +64,6 @@ const updateUser = async (req, res) => {
 	if (userEmailStatus === 'current') {
 		delete req.body.email;
 	}
-
-	console.log('req.body : ', req.body);
 
 	const user = await User.findByIdAndUpdate({ _id: userId }, req.body, {
 		new: true,

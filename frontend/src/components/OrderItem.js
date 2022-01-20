@@ -1,9 +1,9 @@
 import { Box, Card } from '@mui/material';
-import LoadingPage from '../components/LoadingPage';
+import LoadingPage from './LoadingPage';
 import { useState, useEffect } from 'react';
 import useAxiosProducts from '../utils/useAxiosProducts';
 
-export const AddressOrder = (props) => {
+export const OrderItem = (props) => {
 	const item = props.item;
 	const [products, setProducts] = useState([]);
 	const productsDB = useAxiosProducts();
@@ -46,8 +46,7 @@ export const AddressOrder = (props) => {
 					height: 120,
 					width: 130,
 				}}
-				alt="The house from the offer."
-				// src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+				alt="product image"
 				src={product.imageUrl[0]}
 			/>
 			<Box

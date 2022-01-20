@@ -30,7 +30,7 @@ const Users = () => {
 	const data = useLocalStorageHook();
 
 	const handleClick = (event, cellValue) => {
-		data.saveCurrentUserId(cellValue.row._id);
+		data.saveSelectedUserId(cellValue.row._id);
 		history.push('/profile');
 	};
 
@@ -60,6 +60,22 @@ const Users = () => {
 							backgroundColor: getColor(cellValues.row.role),
 						}}
 						label={cellValues.row.role}
+					/>
+				);
+			},
+		},
+		{
+			field: 'isActive',
+			headerName: 'Active',
+			minWidth: 30,
+			renderCell: (cellValues) => {
+				return (
+					<Chip
+						style={{
+							minWidth: 80,
+							backgroundColor: `${cellValues.row.isActive ? 'green' : 'red'}`,
+						}}
+						label={`${cellValues.row.isActive ? 'Yes' : 'No'}`}
 					/>
 				);
 			},

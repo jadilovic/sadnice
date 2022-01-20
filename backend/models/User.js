@@ -53,12 +53,15 @@ const UserSchema = new mongoose.Schema({
 	},
 	phone: {
 		type: String,
-		validate: {
-			validator: function (v) {
-				return /[0-9]{9,10}/.test(v);
-			},
-			message: (props) => `${props.value} is not a valid phone number!`,
-		},
+		minlength: [9, 'Phone Number must be minimum 9 numbers long'],
+		maxlength: [10, 'Phone Number can be maximum 10 numbers long'],
+		// validate: {
+		// 	validator: function (v) {
+		// 		return /[0-9]{9,10}/.test(v);
+		// 	},
+		// 	message: (props) =>
+		// 		`${props.value} nije validan broj telefona jer treba da sadrzi minimalno 9 i maksimalno 10 brojeva!`,
+		// },
 	},
 	isActive: {
 		type: Boolean,

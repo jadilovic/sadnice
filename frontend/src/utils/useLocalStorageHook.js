@@ -7,8 +7,8 @@ const useLocalStorageHook = () => {
 		localStorage.setItem('currentTaskId', taskId);
 	};
 
-	const saveCurrentUserId = (userId) => {
-		localStorage.setItem('currentUserId', userId);
+	const saveSelectedUserId = (userId) => {
+		localStorage.setItem('selectedUserId', userId);
 	};
 
 	const saveCurrentTaskObject = (player) => {
@@ -97,7 +97,7 @@ const useLocalStorageHook = () => {
 		saveCurrentTaskId,
 		getCurrentTaskObject,
 		saveCurrentTaskObject,
-		saveCurrentUserId,
+		saveSelectedUserId,
 	};
 };
 

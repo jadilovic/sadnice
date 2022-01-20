@@ -11,18 +11,19 @@ import {
 } from '@mui/material';
 
 export const AddressDetails = (props) => {
-	const [values, setValues] = useState(props.userAddress);
+	//	const [values, setValues] = useState(props.orderAddress);
+	const { setOrderAddress, orderAddress } = props;
 
 	const handleChange = (event) => {
-		setValues({
-			...values,
+		setOrderAddress({
+			...orderAddress,
 			[event.target.name]: event.target.value,
 		});
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(values);
+		console.log(orderAddress);
 	};
 
 	console.log(props.userAddress);
@@ -52,7 +53,7 @@ export const AddressDetails = (props) => {
 								name="firstName"
 								onChange={handleChange}
 								required
-								value={values.firstName}
+								value={orderAddress.firstName}
 								variant="outlined"
 							/>
 						</Grid>
@@ -63,7 +64,7 @@ export const AddressDetails = (props) => {
 								name="lastName"
 								onChange={handleChange}
 								required
-								value={values.lastName}
+								value={orderAddress.lastName}
 								variant="outlined"
 							/>
 						</Grid>
@@ -74,7 +75,7 @@ export const AddressDetails = (props) => {
 								name="address"
 								onChange={handleChange}
 								required
-								value={values.address}
+								value={orderAddress.address}
 								variant="outlined"
 							/>
 						</Grid>
@@ -85,7 +86,7 @@ export const AddressDetails = (props) => {
 								name="city"
 								onChange={handleChange}
 								required
-								value={values.city}
+								value={orderAddress.city}
 								variant="outlined"
 							></TextField>
 						</Grid>
@@ -96,7 +97,7 @@ export const AddressDetails = (props) => {
 								name="postNumber"
 								onChange={handleChange}
 								required
-								value={values.postNumber}
+								value={orderAddress.postNumber}
 								variant="outlined"
 							></TextField>
 						</Grid>
@@ -106,8 +107,7 @@ export const AddressDetails = (props) => {
 								label="Email Address"
 								name="email"
 								onChange={handleChange}
-								required
-								value={values.email}
+								value={orderAddress.email}
 								variant="outlined"
 							/>
 						</Grid>
@@ -118,7 +118,7 @@ export const AddressDetails = (props) => {
 								name="phone"
 								onChange={handleChange}
 								required
-								value={values.phone}
+								value={orderAddress.phone}
 								variant="outlined"
 							/>
 						</Grid>

@@ -12,6 +12,10 @@ import {
 	Grid,
 	TextField,
 	Alert,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
 } from '@mui/material';
 import LoadingPage from '../components/LoadingPage';
 import roles from '../data/roles';
@@ -19,32 +23,40 @@ import roles from '../data/roles';
 const UserProfile = () => {
 	const history = useHistory();
 	const screen = UserWindow();
-	const [userValues, setUserValues] = useState({
+	let [userValues, setUserValues] = useState({
 		firstName: '',
 		lastName: '',
 		email: '',
-		phone: null,
-		address: null,
-		city: null,
-		postNumber: null,
+		phone: '',
+		address: '',
+		city: '',
+		postNumber: '',
 	});
 	const [error, setError] = useState('');
 	const [fieldErrors, setFieldErrors] = useState({});
 	const [loading, setLoading] = useState(true);
+	const [admin, setAdmin] = useState(false);
 	const mongoDB = useAxiosRequest();
 
 	const handleChange = (event) => {
-		setUserValues({
-			...userValues,
-			[event.target.name]: event.target.value,
-		});
+		if (event.target.name === 'isActive') {
+			const isActive = event.target.value === 'true';
+			setUserValues({
+				...userValues,
+				[event.target.name]: isActive,
+			});
+		} else {
+			setUserValues({
+				...userValues,
+				[event.target.name]: event.target.value,
+			});
+		}
 	};
 
 	const getUserObject = async (userId) => {
 		try {
 			const editingUserObject = await mongoDB.getUser(userId);
-			console.log(editingUserObject.user);
-			setUserValues({ ...userValues, ...editingUserObject.user });
+			setUserValues({ ...editingUserObject.user });
 			setLoading(false);
 		} catch (error) {
 			console.log('get user object error: ', error);
@@ -52,8 +64,17 @@ const UserProfile = () => {
 	};
 
 	useEffect(() => {
+		const selectedUserId = localStorage.getItem('selectedUserId');
 		const user = JSON.parse(localStorage.getItem('user'));
-		getUserObject(user._id);
+		if (selectedUserId) {
+			getUserObject(selectedUserId);
+			localStorage.removeItem('selectedUserId');
+		} else {
+			getUserObject(user._id);
+		}
+		if (user.role === 'admin') {
+			setAdmin(true);
+		}
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getColor = (selectedRole) => {
@@ -87,10 +108,12 @@ const UserProfile = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log(userValues);
-		// remove not used values
-		if (!userValues.phone) {
-			delete userValues.phone;
+		// remove not empty values
+		const propertiesArray = Object.keys(userValues);
+		for (let i = 0; i < propertiesArray.length; i++) {
+			if (userValues[propertiesArray[i]] === '') {
+				userValues[propertiesArray[i]] = null;
+			}
 		}
 		try {
 			const editedUser = await mongoDB.updateUser(userValues);
@@ -113,6 +136,8 @@ const UserProfile = () => {
 			}
 		}
 	};
+
+	console.log('user profile render');
 
 	if (loading) {
 		return <LoadingPage />;
@@ -189,6 +214,7 @@ const UserProfile = () => {
 							</Grid>
 							<Grid item md={6} xs={12}>
 								<TextField
+									type={'number'}
 									error={fieldErrors?.phone?.error ? true : false}
 									helperText={fieldErrors?.phone?.msg}
 									fullWidth
@@ -227,6 +253,7 @@ const UserProfile = () => {
 							</Grid>
 							<Grid item md={6} xs={12}>
 								<TextField
+									type={'number'}
 									error={fieldErrors?.postNumber?.error ? true : false}
 									helperText={fieldErrors?.postNumber?.msg}
 									fullWidth
@@ -238,34 +265,67 @@ const UserProfile = () => {
 									variant="outlined"
 								/>
 							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									sx={{
-										backgroundColor: getColor(userValues.role),
-										color: 'white',
-										borderRadius: 1,
-									}}
-									fullWidth
-									label="Select Role"
-									name="role"
-									onChange={handleChange}
-									required
-									select
-									SelectProps={{ native: true }}
-									value={userValues.role}
-									variant="outlined"
-								>
-									{roles.map((role) => (
-										<option
-											style={{ backgroundColor: role.hex }}
-											key={role.name}
-											value={role.name}
+							<Grid item md={6} xs={12}></Grid>
+							{admin && (
+								<>
+									<Grid item md={6} xs={12}>
+										<InputLabel>Odaberi status</InputLabel>
+										<TextField
+											sx={{
+												backgroundColor: getColor(userValues.role),
+												color: 'white',
+												borderRadius: 1,
+											}}
+											fullWidth
+											//	label="Select Role"
+											name="role"
+											onChange={handleChange}
+											required
+											select
+											SelectProps={{ native: true }}
+											value={userValues.role}
+											variant="outlined"
 										>
-											{role.name}
-										</option>
-									))}
-								</TextField>
-							</Grid>
+											{roles.map((role) => (
+												<option
+													style={{ backgroundColor: role.hex }}
+													key={role.name}
+													value={role.name}
+												>
+													{role.name}
+												</option>
+											))}
+										</TextField>
+									</Grid>
+
+									<Grid item md={6} xs={12}>
+										<InputLabel>Odaberi registraciju</InputLabel>
+										<TextField
+											sx={{
+												backgroundColor: userValues.isActive ? 'green' : 'red',
+												color: 'white',
+												borderRadius: 1,
+											}}
+											fullWidth
+											//	label="Status korisnika"
+											name="isActive"
+											onChange={handleChange}
+											required
+											select
+											SelectProps={{ native: true }}
+											value={userValues.isActive}
+											variant="outlined"
+										>
+											<option style={{ backgroundColor: 'green' }} value={true}>
+												Aktivan
+											</option>
+											<option style={{ backgroundColor: 'red' }} value={false}>
+												Isključen
+											</option>
+										</TextField>
+									</Grid>
+								</>
+							)}
 						</Grid>
 					</CardContent>
 					<Divider />
