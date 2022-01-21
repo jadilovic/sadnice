@@ -56,7 +56,7 @@ const UserProfile = () => {
 	const getUserObject = async (userId) => {
 		try {
 			const editingUserObject = await mongoDB.getUser(userId);
-			setUserValues({ ...editingUserObject.user });
+			setUserValues({ ...userValues, ...editingUserObject.user });
 			setLoading(false);
 		} catch (error) {
 			console.log('get user object error: ', error);
@@ -137,7 +137,7 @@ const UserProfile = () => {
 		}
 	};
 
-	console.log('user profile render');
+	console.log('user profile render : ', userValues);
 
 	if (loading) {
 		return <LoadingPage />;

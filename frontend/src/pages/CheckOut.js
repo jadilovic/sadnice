@@ -156,6 +156,7 @@ const CheckOut = () => {
 													minHeight: 60,
 													maxHeight: 60,
 													width: '70%',
+													maxWidth: 90,
 												}}
 												alt="prodcut photo"
 												src={`${productDetails.imageUrl[0]}`}
