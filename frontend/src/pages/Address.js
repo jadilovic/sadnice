@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, Grid, Stack, Chip } from '@mui/material';
+import {
+	Box,
+	Container,
+	Grid,
+	Stack,
+	Chip,
+	CardContent,
+	Card,
+} from '@mui/material';
 import { OrderItem } from '../components/OrderItem';
 import { AddressDetails } from '../components/AddressDetails';
 import UserWindow from '../utils/UserWindow';
@@ -67,6 +75,8 @@ const Address = () => {
 						<AddressDetails
 							orderAddress={orderAddress}
 							setOrderAddress={setOrderAddress}
+							shoppingCart={shoppingCart}
+							totalOrder={totalOrder}
 						/>
 					</Grid>
 				</Grid>

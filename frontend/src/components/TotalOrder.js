@@ -10,7 +10,7 @@ const TotalOrder = (props) => {
 		<Card
 			sx={{
 				marginBottom: 2,
-				marginLeft: { sm: 0, md: 2, lg: 2 },
+				marginRight: { sm: 0, md: 2, lg: 2 },
 				display: 'flex',
 				flexDirection: { xs: 'row', md: 'row', lg: 'row' },
 				// alignItems: 'center',
@@ -30,11 +30,20 @@ const TotalOrder = (props) => {
 					<Grid item xs={6}>
 						<Typography align="right">{totalOrder} KM</Typography>
 					</Grid>
+					<Grid item xs={12}>
+						<Divider orientation="horizontal" flexItem />
+					</Grid>
 					<Grid item xs={6}>
 						<Typography align="left">Dostava:</Typography>
 					</Grid>
 					<Grid item xs={6}>
 						<Typography align="right">10 KM</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography sx={{ paddingRight: 10 }}>
+							Standardna dostava brzom poštom - Za cijelu BiH isporuka u roku od
+							2-3 radna dana
+						</Typography>
 					</Grid>
 					<Grid item xs={12}>
 						<Divider orientation="horizontal" flexItem />

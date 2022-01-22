@@ -6,6 +6,7 @@
 		"@mui/styles": "^5.0.2",
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.19.0",
+		"cloudinary": "1.25.1",
 		"concurrently": "^6.3.0",
 		"cors": "^2.8.5",
 		"dotenv": "^10.0.0",
@@ -18,14 +19,14 @@
 		"jsonwebtoken": "^8.5.1",
 		"moment": "^2.29.1",
 		"mongoose": "^6.0.12",
+		"mongoose-sequence": "^5.3.1",
 		"nodemon": "^2.0.14",
 		"rate-limiter": "^0.2.0",
 		"react-helmet-async": "^1.1.2",
 		"react-swipeable-views": "^0.14.0",
 		"swagger-ui-express": "^4.1.6",
 		"xss-clean": "^0.1.1",
-		"yamljs": "^0.3.0",
-		"cloudinary": "1.25.1"
+		"yamljs": "^0.3.0"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.14"

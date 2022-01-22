@@ -188,7 +188,9 @@ const CheckOut = () => {
 								<TableCell align="center">{totalOrder} KM</TableCell>
 							</TableRow>
 							<TableRow>
-								<TableCell align="left">Dostava:</TableCell>
+								<TableCell align="left">
+									Standardna dostava brzom poštom:
+								</TableCell>
 								<TableCell align="center">10 KM</TableCell>
 							</TableRow>
 							<TableRow>
@@ -358,7 +360,7 @@ const CheckOut = () => {
 							variant="contained"
 							color="success"
 						>
-							Dodaj Adresu
+							Dodaj Adresu i Potvrdi Narudžbu
 						</Button>
 					</Item>
 				</Grid>

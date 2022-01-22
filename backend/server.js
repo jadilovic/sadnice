@@ -20,6 +20,7 @@ const authRouter = require('./routes/auth');
 const tasksRouter = require('./routes/tasks');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
+const ordersRouter = require('./routes/orders');
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
@@ -42,6 +43,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/tasks', authenticateUser, tasksRouter);
 app.use('/api/v1/users', authenticateUser, usersRouter);
 app.use('/api/v1/products', productsRouter);
+app.use('/api/v1/orders', ordersRouter);
 
 // added for heroku
 app.get('/*', (req, res) => {

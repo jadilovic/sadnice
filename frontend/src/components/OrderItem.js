@@ -27,7 +27,7 @@ export const OrderItem = (props) => {
 		<Card
 			sx={{
 				marginBottom: 2,
-				marginLeft: { sm: 0, md: 2, lg: 2 },
+				marginRight: { sm: 0, md: 2, lg: 2 },
 				display: 'flex',
 				flexDirection: { xs: 'row', md: 'row', lg: 'row' },
 				// alignItems: 'center',
