@@ -8,7 +8,11 @@ import {
 	Divider,
 	Grid,
 	TextField,
+	Checkbox,
+	FormGroup,
+	FormControlLabel,
 } from '@mui/material';
+import { breakpoints } from '@mui/system';
 
 export const AddressDetails = (props) => {
 	//	const [values, setValues] = useState(props.orderAddress);
@@ -24,6 +28,12 @@ export const AddressDetails = (props) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(orderAddress);
+	};
+
+	const [checked, setChecked] = useState(false);
+
+	const checkedChange = (event) => {
+		setChecked(event.target.checked);
 	};
 
 	console.log(props.userAddress);
@@ -124,6 +134,53 @@ export const AddressDetails = (props) => {
 						</Grid>
 					</Grid>
 				</CardContent>
+				<Divider />
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'flex-start',
+						p: 2,
+					}}
+				>
+					<FormControlLabel
+						control={
+							<Checkbox
+								checked={checked}
+								onChange={checkedChange}
+								inputProps={{ 'aria-label': 'controlled' }}
+							/>
+						}
+						label="Plaćanje Pouzećem."
+					/>
+				</Box>
+				<Typography sx={{ paddingLeft: 2, paddingBottom: 2 }}>
+					Plaćanje kešom pri preuzimanju artikla.
+				</Typography>
+				<Divider />
+				<Typography sx={{ p: 2 }}>
+					Vaši lični podaci će se koristiti za obradu vaše narudžbe, podršku
+					vašem iskustvu na ovoj veb lokaciji i u druge svrhe opisane u pravila
+					o privatnosti.
+				</Typography>
+				<Divider />
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'flex-start',
+						p: 2,
+					}}
+				>
+					<FormControlLabel
+						control={
+							<Checkbox
+								checked={checked}
+								onChange={checkedChange}
+								inputProps={{ 'aria-label': 'controlled' }}
+							/>
+						}
+						label="Pročitao/la sam i slažem se s uslovima korištenja i odredbama web stranice."
+					/>
+				</Box>
 				<Divider />
 				<Box
 					sx={{

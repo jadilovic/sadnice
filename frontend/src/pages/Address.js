@@ -58,16 +58,16 @@ const Address = () => {
 				</Stack>
 				<Grid container>
 					<Grid item lg={6} md={6} xs={12}>
-						<AddressDetails
-							orderAddress={orderAddress}
-							setOrderAddress={setOrderAddress}
-						/>
-					</Grid>
-					<Grid item lg={6} md={6} xs={12}>
 						{shoppingCart.map((item, index) => {
 							return <OrderItem key={index} item={item} />;
 						})}
 						<TotalOrder totalOrder={totalOrder} />
+					</Grid>
+					<Grid item lg={6} md={6} xs={12}>
+						<AddressDetails
+							orderAddress={orderAddress}
+							setOrderAddress={setOrderAddress}
+						/>
 					</Grid>
 				</Grid>
 			</Container>

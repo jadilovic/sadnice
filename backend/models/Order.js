@@ -46,11 +46,8 @@ const OrderSchema = new mongoose.Schema({
 		// 		`${props.value} nije validan broj telefona jer treba da sadrzi minimalno 9 i maksimalno 10 brojeva!`,
 		// },
 	},
-	imageUrl: [
-		{
-			type: String,
-		},
-	],
+	shoppingCart: [{ id: String, amount: Number }],
+	total,
 });
 
 module.exports = mongoose.model('Order', OrderSchema);
