@@ -21,6 +21,7 @@ import CheckOut from './pages/CheckOut';
 import CreateProduct from './pages/CreateProduct';
 import ProductPage from './pages/ProductPage';
 import Iframely from './pages/Iframe';
+import OrderSummary from './pages/OrderSummary';
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
@@ -49,6 +50,7 @@ const App = () => {
 					<Route component={CheckOut} path="/checkout" exact />
 					<Route component={Address} path="/address" exact />
 					<Route component={Products} path="/materials" exact />
+					<Route component={OrderSummary} path="/order" exact />
 					<PrivateRoute component={UserProfile} path="/profile" exact />
 					<PrivateRoute component={Restricted} path="/restricted" exact />
 					<AdminRoute component={CreateProduct} path="/products" exact />

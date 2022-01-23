@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import useAxiosOrders from '../utils/useAxiosOrders';
 import {
 	Box,
@@ -18,6 +19,7 @@ import {
 
 export const AddressDetails = (props) => {
 	//	const [values, setValues] = useState(props.orderAddress);
+	const history = useHistory();
 	const { setOrderAddress, orderAddress, shoppingCart, totalOrder } = props;
 	const [conditions, setConditions] = useState({
 		pay: false,
@@ -45,6 +47,7 @@ export const AddressDetails = (props) => {
 			orderAddress.totalOrder = totalOrder;
 			orderAddress.orderStatus = 'ongoing';
 			delete orderAddress.email;
+			// check if isActive false
 			console.log('data : ', orderAddress);
 			try {
 				const order = await mongoDB.createOrder(orderAddress);
@@ -54,6 +57,8 @@ export const AddressDetails = (props) => {
 				console.log(err.response);
 				//	setError(err.response.data.msg);
 			}
+			localStorage.setItem('order', JSON.stringify(orderAddress));
+			history.push('/order');
 		}
 	};
 
@@ -64,7 +69,6 @@ export const AddressDetails = (props) => {
 		});
 	};
 
-	console.log('error : ', error);
 	return (
 		<form onSubmit={handleSubmit} autoComplete="off">
 			<Card

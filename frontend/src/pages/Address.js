@@ -44,7 +44,6 @@ const Address = () => {
 		return <LoadingPage />;
 	}
 
-	console.log(shoppingCart);
 	return (
 		<Box
 			component="main"
