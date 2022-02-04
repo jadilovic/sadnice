@@ -12,11 +12,17 @@ const Products = () => {
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [products, setProducts] = useState([]);
 	const productsDB = useAxiosProducts();
+	const [loading, setLoading] = useState(true);
+	let category = localStorage.getItem('category')
+		? localStorage.getItem('category')
+		: '';
+	let age = localStorage.getItem('age') ? localStorage.getItem('age') : '';
 
 	const getProducts = async (age, category) => {
 		const products = await productsDB.getAllProducts([age], [category]);
 		setProducts(products);
 		localStorage.removeItem('category');
+		setLoading(false);
 		console.log('finished loading', category);
 	};
 
@@ -27,27 +33,19 @@ const Products = () => {
 		if (currentShoppingCart) {
 			setShoppingCart(currentShoppingCart);
 		}
-		let category = localStorage.getItem('category')
-			? localStorage.getItem('category')
-			: '';
-		if (
-			category === 'Home' ||
-			category === 'Sadnice' ||
-			category === 'Narudžbe' ||
-			category === 'Profil' ||
-			category === 'Korisnici' ||
-			category === 'Tasks' ||
-			category === 'Ostalo'
-		) {
+		getProducts(age, category);
+	}, []);
+
+	useEffect(() => {
+		if (category === 'Home') {
 			category = '';
 		}
-		const age = localStorage.getItem('age') ? localStorage.getItem('age') : '';
 		getProducts(age, category);
-	}, [localStorage.getItem('category')]);
+	}, [category]);
 
-	console.log(localStorage.getItem('category'));
+	console.log(age, category, products);
 
-	if (products.length < 1) {
+	if (loading) {
 		return <LoadingPage />;
 	}
 	return (

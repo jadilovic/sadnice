@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Users from './pages/Users';
 import Signup from './pages/Signup';
 // import Home from './pages/Home';
-import Edit from './pages/Edit';
+// import Edit from './pages/Edit';
 import UserProfile from './pages/UserProfile';
 import Error from './pages/Error';
 import Address from './pages/Address';

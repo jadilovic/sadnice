@@ -202,13 +202,11 @@ const Navbar = (props) => {
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-			{/* <AppBar position="static"> */}
 			<AppBar
 				position="fixed"
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
 			>
 				<Toolbar>
-					{/* {authenticated && ( */}
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
@@ -218,18 +216,24 @@ const Navbar = (props) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					{/* )} */}
 					<Typography
 						variant="h6"
 						component="div"
 						paddingRight={2}
 						paddingTop={1.25}
 					>
-						<Link underline="none" href="/materials" color="white">
+						<Link
+							component="button"
+							variant="body2"
+							onClick={() => handleMenuClick('/materials', 'Home')}
+							underline="none"
+							//	href="/materials"
+							color="white"
+						>
 							<img
 								style={{ width: '100%', height: 40 }}
 								src={seedling}
-								alt="bild-it logo"
+								alt="sadnice logo"
 							/>
 						</Link>
 					</Typography>
@@ -248,7 +252,13 @@ const Navbar = (props) => {
 					{authenticated ? (
 						<UserMenu />
 					) : (
-						<Link underline="none" href="/" color="white">
+						<Link
+							underline="none"
+							component="button"
+							variant="body2"
+							color="white"
+							onClick={() => handleMenuClick('/')}
+						>
 							<Typography variant="h6" component="div">
 								{'Prijava'}
 							</Typography>
