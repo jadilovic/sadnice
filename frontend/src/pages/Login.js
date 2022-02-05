@@ -163,7 +163,6 @@ const Login = () => {
 									</Box>
 								)}
 								<TextField
-									autoFocus
 									margin="normal"
 									required
 									fullWidth
