@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import useAxiosRequest from '../utils/useAxiosRequest';
 import { Link, useHistory } from 'react-router-dom';
-import { Box, Alert, Avatar } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Box, Alert, Avatar, Button } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -57,6 +56,7 @@ const Login = () => {
 	const history = useHistory();
 	const mongoDB = useAxiosRequest();
 	const [error, setError] = useState(null);
+	//	const [signIn, setSignIn] = useState(false);
 	const screen = UserWindow();
 
 	const handleSubmit = (event) => {
@@ -109,7 +109,7 @@ const Login = () => {
 								Dobrodošli na stranice porodičnog poljoprivrednog gazdinstva
 								Adilović!
 							</Typography>
-							<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 5 }}>
+							<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 2 }}>
 								<Link
 									style={{ color: '#648381' }}
 									to="/materials"
@@ -126,12 +126,19 @@ const Login = () => {
 					<ContentStyle>
 						<Box
 							sx={{
-								marginTop: 5,
+								marginTop: 2,
 								display: 'flex',
 								flexDirection: 'column',
 								alignItems: 'center',
 							}}
 						>
+							<Typography
+								style={{ paddingBottom: 20 }}
+								component="h6"
+								variant="h6"
+							>
+								Ulaz za registrovane korisnike
+							</Typography>
 							<Avatar sx={{ m: 1, bgcolor: '#C33C54' }}>
 								<LockOutlinedIcon />
 							</Avatar>
@@ -156,6 +163,7 @@ const Login = () => {
 									</Box>
 								)}
 								<TextField
+									autoFocus
 									margin="normal"
 									required
 									fullWidth
@@ -163,7 +171,6 @@ const Login = () => {
 									label="Email Address"
 									name="email"
 									autoComplete="email"
-									autoFocus
 								/>
 								<TextField
 									margin="normal"
@@ -196,10 +203,10 @@ const Login = () => {
 								</Grid>
 							</Box>
 						</Box>
-						<Copyright sx={{ mt: 8, mb: 4 }} />
 					</ContentStyle>
 				</Container>
 			</RootStyle>
+			<Copyright sx={{ mt: 4, mb: 4 }} />
 		</Box>
 	);
 };
