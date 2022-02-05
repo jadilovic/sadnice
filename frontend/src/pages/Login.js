@@ -73,7 +73,7 @@ const Login = () => {
 		try {
 			const loggedIn = await mongoDB.userLogin(userData);
 			login(loggedIn.token, loggedIn.user);
-			history.push('/materials');
+			history.push('/products');
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
@@ -112,7 +112,7 @@ const Login = () => {
 							<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 2 }}>
 								<Link
 									style={{ color: '#648381' }}
-									to="/materials"
+									to="/products"
 									variant="body2"
 								>
 									{'Ulaz za goste'}
@@ -167,7 +167,7 @@ const Login = () => {
 									required
 									fullWidth
 									id="email"
-									label="Email Address"
+									label="Email adresa"
 									name="email"
 									autoComplete="email"
 								/>
@@ -176,7 +176,7 @@ const Login = () => {
 									required
 									fullWidth
 									name="password"
-									label="Password"
+									label="Lozinka"
 									type="password"
 									id="password"
 									autoComplete="current-password"

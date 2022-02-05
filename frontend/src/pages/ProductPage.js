@@ -4,7 +4,6 @@ import {
 	Avatar,
 	Box,
 	CardContent,
-	Modal,
 	Grid,
 	Typography,
 	Button,
@@ -14,7 +13,6 @@ import {
 	Container,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-//import MainCard from './MainCard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -45,6 +43,7 @@ const MaterialCard = () => {
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [shoppingCartLength, setShoppingCartLength] = useState(0);
 	const [open, setOpen] = useState(false);
+	const [openAlert, setOpenAlert] = useState(false);
 	const [openImages, setOpenImages] = useState(false);
 	const [count, setCount] = useState(0);
 	const history = useHistory();
@@ -75,7 +74,7 @@ const MaterialCard = () => {
 	const handleContinueShopping = () => {
 		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart)); //store shopping cart items
 		setOpen(false);
-		history.push('/materials');
+		history.push('/products');
 	};
 
 	const increase = () => {
@@ -90,6 +89,7 @@ const MaterialCard = () => {
 
 	const order = (itemId) => {
 		if (itemAmount < 1) {
+			setOpenAlert(true);
 			return null;
 		}
 		const newItem = {
@@ -117,6 +117,8 @@ const MaterialCard = () => {
 	};
 	const handleOpenImages = () => setOpenImages(true);
 	const handleCloseImages = () => setOpenImages(false);
+	const handleCloseAlert = () => setOpenAlert(false);
+
 	const imageCount = () => {
 		if (count < 2) {
 			setCount(count + 1);
@@ -135,7 +137,7 @@ const MaterialCard = () => {
 			<Box
 				component="main"
 				sx={{
-					marginTop: 7,
+					marginTop: screen.dynamicWidth < 600 ? 7 : 8,
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
@@ -144,7 +146,7 @@ const MaterialCard = () => {
 				}}
 			>
 				<Container component="main" maxWidth="md">
-					<Card style={{ marginTop: 5, minHeight: 600 }}>
+					<Card style={{ marginTop: 5 }}>
 						<CardHeader
 							avatar={<Avatar src={product.imageUrl[0]} alt="Product photo" />}
 							action={
@@ -225,13 +227,20 @@ const MaterialCard = () => {
 							</Grid>
 						</Grid>
 						<CardContent>
-							<Typography variant="body2" color="text.secondary">
-								This impressive paella is a perfect party dish and a fun meal to
-								cook together with your guests. Add 1 cup of frozen peas along
-								with the mussels, if you like.{' '}
+							<Typography
+								align="justify"
+								variant="body2"
+								color="text.secondary"
+							>
+								{product.description}
+							</Typography>
+							<Typography variant="body2">
 								{`Starost sadnice: ${product.age} ${
 									product.age > 1 ? 'godine' : 'godina'
 								}`}
+							</Typography>
+							<Typography variant="body2">
+								Pakovanje: {product.packaging}
 							</Typography>
 						</CardContent>
 						<CardActions disableSpacing>
@@ -276,12 +285,7 @@ const MaterialCard = () => {
 				</Container>
 			</Box>
 			<div>
-				<Dialog
-					open={open}
-					onClose={handleContinueShopping}
-					aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description"
-				>
+				<Dialog open={open} onClose={handleContinueShopping}>
 					<DialogTitle
 						style={{ backgroundColor: 'darkgray' }}
 						color="yellow"
@@ -324,6 +328,22 @@ const MaterialCard = () => {
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleCloseImages}>Zatvori</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
+			<div>
+				<Dialog open={openAlert} onClose={handleCloseAlert}>
+					<DialogTitle>{'Dodajte količinu sadnica!'}</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Prije dodavanja odabrane sadnice u korpu za narudžbe potrebno je
+							navesti količinu sadnica koje želite.
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button variant="contained" onClick={handleCloseAlert}>
+							OK
+						</Button>
 					</DialogActions>
 				</Dialog>
 			</div>

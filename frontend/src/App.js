@@ -20,7 +20,7 @@ import Products from './pages/Products';
 import CheckOut from './pages/CheckOut';
 import CreateProduct from './pages/CreateProduct';
 import ProductPage from './pages/ProductPage';
-import Iframely from './pages/Iframe';
+import Orders from './pages/Orders';
 import OrderSummary from './pages/OrderSummary';
 
 const App = () => {
@@ -49,12 +49,12 @@ const App = () => {
 					<Route component={ProductPage} path="/product" exact />
 					<Route component={CheckOut} path="/checkout" exact />
 					<Route component={Address} path="/address" exact />
-					<Route component={Products} path="/materials" exact />
+					<Route component={Products} path="/products" exact />
 					<Route component={OrderSummary} path="/order" exact />
 					<PrivateRoute component={UserProfile} path="/profile" exact />
 					<PrivateRoute component={Restricted} path="/restricted" exact />
-					<AdminRoute component={CreateProduct} path="/products" exact />
-					<AdminRoute component={Iframely} path="/stats" exact />
+					<AdminRoute component={CreateProduct} path="/create_product" exact />
+					<AdminRoute component={Orders} path="/orders" exact />
 					{/* <AdminRoute component={Edit} path="/edit" exact /> */}
 					<AdminRoute component={Users} path="/users" exact />
 					<Route component={Error} path="/*" />

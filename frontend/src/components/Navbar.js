@@ -50,61 +50,61 @@ const Navbar = (props) => {
 		{
 			section: 'Home',
 			icon: berries,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Malina',
 			icon: raspberry,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Ribizla',
 			icon: currant,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Kupina',
 			icon: blackberry,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Ogrozd',
 			icon: gooseberry,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Tayberry',
 			icon: tayberry,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Jagoda',
 			icon: strawberry,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Aronija',
 			icon: aronia,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Gođi',
 			icon: goji,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 		{
 			section: 'Ostalo',
 			icon: fruits,
-			linkToSection: '/materials',
+			linkToSection: '/products',
 			permission: 'guest',
 		},
 	];
@@ -124,13 +124,13 @@ const Navbar = (props) => {
 		{
 			section: 'Narudžbe',
 			icon: <FormatListNumberedIcon />,
-			linkToSection: '/stats',
+			linkToSection: '/orders',
 			permission: 'admin',
 		},
 		{
 			section: 'Sadnice',
 			icon: <LibraryBooksIcon />,
-			linkToSection: '/products',
+			linkToSection: '/create_product',
 			permission: 'admin',
 		},
 		{
@@ -225,9 +225,9 @@ const Navbar = (props) => {
 						<Link
 							component="button"
 							variant="body2"
-							onClick={() => handleMenuClick('/materials', 'Home')}
+							onClick={() => handleMenuClick('/products', 'Home')}
 							underline="none"
-							//	href="/materials"
+							//	href="/products"
 							color="white"
 						>
 							<img

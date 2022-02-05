@@ -36,11 +36,11 @@ const CreateProduct = () => {
 	const mongoDB = useAxiosRequest();
 	const [error, setError] = useState(null);
 	const [fieldErrors, setFieldErrors] = useState({});
-	// const [imageUrl, setImageUrl] = useState('');
 	const [imageUrl, setImageUrl] = useState([]);
 	const screen = UserWindow();
 	const [age, setAge] = useState(1);
 	const [category, setCategory] = useState('Malina');
+	const [packaging, setPackaging] = useState('Golih žila');
 
 	const changeAge = (event) => {
 		setAge(event.target.value);
@@ -48,6 +48,10 @@ const CreateProduct = () => {
 
 	const changeCategory = (event) => {
 		setCategory(event.target.value);
+	};
+
+	const changePackaging = (event) => {
+		setPackaging(event.target.value);
 	};
 
 	const handleSubmit = (event) => {
@@ -59,6 +63,7 @@ const CreateProduct = () => {
 			price: data.get('price'),
 			category: category,
 			age: age,
+			packaging: packaging,
 			description: data.get('description'),
 			imageUrl: imageUrl,
 			available: true,
@@ -91,7 +96,7 @@ const CreateProduct = () => {
 		console.log(productData);
 		try {
 			await mongoDB.createProduct(productData);
-			history.push('/materials');
+			history.push('/products');
 		} catch (err) {
 			console.log(err.response);
 			try {
@@ -188,17 +193,25 @@ const CreateProduct = () => {
 						</Grid>
 						<Grid item xs={12} sm={3}>
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">Age</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									value={age}
-									label="Age"
-									onChange={changeAge}
-								>
+								<InputLabel>Age</InputLabel>
+								<Select value={age} label="Age" onChange={changeAge}>
 									<MenuItem value={1}>Jedna</MenuItem>
 									<MenuItem value={2}>Dvije</MenuItem>
-									<MenuItem value={3}>Tri</MenuItem>
+									<MenuItem value={3}>Dvije</MenuItem>
+									<MenuItem value={4}>Četiri</MenuItem>
+								</Select>
+							</FormControl>
+						</Grid>
+						<Grid item xs={12}>
+							<FormControl fullWidth>
+								<InputLabel>Packaging</InputLabel>
+								<Select
+									value={packaging}
+									label="Packaging"
+									onChange={changePackaging}
+								>
+									<MenuItem value="Kontejnerske">Kontejnerske</MenuItem>
+									<MenuItem value="Golih žila">Golih žila</MenuItem>
 								</Select>
 							</FormControl>
 						</Grid>

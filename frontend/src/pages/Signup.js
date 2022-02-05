@@ -94,9 +94,9 @@ const Signup = () => {
 		}
 	};
 
-	// if (isAuthenticated()) {
-	// 	history.push('/');
-	// }
+	if (isAuthenticated()) {
+		history.push('/');
+	}
 
 	return (
 		<Box
@@ -118,7 +118,7 @@ const Signup = () => {
 						<PersonAdd />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						BILD-IT Training Sign up
+						Registracija korisnika
 					</Typography>
 					<Box
 						component="form"
@@ -147,7 +147,7 @@ const Signup = () => {
 									required
 									fullWidth
 									id="firstName"
-									label="First Name"
+									label="Ime"
 									autoFocus
 								/>
 							</Grid>
@@ -158,7 +158,7 @@ const Signup = () => {
 									required
 									fullWidth
 									id="lastName"
-									label="Last Name"
+									label="Prezime"
 									name="lastName"
 									autoComplete="family-name"
 								/>
@@ -170,7 +170,7 @@ const Signup = () => {
 									required
 									fullWidth
 									id="email"
-									label="Email Address"
+									label="Email adresa"
 									name="email"
 									autoComplete="email"
 								/>
@@ -182,7 +182,7 @@ const Signup = () => {
 									required
 									fullWidth
 									name="password"
-									label="Password"
+									label="Lozinka"
 									type="password"
 									id="password"
 									autoComplete="new-password"
@@ -195,12 +195,12 @@ const Signup = () => {
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 						>
-							Sign Up
+							Registracija
 						</Button>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
 								<Link style={{ color: '#648381' }} to="/" variant="body2">
-									Already have an account? Log in
+									Već ste registrovani? Prijavi se!
 								</Link>
 							</Grid>
 						</Grid>

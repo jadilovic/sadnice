@@ -1,63 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import {
 	Grid,
 	Box,
 	Container,
 	Card,
-	CardHeader,
 	CardContent,
 	Paper,
-	IconButton,
 	Stack,
 	Chip,
 } from '@mui/material';
 import UserWindow from '../utils/UserWindow';
 import LoadingPage from '../components/LoadingPage';
 import useAxiosProducts from '../utils/useAxiosProducts';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import TotalOrder from '../components/TotalOrder';
-
-const products = [
-	{
-		name: 'Product 1',
-		desc: 'A nice thing',
-		price: '$9.99',
-	},
-	{
-		name: 'Product 2',
-		desc: 'Another thing',
-		price: '$3.45',
-	},
-	{
-		name: 'Product 3',
-		desc: 'Something else',
-		price: '$6.51',
-	},
-	{
-		name: 'Product 4',
-		desc: 'Best thing of all',
-		price: '$14.11',
-	},
-	{ name: 'Shipping', desc: '', price: 'Free' },
-];
-
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-	{ name: 'Card type', detail: 'Visa' },
-	{ name: 'Card holder', detail: 'Mr John Smith' },
-	{ name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-	{ name: 'Expiry date', detail: '04/2024' },
-];
 
 const OrderSummary = () => {
 	const productsDB = useAxiosProducts();
@@ -81,7 +42,7 @@ const OrderSummary = () => {
 		setShoppingCart(localStorageOrder.shoppingCart);
 		setTotalOrder(Number(localStorageOrder.totalOrder));
 		getProducts();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getProductObject = (productId) => {
 		return products.find((product) => product._id === productId);

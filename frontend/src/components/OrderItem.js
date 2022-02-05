@@ -15,7 +15,7 @@ export const OrderItem = (props) => {
 
 	useEffect(() => {
 		getProducts();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const product = products.find((product) => product._id === item.id);
 

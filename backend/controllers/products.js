@@ -83,6 +83,7 @@ const getProduct = async (req, res) => {
 			price: 1,
 			available: 1,
 			age: 1,
+			packaging: 1,
 		}
 	);
 	if (!product) {

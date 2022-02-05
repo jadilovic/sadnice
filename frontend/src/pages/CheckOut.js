@@ -63,7 +63,7 @@ const CheckOut = () => {
 		);
 		localStorageShoppingCart && setShoppingCart(localStorageShoppingCart);
 		getProducts();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getProductObject = (productId) => {
 		return products.find((product) => product._id === productId);

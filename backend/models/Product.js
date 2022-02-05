@@ -14,8 +14,8 @@ const ProductSchema = mongoose.Schema(
 			required: [true, 'Please enter product description'],
 			minlength: [25, 'Product description must be minimum 25 characters long'],
 			maxlength: [
-				200,
-				'Product description can be maximum 200 characters long',
+				400,
+				'Product description can be maximum 400 characters long',
 			],
 		},
 		imageUrl: [
@@ -41,11 +41,17 @@ const ProductSchema = mongoose.Schema(
 			minlength: [5, 'Category must be minimum 5 characters long'],
 			maxlength: [30, 'Category can be maximum 30 characters long'],
 		},
+		packaging: {
+			type: String,
+			required: [true, 'Please select packaging'],
+			minlength: [5, 'Packaging must be minimum 5 characters long'],
+			maxlength: [30, 'Packaging can be maximum 30 characters long'],
+		},
 		age: {
 			type: Number,
 			required: [true, 'Please enter product age'],
 			min: [1, 'Minimum age is 1'],
-			max: [3, 'Maximum age is 3'],
+			max: [4, 'Maximum age is 4'],
 		},
 		available: {
 			type: Boolean,
