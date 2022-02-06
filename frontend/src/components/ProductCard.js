@@ -9,7 +9,7 @@ import {
 	CardActionArea,
 } from '@mui/material';
 
-const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
+const ProductCard = ({ product, shoppingCart, setShoppingCart }) => {
 	const history = useHistory();
 
 	const handleProduct = (productId) => {
@@ -58,4 +58,4 @@ const MaterialCard = ({ product, shoppingCart, setShoppingCart }) => {
 	);
 };
 
-export default MaterialCard;
+export default ProductCard;

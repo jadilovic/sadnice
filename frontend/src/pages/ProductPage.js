@@ -37,7 +37,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 	},
 }));
 
-const MaterialCard = () => {
+const ProductPage = () => {
 	const [product, setProduct] = useState(null);
 	const [itemAmount, setItemAmount] = useState(0);
 	const [shoppingCart, setShoppingCart] = useState([]);
@@ -351,4 +351,4 @@ const MaterialCard = () => {
 	);
 };
 
-export default MaterialCard;
+export default ProductPage;

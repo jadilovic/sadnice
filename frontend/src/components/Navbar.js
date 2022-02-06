@@ -201,8 +201,6 @@ const Navbar = (props) => {
 	};
 
 	const handleRegisterClick = (menuLink) => {
-		localStorage.removeItem('category');
-		localStorage.removeItem('age');
 		history.push(menuLink);
 	};
 
@@ -233,7 +231,6 @@ const Navbar = (props) => {
 							variant="body2"
 							onClick={() => handleMenuClick('/products', 'Home')}
 							underline="none"
-							//	href="/products"
 							color="white"
 						>
 							<img

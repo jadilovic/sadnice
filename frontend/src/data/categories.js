@@ -6,7 +6,7 @@ const categories = [
 	'Jagoda',
 	'Kupina',
 	'Tajberi',
-	'Godji',
+	'Gođi',
 	'Ljesnjak',
 	'Visnja',
 ];

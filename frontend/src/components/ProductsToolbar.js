@@ -9,6 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ProductFilters from './ProductFilters';
 import { useHistory } from 'react-router-dom';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -59,8 +60,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-export default function SearchAppBar(props) {
+export default function ProductsToolbar(props) {
 	const history = useHistory();
+	const {
+		products,
+		setFilteredProducts,
+		isOpenFilter,
+		onOpenFilter,
+		onCloseFilter,
+		setSelectedFilters,
+	} = props;
 	const [shoppingCartLength, setShoppingCartLength] = useState(0);
 
 	useEffect(() => {
@@ -71,15 +80,14 @@ export default function SearchAppBar(props) {
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
-					<IconButton
-						size="large"
-						edge="start"
-						color="inherit"
-						aria-label="open drawer"
-						sx={{ mr: 2 }}
-					>
-						<FilterListIcon />
-					</IconButton>
+					<ProductFilters
+						products={products}
+						setFilteredProducts={setFilteredProducts}
+						isOpenFilter={isOpenFilter}
+						onOpenFilter={onOpenFilter}
+						onCloseFilter={onCloseFilter}
+						setSelectedFilters={setSelectedFilters}
+					/>
 					<Search>
 						<SearchIconWrapper>
 							<SearchIcon />

@@ -1,8 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Box, Container, Grid, Pagination } from '@mui/material';
+import {
+	Box,
+	Container,
+	Grid,
+	Pagination,
+	Paper,
+	Typography,
+} from '@mui/material';
 // import products from '../data/products';
-import MaterialsListToolbar from '../components/Materials-list-toolbar';
-import MaterialCard from '../components/MaterialCard';
+import ProductsToolbar from '../components/ProductsToolbar';
+import ProductCard from '../components/ProductCard';
 import UserWindow from '../utils/UserWindow';
 import useAxiosProducts from '../utils/useAxiosProducts';
 import LoadingPage from '../components/LoadingPage';
@@ -14,22 +21,24 @@ const Products = () => {
 	const [products, setProducts] = useState([]);
 	const productsDB = useAxiosProducts();
 	const [loading, setLoading] = useState(true);
+	const [filteredProducts, setFilteredProducts] = useState([]);
+	const [selectedFilters, setSelectedFilters] = useState('');
+	const [openFilter, setOpenFilter] = useState(false);
 	let category = localStorage.getItem('category')
 		? localStorage.getItem('category')
-		: '';
+		: 'Home';
 	let age = localStorage.getItem('age') ? localStorage.getItem('age') : '';
 
-	const getProducts = async (selectedAge, selectedCategory) => {
-		if (selectedCategory === 'Home') {
-			selectedCategory = '';
+	const getProducts = async () => {
+		if (category === 'Home') {
+			category = '';
 		}
-		const products = await productsDB.getAllProducts(
-			[selectedAge],
-			[selectedCategory]
-		);
+		const products = await productsDB.getAllProducts([age], [category]);
 		setProducts(products);
+		setFilteredProducts(products);
+		setSelectedFilters('');
 		setLoading(false);
-		console.log('finished loading', selectedCategory);
+		console.log('finished loading', category);
 	};
 
 	useEffect(() => {
@@ -39,19 +48,27 @@ const Products = () => {
 		if (currentShoppingCart) {
 			setShoppingCart(currentShoppingCart);
 		}
-		getProducts(age, category);
+		getProducts();
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (isMounted.current) {
 			console.log('category use effect : ', age, category);
-			getProducts(age, category);
+			getProducts();
 		} else {
 			isMounted.current = true;
 		}
 	}, [category]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	console.log(products);
+	const handleOpenFilter = () => {
+		setOpenFilter(true);
+	};
+
+	const handleCloseFilter = () => {
+		setOpenFilter(false);
+	};
+
+	console.log(category);
 
 	if (loading) {
 		return <LoadingPage />;
@@ -68,16 +85,56 @@ const Products = () => {
 				}}
 			>
 				<Container maxWidth={false}>
-					<MaterialsListToolbar shoppingCart={shoppingCart} />
+					<ProductsToolbar
+						products={products}
+						setFilteredProducts={setFilteredProducts}
+						isOpenFilter={openFilter}
+						onOpenFilter={handleOpenFilter}
+						onCloseFilter={handleCloseFilter}
+						setSelectedFilters={setSelectedFilters}
+						shoppingCart={shoppingCart}
+					/>
+					{filteredProducts.length < 1 && (
+						<Grid item xs={12} sm={12} lg={12}>
+							<Paper
+								component="form"
+								style={{
+									justifyContent: 'center',
+								}}
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									width: '100%',
+								}}
+							>
+								<Typography variant="p">
+									Nisu pronadjene trazene sadnice
+								</Typography>
+							</Paper>
+						</Grid>
+					)}
+					{selectedFilters && (
+						<Grid item xs={12} sm={12} lg={12}>
+							<Paper
+								component="form"
+								style={{
+									justifyContent: 'center',
+								}}
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									width: '100%',
+								}}
+							>
+								<Typography variant="p">{`${selectedFilters}`}</Typography>
+							</Paper>
+						</Grid>
+					)}
 					<Box sx={{ pt: 3 }}>
 						<Grid container spacing={3}>
-							{products.map((product, index) => (
+							{filteredProducts.map((product, index) => (
 								<Grid item key={index} lg={4} md={6} xs={12}>
-									<MaterialCard
-										product={product}
-										//	shoppingCart={shoppingCart}
-										//	setShoppingCart={setShoppingCart}
-									/>
+									<ProductCard product={product} />
 								</Grid>
 							))}
 						</Grid>

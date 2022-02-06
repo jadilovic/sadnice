@@ -56,8 +56,9 @@ const Login = () => {
 	const history = useHistory();
 	const mongoDB = useAxiosRequest();
 	const [error, setError] = useState(null);
-	//	const [signIn, setSignIn] = useState(false);
 	const screen = UserWindow();
+	localStorage.removeItem('category');
+	localStorage.removeItem('age');
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
