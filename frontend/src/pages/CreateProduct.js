@@ -253,11 +253,7 @@ const CreateProduct = () => {
 					</Button>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
-							<Link
-								style={{ color: '#648381' }}
-								to="/materials"
-								variant="body2"
-							>
+							<Link style={{ color: '#648381' }} to="/products" variant="body2">
 								Go to products
 							</Link>
 						</Grid>

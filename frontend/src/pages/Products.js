@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Box, Container, Grid, Pagination } from '@mui/material';
 // import products from '../data/products';
 import MaterialsListToolbar from '../components/Materials-list-toolbar';
@@ -9,6 +9,7 @@ import LoadingPage from '../components/LoadingPage';
 
 const Products = () => {
 	const screen = UserWindow();
+	const isMounted = useRef(false);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [products, setProducts] = useState([]);
 	const productsDB = useAxiosProducts();
@@ -18,12 +19,17 @@ const Products = () => {
 		: '';
 	let age = localStorage.getItem('age') ? localStorage.getItem('age') : '';
 
-	const getProducts = async (age, category) => {
-		const products = await productsDB.getAllProducts([age], [category]);
+	const getProducts = async (selectedAge, selectedCategory) => {
+		if (selectedCategory === 'Home') {
+			selectedCategory = '';
+		}
+		const products = await productsDB.getAllProducts(
+			[selectedAge],
+			[selectedCategory]
+		);
 		setProducts(products);
-		localStorage.removeItem('category');
 		setLoading(false);
-		console.log('finished loading', category);
+		console.log('finished loading', selectedCategory);
 	};
 
 	useEffect(() => {
@@ -37,13 +43,15 @@ const Products = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (category === 'Home') {
-			category = ''; // eslint-disable-line react-hooks/exhaustive-deps
+		if (isMounted.current) {
+			console.log('category use effect : ', age, category);
+			getProducts(age, category);
+		} else {
+			isMounted.current = true;
 		}
-		getProducts(age, category);
-	}, [category]);
+	}, [category]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	console.log(age, category, products);
+	console.log(products);
 
 	if (loading) {
 		return <LoadingPage />;

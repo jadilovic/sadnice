@@ -78,7 +78,7 @@ const Navbar = (props) => {
 			permission: 'guest',
 		},
 		{
-			section: 'Tayberry',
+			section: 'Tajberi',
 			icon: tayberry,
 			linkToSection: '/products',
 			permission: 'guest',
@@ -200,6 +200,12 @@ const Navbar = (props) => {
 		history.push(menuLink);
 	};
 
+	const handleRegisterClick = (menuLink) => {
+		localStorage.removeItem('category');
+		localStorage.removeItem('age');
+		history.push(menuLink);
+	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar
@@ -257,7 +263,7 @@ const Navbar = (props) => {
 							component="button"
 							variant="body2"
 							color="white"
-							onClick={() => handleMenuClick('/')}
+							onClick={() => handleRegisterClick('/')}
 						>
 							<Typography variant="h6" component="div">
 								{'Prijava'}

@@ -343,7 +343,7 @@ const CheckOut = () => {
 				<Grid item xs={12} sm={12} md={6}>
 					<Item>
 						<Button
-							onClick={() => history.push('/materials')}
+							onClick={() => history.push('/products')}
 							fullWidth
 							variant="contained"
 							color="warning"

@@ -22,6 +22,8 @@ const UserMenu = () => {
 
 	const handleLogout = () => {
 		logout();
+		localStorage.removeItem('age');
+		localStorage.removeItem('category');
 		history.push('/');
 	};
 

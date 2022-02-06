@@ -53,7 +53,7 @@ export default function Restricted() {
 					/>
 
 					<Button
-						to="/materials"
+						to="/products"
 						size="large"
 						variant="contained"
 						component={RouterLink}

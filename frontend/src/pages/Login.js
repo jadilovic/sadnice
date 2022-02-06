@@ -79,13 +79,13 @@ const Login = () => {
 			if (err.response) {
 				setError(err.response.data.msg);
 			} else {
-				setError('Network error. Try again later');
+				setError('Network error. Pokušajte ponovo kasnije.');
 			}
 		}
 	};
 
 	if (isAuthenticated()) {
-		history.push('/materials');
+		history.push('/products');
 	}
 
 	return (
