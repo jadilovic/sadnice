@@ -47,7 +47,7 @@ const CheckOut = () => {
 	};
 
 	const getProducts = async () => {
-		const products = await productsDB.getAllProducts([], []);
+		const products = await productsDB.getAllProducts([], [], []);
 		setProducts(products);
 	};
 
@@ -162,7 +162,7 @@ const CheckOut = () => {
 												src={`${productDetails.imageUrl[0]}`}
 											/>
 										</TableCell>
-										<TableCell align="left">{productDetails.title}</TableCell>
+										<TableCell align="left">{`${productDetails.category} ${productDetails.title}`}</TableCell>
 										<TableCell align="right">
 											{productDetails.price} KM
 										</TableCell>
@@ -230,7 +230,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												{productDetails.title}
+												{`${productDetails.category} ${productDetails.title}`}
 											</Typography>
 										</Grid>
 										<Grid item xs={6} paddingTop={0.5}>

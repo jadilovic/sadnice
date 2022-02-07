@@ -21,6 +21,7 @@ const getAllProducts = async (req, res) => {
 	// const products = await Product.find({});
 	let ageFilters = [];
 	let categoryFilters = [];
+	let packagingFilters = [];
 	// console.log('req.query: ', req.query);
 	if (req.query.age) {
 		if (Array.isArray(req.query.age)) {
@@ -40,6 +41,15 @@ const getAllProducts = async (req, res) => {
 			categoryFilters.push({ ['category']: req.query.category });
 		}
 	}
+	if (req.query.packaging) {
+		if (Array.isArray(req.query.packaging)) {
+			packagingFilters = req.query.packaging.map((packagingit) => {
+				return { ['packaging']: packagingit };
+			});
+		} else {
+			packagingFilters.push({ ['packaging']: req.query.packaging });
+		}
+	}
 
 	const products = await Product.find(
 		{
@@ -49,6 +59,9 @@ const getAllProducts = async (req, res) => {
 				},
 				{
 					$or: categoryFilters.length > 0 ? categoryFilters : [{}],
+				},
+				{
+					$or: packagingFilters.length > 0 ? packagingFilters : [{}],
 				},
 			],
 			//	createdBy: req.user.userId,

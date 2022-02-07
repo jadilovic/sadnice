@@ -47,18 +47,23 @@ export const AddressDetails = (props) => {
 			orderAddress.totalOrder = totalOrder;
 			orderAddress.orderStatus = 'ongoing';
 			delete orderAddress.email;
+			delete orderAddress._id;
 			// check if isActive false
 			console.log('data : ', orderAddress);
 			try {
 				const order = await mongoDB.createOrder(orderAddress);
-				setOrderAddress({});
+				//	setOrderAddress({});
 				console.log(order);
+				localStorage.setItem('order', JSON.stringify(order));
+				localStorage.removeItem('shopping_cart');
+				localStorage.removeItem('category');
+				localStorage.removeItem('total_order');
+				localStorage.removeItem('product_id');
+				history.push('/order');
 			} catch (err) {
 				console.log(err.response);
 				//	setError(err.response.data.msg);
 			}
-			localStorage.setItem('order', JSON.stringify(orderAddress));
-			history.push('/order');
 		}
 	};
 
@@ -185,7 +190,7 @@ export const AddressDetails = (props) => {
 							Plaćanje kešom pri preuzimanju artikla.
 						</Typography>
 						<Divider />
-						<Typography sx={{ p: 2 }}>
+						<Typography align="justify" sx={{ p: 2 }}>
 							Vaši lični podaci će se koristiti za obradu vaše narudžbe, podršku
 							vašem iskustvu na ovoj veb lokaciji i u druge svrhe opisane u
 							pravila o privatnosti.
@@ -221,14 +226,14 @@ export const AddressDetails = (props) => {
 						Naručite
 					</Button>
 				</Box>
-				<Typography sx={{ p: 2 }}>
+				<Typography align="justify" sx={{ p: 2 }}>
 					Ovim potvrđujem da su moji kontakt podaci, adresa i kontakt telefon za
 					pošiljku ispravni. U slučaju da sam dao/dala pogrešne podatke, te
 					usljed toga dođe do dodatnih troškova isporuke preuzimam dodatne
 					troškove istih.
 				</Typography>
 				<Divider />
-				<Typography sx={{ p: 2 }}>
+				<Typography align="justify" sx={{ p: 2 }}>
 					Klikom na Naručite potvrđujete Vašu narudžbu, te ćete biti prebačeni
 					na stranicu sa potvrdom Vaše narudžbe
 				</Typography>

@@ -1,4 +1,4 @@
-import { Home, Business, Group, Person } from '@mui/icons-material';
+import { Home, Business } from '@mui/icons-material';
 import React from 'react';
 
 const packaging = [

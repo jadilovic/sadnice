@@ -26,14 +26,13 @@ const Products = () => {
 	const [openFilter, setOpenFilter] = useState(false);
 	let category = localStorage.getItem('category')
 		? localStorage.getItem('category')
-		: 'Home';
-	let age = localStorage.getItem('age') ? localStorage.getItem('age') : '';
+		: '';
 
 	const getProducts = async () => {
 		if (category === 'Home') {
 			category = '';
 		}
-		const products = await productsDB.getAllProducts([age], [category]);
+		const products = await productsDB.getAllProducts([''], [category], ['']);
 		setProducts(products);
 		setFilteredProducts(products);
 		setSelectedFilters('');
@@ -42,6 +41,7 @@ const Products = () => {
 	};
 
 	useEffect(() => {
+		setLoading(true);
 		const currentShoppingCart = JSON.parse(
 			localStorage.getItem('shopping_cart')
 		);
@@ -53,7 +53,8 @@ const Products = () => {
 
 	useEffect(() => {
 		if (isMounted.current) {
-			console.log('category use effect : ', age, category);
+			setLoading(true);
+			console.log('category use effect : ', category);
 			getProducts();
 		} else {
 			isMounted.current = true;
@@ -86,6 +87,7 @@ const Products = () => {
 			>
 				<Container maxWidth={false}>
 					<ProductsToolbar
+						category={category === 'Home' ? '' : category}
 						products={products}
 						setFilteredProducts={setFilteredProducts}
 						isOpenFilter={openFilter}

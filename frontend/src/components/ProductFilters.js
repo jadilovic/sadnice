@@ -9,7 +9,6 @@ import {
 	Divider,
 	Checkbox,
 	FormControl,
-	Paper,
 	Typography,
 	MenuItem,
 	ListItemText,
@@ -25,6 +24,7 @@ import IconButton from '@mui/material/IconButton';
 export default function ProductFilters(props) {
 	const mongoDB = useAxiosProducts();
 	const {
+		category,
 		products,
 		setFilteredProducts,
 		isOpenFilter,
@@ -61,7 +61,8 @@ export default function ProductFilters(props) {
 			const filteredProducts = await mongoDB.getAllProducts(
 				// --- this is get request
 				selectedAge,
-				['']
+				[category],
+				selectedPackaging
 			);
 			console.log('filtered products : ', filteredProducts);
 			setFilteredProducts(filteredProducts);

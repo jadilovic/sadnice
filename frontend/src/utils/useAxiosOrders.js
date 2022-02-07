@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserToken } from '../auth/Authentication';
+import { getUserToken, getUserData } from '../auth/Authentication';
 
 const useAxiosOrders = () => {
 	// GET FILTER REQUEST
@@ -110,7 +110,13 @@ const useAxiosOrders = () => {
 	};
 
 	const createOrder = async (newOrder) => {
-		await axios({
+		console.log('test create order');
+		if (getUserData()?._id) {
+			newOrder.createdBy = getUserData()._id;
+		} else {
+			newOrder.createdBy = '62017af2ee92a0853a8c0021';
+		}
+		return axios({
 			method: 'POST',
 			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/orders`,
 			data: {

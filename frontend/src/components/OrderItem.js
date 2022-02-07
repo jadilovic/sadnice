@@ -9,7 +9,7 @@ export const OrderItem = (props) => {
 	const productsDB = useAxiosProducts();
 
 	const getProducts = async () => {
-		const products = await productsDB.getAllProducts([], []);
+		const products = await productsDB.getAllProducts([], [], []);
 		setProducts(products);
 	};
 
@@ -60,7 +60,7 @@ export const OrderItem = (props) => {
 				}}
 			>
 				<Box component="span" sx={{ fontSize: 16, mt: 1 }}>
-					{product.title}
+					{`${product.category} ${product.title}`}
 				</Box>
 				<Box component="span" sx={{ color: 'primary.main', fontSize: 18 }}>
 					{`${product.price} KM`}

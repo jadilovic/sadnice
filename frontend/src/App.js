@@ -22,6 +22,7 @@ import CreateProduct from './pages/CreateProduct';
 import ProductPage from './pages/ProductPage';
 import Orders from './pages/Orders';
 import OrderSummary from './pages/OrderSummary';
+import Print from './utils/Print';
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
@@ -50,7 +51,7 @@ const App = () => {
 					<Route component={CheckOut} path="/checkout" exact />
 					<Route component={Address} path="/address" exact />
 					<Route component={Products} path="/products" exact />
-					<Route component={OrderSummary} path="/order" exact />
+					<Route component={Print} path="/order" exact />
 					<PrivateRoute component={UserProfile} path="/profile" exact />
 					<PrivateRoute component={Restricted} path="/restricted" exact />
 					<AdminRoute component={CreateProduct} path="/create_product" exact />

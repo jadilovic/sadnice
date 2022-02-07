@@ -4,7 +4,8 @@ const { BadRequestError, NotFoundError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 
 const createOrder = async (req, res) => {
-	//	req.body.newOrder.createdBy = req.user.userId;
+	// console.log(req.body.newOrder);
+	// req.body.newOrder.createdBy = req.user.userId;
 	const order = await Order.create(req.body.newOrder);
 	res.status(StatusCodes.CREATED).json({ order });
 };
