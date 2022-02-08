@@ -3,7 +3,7 @@ import { getUserToken, getUserData } from '../auth/Authentication';
 
 const useAxiosOrders = () => {
 	// GET FILTER REQUEST
-	const getAllProducts = async (ageFilters, categoryFilters) => {
+	const getAllOrders = async (ageFilters, categoryFilters) => {
 		let querystring = '?';
 		ageFilters.forEach((age) => {
 			querystring = querystring.concat(`age=${age}&`);
@@ -14,12 +14,12 @@ const useAxiosOrders = () => {
 		//	console.log('querystring: ', querystring);
 		return axios({
 			method: 'GET',
-			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/products${querystring}`,
-			headers: {
-				authorization: `Bearer ${getUserToken()}`,
-			},
+			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/orders${querystring}`,
+			// headers: {
+			// 	authorization: `Bearer ${getUserToken()}`,
+			// },
 		}).then((res) => {
-			return res.data.products;
+			return res.data.orders;
 		});
 	};
 
@@ -132,7 +132,7 @@ const useAxiosOrders = () => {
 	};
 
 	return {
-		getAllProducts,
+		getAllOrders,
 		deleteTask,
 		getProduct,
 		updateTask,

@@ -46,6 +46,7 @@ export const AddressDetails = (props) => {
 			orderAddress.shoppingCart = shoppingCart;
 			orderAddress.totalOrder = totalOrder;
 			orderAddress.orderStatus = 'ongoing';
+			orderAddress.comment = 'Nema';
 			delete orderAddress.email;
 			delete orderAddress._id;
 			// check if isActive false

@@ -34,7 +34,7 @@ const getAllOrders = async (req, res) => {
 		}
 	}
 
-	const products = await Order.find(
+	const orders = await Order.find(
 		{
 			$and: [
 				{
@@ -59,7 +59,7 @@ const getAllOrders = async (req, res) => {
 	// .sort({
 	// 	createdAt: -1,
 	// });
-	res.status(StatusCodes.OK).json({ products, length: products.length });
+	res.status(StatusCodes.OK).json({ orders, length: orders.length });
 };
 
 const getOrder = async (req, res) => {

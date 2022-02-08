@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+
 import 'moment/locale/bs';
 import Typography from '@mui/material/Typography';
 import {
@@ -22,7 +23,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-const OrderSummary = () => {
+const OrderSummary = React.forwardRef((props, ref) => {
 	const productsDB = useAxiosProducts();
 	const screen = UserWindow();
 	const [loading, setLoading] = useState(true);
@@ -30,6 +31,7 @@ const OrderSummary = () => {
 	const [products, setProducts] = useState([]);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [totalOrder, setTotalOrder] = useState(0);
+
 	moment.locale('bs');
 
 	const getProducts = async () => {
@@ -62,18 +64,22 @@ const OrderSummary = () => {
 		<Box
 			sx={{
 				flexGrow: 1,
-				paddingTop: 9,
+				paddingTop: 8,
 				paddingLeft: screen.dynamicWidth < 600 ? 0 : 22,
 				paddingRight: 0,
 				width: '100%',
 			}}
 		>
-			<Container component="main" maxWidth="md">
-				<Stack spacing={1} alignItems="center" paddingBottom={2}>
+			<Container component="main" maxWidth="md" ref={ref}>
+				<Stack spacing={1} alignItems="center" paddingTop={2} paddingBottom={2}>
 					<Chip
-						style={{ minWidth: 300, minHeight: 40, fontSize: 19 }}
+						style={{
+							minWidth: 300,
+							minHeight: 40,
+							fontSize: 19,
+						}}
 						size="medium"
-						label={`Vaša narudžba broj: ${order.orderNumber}`}
+						label={`Narudžba sadnica broj: ${order.orderNumber}`}
 						color="primary"
 					/>
 				</Stack>
@@ -164,15 +170,25 @@ const OrderSummary = () => {
 								<Typography variant="body2">
 									{`Datum: ${moment(order.createdAt).format('LLLL')}`}
 								</Typography>
-								<Typography variant="body2">
-									Status:{' '}
+								<Stack direction="row" spacing={1}>
+									<Typography variant="body2">Status: </Typography>
 									<Chip
-										label={order.orderStatus}
+										label={`${
+											order.orderStatus === 'ongoing'
+												? 'U pripremi'
+												: order.orderStatus === 'completed'
+												? 'Ispruceno'
+												: 'Otkazano'
+										}`}
 										color={`${
-											order.orderStatus === 'ongoing' ? 'primary' : 'secondary'
+											order.orderStatus === 'ongoing'
+												? 'primary'
+												: order.orderStatus === 'completed'
+												? 'secondary'
+												: 'error'
 										}`}
 									/>
-								</Typography>
+								</Stack>
 								<Typography variant="body2">
 									{`Telefon: ${order.phone}`}
 								</Typography>
@@ -183,6 +199,6 @@ const OrderSummary = () => {
 			</Container>
 		</Box>
 	);
-};
+});
 
 export default OrderSummary;
