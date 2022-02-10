@@ -12,16 +12,16 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
 	// const products = await Product.find({});
-	let ageFilters = [];
+	let userFilters = [];
 	let categoryFilters = [];
 	// console.log('req.query: ', req.query);
-	if (req.query.age) {
-		if (Array.isArray(req.query.age)) {
-			ageFilters = req.query.age.map((age) => {
-				return { ['age']: age };
+	if (req.query.userId) {
+		if (Array.isArray(req.query.userId)) {
+			userFilters = req.query.userId.map((id) => {
+				return { ['createdBy']: id };
 			});
 		} else {
-			ageFilters.push({ ['age']: req.query.age });
+			userFilters.push({ ['createdBy']: req.query.userId });
 		}
 	}
 	if (req.query.category) {
@@ -38,7 +38,7 @@ const getAllOrders = async (req, res) => {
 		{
 			$and: [
 				{
-					$or: ageFilters.length > 0 ? ageFilters : [{}],
+					$or: userFilters.length > 0 ? userFilters : [{}],
 				},
 				{
 					$or: categoryFilters.length > 0 ? categoryFilters : [{}],
@@ -107,37 +107,28 @@ const emailExists = async (email, userId) => {
 		return 'new';
 	}
 };
-
-const updateUser = async (req, res) => {
+*/
+const updateOrder = async (req, res) => {
 	const {
-		body: { firstName, lastName, email },
+		// body: { comment },
 		//	user: { userId },
 		params: { id: userId },
 	} = req;
-	const userEmailStatus = await emailExists(email, userId);
 
-	if (userEmailStatus === 'exists') {
-		throw new BadRequestError(
-			'ValidationError: email-Entered email already exists. Please enter different email.'
-		);
-	}
-	if (userEmailStatus === 'current') {
-		delete req.body.email;
-	}
-
-	const user = await User.findByIdAndUpdate({ _id: userId }, req.body, {
+	const order = await Order.findByIdAndUpdate({ _id: userId }, req.body, {
 		new: true,
 		runValidators: true,
 	});
-	if (!user) {
-		throw new NotFoundError(`User with id ${userId} was not found`);
+	if (!order) {
+		throw new NotFoundError(`Order with id ${userId} was not found`);
 	}
-	res.status(StatusCodes.OK).json({ user });
+	console.log(order);
+	res.status(StatusCodes.OK).json({ order });
 };
-*/
 
 module.exports = {
 	getAllOrders,
 	createOrder,
 	getOrder,
+	updateOrder,
 };

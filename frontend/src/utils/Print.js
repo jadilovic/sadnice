@@ -48,7 +48,7 @@ const Print = () => {
 								<Button
 									sx={{ width: 200 }}
 									onClick={handlePrint}
-									color="primary"
+									color="success"
 									variant="contained"
 								>
 									Sačuvaj / Print

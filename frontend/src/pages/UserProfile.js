@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserWindow from '../utils/UserWindow';
 import useAxiosRequest from '../utils/useAxiosRequest';
+import { getUserData } from '../auth/Authentication';
 import { useHistory } from 'react-router-dom';
 import {
 	Box,
@@ -12,7 +13,6 @@ import {
 	Grid,
 	TextField,
 	InputLabel,
-	Container,
 } from '@mui/material';
 import LoadingPage from '../components/LoadingPage';
 import roles from '../data/roles';
@@ -91,7 +91,7 @@ const UserProfile = () => {
 
 	useEffect(() => {
 		const selectedUserId = localStorage.getItem('selectedUserId');
-		const user = JSON.parse(localStorage.getItem('user'));
+		const user = getUserData();
 		if (selectedUserId) {
 			getUserObject(selectedUserId);
 			localStorage.removeItem('selectedUserId');
@@ -176,11 +176,11 @@ const UserProfile = () => {
 	};
 
 	const handleOrders = () => {
-		localStorage.setItem('category', 'Home');
-		history.push('/products');
+		localStorage.setItem('userOrders', userValues._id);
+		history.push('/orders');
 	};
 
-	console.log('field errors : ', fieldErrors);
+	console.log('user values : ', userValues._id);
 
 	if (loading) {
 		return <LoadingPage />;
@@ -219,6 +219,9 @@ const UserProfile = () => {
 							<Grid container spacing={3}>
 								<Grid item md={6} xs={12}>
 									<TextField
+										InputProps={{
+											readOnly: !admin,
+										}}
 										error={fieldErrors?.firstName?.error ? true : false}
 										helperText={fieldErrors?.firstName?.msg}
 										fullWidth
@@ -232,6 +235,9 @@ const UserProfile = () => {
 								</Grid>
 								<Grid item md={6} xs={12}>
 									<TextField
+										InputProps={{
+											readOnly: !admin,
+										}}
 										error={fieldErrors?.lastName?.error ? true : false}
 										helperText={fieldErrors?.lastName?.msg}
 										fullWidth
@@ -245,6 +251,9 @@ const UserProfile = () => {
 								</Grid>
 								<Grid item md={6} xs={12}>
 									<TextField
+										InputProps={{
+											readOnly: !admin,
+										}}
 										error={fieldErrors?.email?.error ? true : false}
 										helperText={fieldErrors?.email?.msg}
 										fullWidth
@@ -315,6 +324,7 @@ const UserProfile = () => {
 										<Grid item md={6} xs={12}>
 											<InputLabel>Odaberi status</InputLabel>
 											<TextField
+												size="small"
 												sx={{
 													backgroundColor:
 														userValues.role === 'admin' ? 'red' : 'lightblue',
@@ -346,6 +356,7 @@ const UserProfile = () => {
 										<Grid item md={6} xs={12}>
 											<InputLabel>Odaberi registraciju</InputLabel>
 											<TextField
+												size="small"
 												sx={{
 													backgroundColor: userValues.isActive
 														? 'green'

@@ -3,10 +3,10 @@ import { getUserToken, getUserData } from '../auth/Authentication';
 
 const useAxiosOrders = () => {
 	// GET FILTER REQUEST
-	const getAllOrders = async (ageFilters, categoryFilters) => {
+	const getAllOrders = async (userIdArr, categoryFilters) => {
 		let querystring = '?';
-		ageFilters.forEach((age) => {
-			querystring = querystring.concat(`age=${age}&`);
+		userIdArr.forEach((userId) => {
+			querystring = querystring.concat(`userId=${userId}&`);
 		});
 		categoryFilters.forEach((category) => {
 			querystring = querystring.concat(`category=${category}&`);
@@ -36,19 +36,17 @@ const useAxiosOrders = () => {
 			});
 	};
 
-	const updateTask = async (editedTask) => {
-		const { _id, name, currentStatus, description, avatarColor, avatarIcon } =
-			editedTask;
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
+	const updateOrder = async (orderId, comment, orderStatus) => {
+		// const headers = {
+		// 	Authorization: `Bearer ${getUserToken()}`,
+		// };
 		return axios
 			.patch(
-				`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${_id}`,
-				{ name, currentStatus, description, avatarColor, avatarIcon },
-				{
-					headers,
-				}
+				`${process.env.REACT_APP_SERVER_URL}/api/v1/orders/${orderId}`,
+				{ comment, orderStatus }
+				// {
+				// 	headers,
+				// }
 			)
 			.then((res) => {
 				return res.data;
@@ -135,7 +133,7 @@ const useAxiosOrders = () => {
 		getAllOrders,
 		deleteTask,
 		getProduct,
-		updateTask,
+		updateOrder,
 		getRoles,
 		deleteCloudinaryImage,
 		createOrder,

@@ -179,8 +179,8 @@ export default function ProductFilters(props) {
 						fullWidth
 						size="large"
 						type="submit"
-						color="inherit"
-						variant="outlined"
+						color="success"
+						variant="contained"
 						onClick={() => handleFilter()}
 					>
 						Pokreni filter
@@ -191,8 +191,8 @@ export default function ProductFilters(props) {
 						fullWidth
 						size="large"
 						type="submit"
-						color="inherit"
-						variant="outlined"
+						color="secondary"
+						variant="contained"
 						onClick={() => clearFilter()}
 					>
 						Očisti filter

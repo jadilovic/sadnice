@@ -23,7 +23,6 @@ import UserWindow from '../utils/UserWindow';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import PersonIcon from '@mui/icons-material/Person';
 import raspberry from '../images/raspberry.png';
@@ -113,7 +112,7 @@ const Navbar = (props) => {
 			section: 'Narudžbe',
 			icon: <FormatListNumberedIcon />,
 			linkToSection: '/orders',
-			permission: 'admin',
+			permission: 'member',
 		},
 		{
 			section: 'Sadnice',
@@ -122,21 +121,15 @@ const Navbar = (props) => {
 			permission: 'admin',
 		},
 		{
-			section: 'Profil',
-			icon: <PersonIcon />,
-			linkToSection: '/profile',
-			permission: 'member',
-		},
-		{
 			section: 'Korisnici',
 			icon: <PeopleOutlineIcon />,
 			linkToSection: '/users',
 			permission: 'admin',
 		},
 		{
-			section: 'Tasks',
-			icon: <QueryStatsIcon />,
-			linkToSection: '/tasks',
+			section: 'Profil',
+			icon: <PersonIcon />,
+			linkToSection: '/profile',
 			permission: 'member',
 		},
 	];

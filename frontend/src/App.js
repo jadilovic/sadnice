@@ -54,8 +54,8 @@ const App = () => {
 					<Route component={Print} path="/order" exact />
 					<PrivateRoute component={UserProfile} path="/profile" exact />
 					<PrivateRoute component={Restricted} path="/restricted" exact />
+					<PrivateRoute component={Orders} path="/orders" exact />
 					<AdminRoute component={CreateProduct} path="/create_product" exact />
-					<AdminRoute component={Orders} path="/orders" exact />
 					{/* <AdminRoute component={Edit} path="/edit" exact /> */}
 					<AdminRoute component={Users} path="/users" exact />
 					<Route component={Error} path="/*" />

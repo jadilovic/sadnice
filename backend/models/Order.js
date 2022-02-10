@@ -61,7 +61,9 @@ const OrderSchema = new mongoose.Schema(
 		},
 		comment: {
 			type: String,
-			maxlength: [100, 'Comment can be maximum 100 characters long'],
+			required: [true, 'Please provide comment'],
+			minlength: [4, 'Comment must be minimum 4 characters long'],
+			maxlength: [200, 'Comment can be maximum 100 characters long'],
 		},
 	},
 	{ timestamps: true }

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-
 import 'moment/locale/bs';
+import { getUserData } from '../auth/Authentication';
+import { useHistory } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import {
 	Grid,
@@ -12,38 +13,59 @@ import {
 	Paper,
 	Stack,
 	Chip,
+	Button,
+	TextField,
+	Select,
+	MenuItem,
 } from '@mui/material';
 import UserWindow from '../utils/UserWindow';
 import LoadingPage from '../components/LoadingPage';
 import useAxiosProducts from '../utils/useAxiosProducts';
+import useAxiosOrders from '../utils/useAxiosOrders';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import statuses from '../data/statuses';
 
 const OrderSummary = React.forwardRef((props, ref) => {
 	const productsDB = useAxiosProducts();
+	const ordersDB = useAxiosOrders();
 	const screen = UserWindow();
 	const [loading, setLoading] = useState(true);
 	const [order, setOrder] = useState({});
 	const [products, setProducts] = useState([]);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [totalOrder, setTotalOrder] = useState(0);
+	const [error, setError] = useState(null);
+	const [comment, setComment] = useState('');
+	const [orderStatus, setOrderStatus] = useState('');
+	const [admin, setAdmin] = useState(false);
+	const history = useHistory();
 
 	moment.locale('bs');
 
 	const getProducts = async () => {
 		const products = await productsDB.getAllProducts([], [], []);
-		console.log(products);
 		setProducts(products);
-		setLoading(false);
 	};
+
+	useEffect(() => {
+		console.log('useEffect test on products ');
+		setComment(order.comment);
+		setOrderStatus(order.orderStatus);
+		setLoading(false);
+	}, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		setLoading(true);
 		const localStorageOrder = JSON.parse(localStorage.getItem('order'));
+		const user = getUserData();
+		if (user.role === 'admin') {
+			setAdmin(true);
+		}
 		setOrder(localStorageOrder);
 		setShoppingCart(localStorageOrder.shoppingCart);
 		setTotalOrder(Number(localStorageOrder.totalOrder));
@@ -54,7 +76,43 @@ const OrderSummary = React.forwardRef((props, ref) => {
 		return products.find((product) => product._id === productId);
 	};
 
-	console.log(order);
+	const handleChange = (event) => {
+		event.preventDefault();
+		setComment(event.target.value);
+	};
+
+	const submitData = async (e) => {
+		e.preventDefault();
+		try {
+			const updatedOrder = await ordersDB.updateOrder(
+				order._id,
+				comment,
+				orderStatus
+			);
+			console.log(updatedOrder);
+			history.push('/orders');
+		} catch (err) {
+			console.log(err);
+			if (err.response) {
+				setError(err.response.data.msg.split('-').pop());
+			} else {
+				setError('Network error. Pokušajte ponovo kasnije.');
+			}
+		}
+	};
+
+	const handleOrderStatusChange = (event) => {
+		event.preventDefault();
+		setOrderStatus(event.target.value);
+		//	setChangeBicycleStatus(!changeBicycleStatus);
+	};
+
+	const getStatusColor = () => {
+		const statusObject = statuses.find((status) => orderStatus === status.name);
+		return statusObject.color;
+	};
+
+	console.log(comment);
 
 	if (loading) {
 		return <LoadingPage />;
@@ -153,6 +211,9 @@ const OrderSummary = React.forwardRef((props, ref) => {
 								<Typography variant="body1">
 									{`${order.postNumber} ${order.city}`}
 								</Typography>
+								<Typography paddingTop={1} variant="body1">
+									{`Telefon: ${order.phone}`}
+								</Typography>
 							</CardContent>
 						</Card>
 					</Grid>
@@ -167,31 +228,77 @@ const OrderSummary = React.forwardRef((props, ref) => {
 								>
 									{`Broj narudžbe: ${order.orderNumber}`}
 								</Typography>
-								<Typography variant="body2">
-									{`Datum: ${moment(order.createdAt).format('LLLL')}`}
+								<Typography variant="body1">
+									{`Datum narudžbe: ${moment(order.createdAt).format('lll')}`}
 								</Typography>
-								<Stack direction="row" spacing={1}>
-									<Typography variant="body2">Status: </Typography>
-									<Chip
-										label={`${
-											order.orderStatus === 'ongoing'
-												? 'U pripremi'
-												: order.orderStatus === 'completed'
-												? 'Ispruceno'
-												: 'Otkazano'
-										}`}
-										color={`${
-											order.orderStatus === 'ongoing'
-												? 'primary'
-												: order.orderStatus === 'completed'
-												? 'secondary'
-												: 'error'
-										}`}
-									/>
+								<Typography variant="body1">
+									{`Datum zadnje izmjene: ${moment(order.updatedAt).format(
+										'lll'
+									)}`}
+								</Typography>
+								<Stack padding={1} direction="row" spacing={1}>
+									<Typography variant="body1">Status: </Typography>
+									<Select
+										readOnly={!admin}
+										size="small"
+										variant="outlined"
+										style={{ width: 165 }}
+										value={orderStatus}
+										onChange={handleOrderStatusChange}
+										sx={{
+											backgroundColor: getStatusColor(orderStatus),
+											alignSelf: 'center',
+										}}
+									>
+										{statuses.map((status, index) => {
+											return (
+												<MenuItem
+													sx={{
+														backgroundColor: `${status.color}`,
+													}}
+													key={index}
+													value={status.name}
+												>
+													{` ${status.title}`}
+												</MenuItem>
+											);
+										})}
+									</Select>
 								</Stack>
-								<Typography variant="body2">
-									{`Telefon: ${order.phone}`}
-								</Typography>
+							</CardContent>
+						</Card>
+					</Grid>
+					<Grid item xs={12}>
+						<Card>
+							<CardContent>
+								<form autoComplete="off" noValidate onSubmit={submitData}>
+									<TextField
+										InputProps={{
+											readOnly: !admin,
+										}}
+										margin="normal"
+										required
+										fullWidth
+										multiline
+										minRows={4}
+										name="comment"
+										label="Komentar"
+										id="comment"
+										error={error ? true : false}
+										helperText={error}
+										value={comment}
+										onChange={handleChange}
+									/>
+									{admin && (
+										<Button
+											type="submit"
+											variant="contained"
+											sx={{ mt: 3, mb: 2 }}
+										>
+											Dodaj novi status / komentar
+										</Button>
+									)}
+								</form>
 							</CardContent>
 						</Card>
 					</Grid>

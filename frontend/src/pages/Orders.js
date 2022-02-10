@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Typography, Box, Chip } from '@mui/material';
 import useAxiosOrders from '../utils/useAxiosOrders';
 import UserWindow from '../utils/UserWindow';
@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
 import statuses from '../data/statuses';
 import moment from 'moment';
+import { getUserData } from '../auth/Authentication';
 
 // {
 // 	field: 'fullName',
@@ -27,9 +28,11 @@ const Orders = () => {
 	const mongoDB = useAxiosOrders();
 	const [orders, setOrders] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const isMounted = useRef(false);
 	const history = useHistory();
 	const data = useLocalStorageHook();
 	moment.locale('bs');
+	let category = localStorage.getItem('category');
 
 	const handleClick = (event, cellValue) => {
 		data.saveSelectedUserId(cellValue.row.createdBy);
@@ -47,12 +50,50 @@ const Orders = () => {
 		return status.hex;
 	};
 
+	const displayOrders = async () => {
+		const userOrders = localStorage.getItem('userOrders');
+		let userId = '';
+		if (userOrders) {
+			userId = userOrders;
+		} else {
+			const user = getUserData();
+			if (user.role === 'admin') {
+				userId = '';
+			} else {
+				userId = user._id;
+			}
+		}
+		try {
+			const dbOrders = await mongoDB.getAllOrders([userId], []);
+			setOrders(dbOrders);
+			setLoading(false);
+		} catch (err) {
+			console.log(err.response);
+		}
+		localStorage.removeItem('userOrders');
+	};
+
+	useEffect(() => {
+		displayOrders();
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		if (isMounted.current) {
+			setLoading(true);
+			console.log('category use effect : ', category);
+			displayOrders();
+		} else {
+			isMounted.current = true;
+		}
+	}, [category]); // eslint-disable-line react-hooks/exhaustive-deps
+
 	const columns = [
 		{ field: '_id', hide: true, flex: 1 },
 		{
 			field: 'orderNumber',
 			headerName: 'Br.',
-			flex: 1,
+			//	flex: 1,
+			minWidth: 30,
 			align: 'center',
 			renderCell: (cellValues) => {
 				return (
@@ -71,15 +112,16 @@ const Orders = () => {
 		{
 			field: 'createdAt',
 			headerName: 'Datum',
-			flex: 1,
+			//	flex: 1,
+			minWidth: 30,
 			renderCell: (params) => (
 				<Typography variant="body2">
 					{moment(params.value).format('lll')}
 				</Typography>
 			),
 		},
-		{ field: 'firstName', headerName: 'Ime', flex: 1 },
-		{ field: 'lastName', headerName: 'Prezime', flex: 1 },
+		{ field: 'firstName', headerName: 'Ime', minWidth: 30 },
+		{ field: 'lastName', headerName: 'Prezime', minWidth: 30 },
 		{
 			field: 'createdBy',
 			headerName: 'Korisnik',
@@ -141,22 +183,10 @@ const Orders = () => {
 				);
 			},
 		},
-		{ field: 'city', headerName: 'Grad', flex: 1 },
+		{ field: 'city', headerName: 'Grad', minWidth: 30 },
 	];
 
-	const displayOrders = async () => {
-		try {
-			const dbOrders = await mongoDB.getAllOrders([], []);
-			setOrders(dbOrders);
-			setLoading(false);
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
-
-	useEffect(() => {
-		displayOrders();
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	console.log('user ID : ', category);
 
 	if (loading) {
 		return <LoadingPage />;
