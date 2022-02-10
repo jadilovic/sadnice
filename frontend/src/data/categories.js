@@ -7,8 +7,8 @@ const categories = [
 	'Kupina',
 	'Tajberi',
 	'Gođi',
-	'Ljesnjak',
-	'Visnja',
+	'Lješnjak',
+	'Višnja',
 ];
 
 export default categories;

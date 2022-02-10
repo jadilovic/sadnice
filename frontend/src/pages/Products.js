@@ -29,10 +29,23 @@ const Products = () => {
 		: '';
 
 	const getProducts = async () => {
-		if (category === 'Home') {
+		const categoryArr = [];
+		if (category === 'Home' || category === 'Profil') {
 			category = '';
 		}
-		const products = await productsDB.getAllProducts([''], [category], ['']);
+
+		if (category === 'Ostalo') {
+			category = ['Lješnjak', 'Višnja'];
+			categoryArr.push(...category);
+		} else {
+			categoryArr.push(category);
+		}
+
+		const products = await productsDB.getAllProducts(
+			[''],
+			[...categoryArr],
+			['']
+		);
 		setProducts(products);
 		setFilteredProducts(products);
 		setSelectedFilters('');

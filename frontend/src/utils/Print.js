@@ -6,7 +6,7 @@ import UserWindow from '../utils/UserWindow';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -18,10 +18,16 @@ const Item = styled(Paper)(({ theme }) => ({
 const Print = () => {
 	const componentRef = useRef();
 	const screen = UserWindow();
+	const history = useHistory();
 
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current,
 	});
+
+	const handleHome = () => {
+		localStorage.setItem('category', 'Home');
+		history.push('/products');
+	};
 
 	return (
 		<div>
@@ -53,10 +59,9 @@ const Print = () => {
 							<Item>
 								<Button
 									sx={{ width: 200 }}
-									to="/products"
 									color="secondary"
 									variant="contained"
-									component={RouterLink}
+									onClick={handleHome}
 								>
 									Sadnice početna
 								</Button>

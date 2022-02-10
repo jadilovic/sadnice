@@ -3,7 +3,7 @@ import { Typography, Box, Chip } from '@mui/material';
 import useAxiosRequest from '../utils/useAxiosRequest';
 import UserWindow from '../utils/UserWindow';
 import LoadingPage from '../components/LoadingPage';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
@@ -57,9 +57,10 @@ const Users = () => {
 					<Chip
 						style={{
 							minWidth: 80,
-							backgroundColor: getColor(cellValues.row.role),
 						}}
+						color={getColor(cellValues.value)}
 						label={cellValues.row.role}
+						variant="filled"
 					/>
 				);
 			},
@@ -73,9 +74,11 @@ const Users = () => {
 					<Chip
 						style={{
 							minWidth: 80,
-							backgroundColor: `${cellValues.row.isActive ? 'green' : 'red'}`,
+							//	backgroundColor: `${cellValues.row.isActive ? 'green' : 'red'}`,
 						}}
 						label={`${cellValues.row.isActive ? 'Yes' : 'No'}`}
+						color={`${cellValues.row.isActive ? 'success' : 'error'}`}
+						variant="outlined"
 					/>
 				);
 			},
@@ -129,7 +132,7 @@ const Users = () => {
 					width: '100%',
 				}}
 			>
-				<Typography>Users</Typography>
+				<Typography align="center">Lista registrovanih korisnika</Typography>
 				<div style={{ height: screen.dynamicHeight - 120, width: '100%' }}>
 					<DataGrid
 						getRowId={(row) => row._id}
@@ -137,7 +140,8 @@ const Users = () => {
 						columns={columns}
 						pageSize={5}
 						rowsPerPageOptions={[5]}
-						checkboxSelection
+						components={{ Toolbar: GridToolbar }}
+						//	checkboxSelection
 					/>
 				</div>
 			</Box>

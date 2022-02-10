@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserWindow from '../utils/UserWindow';
 import useAxiosRequest from '../utils/useAxiosRequest';
 import { useHistory } from 'react-router-dom';
@@ -11,11 +11,27 @@ import {
 	Divider,
 	Grid,
 	TextField,
-	Alert,
 	InputLabel,
+	Container,
 } from '@mui/material';
 import LoadingPage from '../components/LoadingPage';
 import roles from '../data/roles';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+
+const Item = styled(Paper)(({ theme }) => ({
+	...theme.typography.body2,
+	padding: theme.spacing(1),
+	textAlign: 'center',
+	color: theme.palette.text.secondary,
+}));
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const UserProfile = () => {
 	const history = useHistory();
@@ -28,12 +44,18 @@ const UserProfile = () => {
 		address: '',
 		city: '',
 		postNumber: '',
+		role: '',
 	});
 	const [error, setError] = useState('');
 	const [fieldErrors, setFieldErrors] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [admin, setAdmin] = useState(false);
 	const mongoDB = useAxiosRequest();
+	const [open, setOpen] = React.useState(false);
+
+	const handleSnackbar = () => {
+		setOpen(true);
+	};
 
 	const handleChange = (event) => {
 		if (event.target.name === 'isActive') {
@@ -53,6 +75,13 @@ const UserProfile = () => {
 	const getUserObject = async (userId) => {
 		try {
 			const editingUserObject = await mongoDB.getUser(userId);
+			// Adding empty string to null values
+			const propertiesArray = Object.keys(editingUserObject.user);
+			for (let i = 0; i < propertiesArray.length; i++) {
+				if (editingUserObject.user[propertiesArray[i]] === null) {
+					editingUserObject.user[propertiesArray[i]] = '';
+				}
+			}
 			setUserValues({ ...userValues, ...editingUserObject.user });
 			setLoading(false);
 		} catch (error) {
@@ -105,7 +134,8 @@ const UserProfile = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		// remove not empty values
+		setLoading(true);
+		// Adding null to empty values
 		const propertiesArray = Object.keys(userValues);
 		for (let i = 0; i < propertiesArray.length; i++) {
 			if (userValues[propertiesArray[i]] === '') {
@@ -114,8 +144,9 @@ const UserProfile = () => {
 		}
 		try {
 			const editedUser = await mongoDB.updateUser(userValues);
-			console.log('edited user values : ', editedUser);
-			history.push('/users');
+			handleSnackbar();
+			setFieldErrors({});
+			getUserObject(editedUser.user._id);
 		} catch (err) {
 			console.log(err.response.data.msg);
 			try {
@@ -131,216 +162,313 @@ const UserProfile = () => {
 				setFieldErrors({});
 				setError('Network error. Try again later.');
 			}
+			setLoading(false);
 		}
 	};
 
-	console.log('user profile render : ', userValues);
+	const handleUsers = () => {
+		history.push('/users');
+	};
+
+	const handleProducts = () => {
+		localStorage.setItem('category', 'Home');
+		history.push('/products');
+	};
+
+	const handleOrders = () => {
+		localStorage.setItem('category', 'Home');
+		history.push('/products');
+	};
+
+	console.log('field errors : ', fieldErrors);
 
 	if (loading) {
 		return <LoadingPage />;
 	}
 
 	return (
-		<Box
-			sx={{
-				flexGrow: 1,
-				paddingTop: 9,
-				paddingLeft: screen.dynamicWidth < 600 ? 0 : 25,
-				paddingRight: 2,
-				width: '100%',
-			}}
-		>
-			<form autoComplete="off" noValidate onSubmit={handleSubmit}>
-				<Card>
-					<CardHeader
-						//	subheader={`${userValues.firstName} ${userValues.lastName}`}
-						title="Profil korisnika"
-					/>
-					{error && (
+		<>
+			<Box
+				sx={{
+					flexGrow: 1,
+					paddingTop: 9,
+					paddingLeft: screen.dynamicWidth < 600 ? 0 : 25,
+					paddingRight: 2,
+					width: '100%',
+				}}
+			>
+				<form autoComplete="off" noValidate onSubmit={handleSubmit}>
+					<Card>
+						<CardHeader
+							//	subheader={`${userValues.firstName} ${userValues.lastName}`}
+							title="Profil korisnika"
+						/>
+						{error && (
+							<Box
+								sx={{
+									paddingTop: 2,
+									paddingBottom: 2,
+									bgcolor: 'background.paper',
+								}}
+							>
+								<Alert severity="error">{error}</Alert>
+							</Box>
+						)}
+						<Divider />
+						<CardContent>
+							<Grid container spacing={3}>
+								<Grid item md={6} xs={12}>
+									<TextField
+										error={fieldErrors?.firstName?.error ? true : false}
+										helperText={fieldErrors?.firstName?.msg}
+										fullWidth
+										label="Ime"
+										name="firstName"
+										onChange={handleChange}
+										required
+										value={userValues.firstName}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}>
+									<TextField
+										error={fieldErrors?.lastName?.error ? true : false}
+										helperText={fieldErrors?.lastName?.msg}
+										fullWidth
+										label="Prezime"
+										name="lastName"
+										onChange={handleChange}
+										required
+										value={userValues.lastName}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}>
+									<TextField
+										error={fieldErrors?.email?.error ? true : false}
+										helperText={fieldErrors?.email?.msg}
+										fullWidth
+										label="Email"
+										name="email"
+										onChange={handleChange}
+										required
+										value={userValues.email}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}>
+									<TextField
+										type={'number'}
+										error={fieldErrors?.phone?.error ? true : false}
+										helperText={fieldErrors?.phone?.msg}
+										fullWidth
+										label="Broj telefona"
+										name="phone"
+										onChange={handleChange}
+										value={userValues.phone}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}>
+									<TextField
+										error={fieldErrors?.address?.error ? true : false}
+										helperText={fieldErrors?.address?.msg}
+										fullWidth
+										label="Adresa"
+										name="address"
+										onChange={handleChange}
+										required
+										value={userValues.address}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}>
+									<TextField
+										error={fieldErrors?.city?.error ? true : false}
+										helperText={fieldErrors?.city?.msg}
+										fullWidth
+										label="Grad"
+										name="city"
+										onChange={handleChange}
+										required
+										value={userValues.city}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}>
+									<TextField
+										type={'number'}
+										error={fieldErrors?.postNumber?.error ? true : false}
+										helperText={fieldErrors?.postNumber?.msg}
+										fullWidth
+										label="Broj pošte"
+										name="postNumber"
+										onChange={handleChange}
+										required
+										value={userValues.postNumber}
+										variant="outlined"
+									/>
+								</Grid>
+								<Grid item md={6} xs={12}></Grid>
+								{admin && (
+									<>
+										<Grid item md={6} xs={12}>
+											<InputLabel>Odaberi status</InputLabel>
+											<TextField
+												sx={{
+													backgroundColor:
+														userValues.role === 'admin' ? 'red' : 'lightblue',
+													borderRadius: 1,
+												}}
+												color={getColor(userValues.role)}
+												fullWidth
+												name="role"
+												onChange={handleChange}
+												required
+												select
+												SelectProps={{ native: true }}
+												value={userValues.role}
+												variant="outlined"
+											>
+												{roles.map((role) => (
+													<option
+														//	style={{ backgroundColor: role.hex }}
+														color={role.hex}
+														key={role.name}
+														value={role.name}
+													>
+														{role.name}
+													</option>
+												))}
+											</TextField>
+										</Grid>
+
+										<Grid item md={6} xs={12}>
+											<InputLabel>Odaberi registraciju</InputLabel>
+											<TextField
+												sx={{
+													backgroundColor: userValues.isActive
+														? 'green'
+														: 'red',
+													color: 'white',
+													borderRadius: 1,
+												}}
+												fullWidth
+												//	label="Status korisnika"
+												name="isActive"
+												onChange={handleChange}
+												required
+												select
+												SelectProps={{ native: true }}
+												value={userValues.isActive}
+												variant="outlined"
+											>
+												<option
+													style={{ backgroundColor: 'green' }}
+													value={true}
+												>
+													Aktivan
+												</option>
+												<option
+													style={{ backgroundColor: 'red' }}
+													value={false}
+												>
+													Isključen
+												</option>
+											</TextField>
+										</Grid>
+									</>
+								)}
+							</Grid>
+						</CardContent>
+						<Divider />
 						<Box
 							sx={{
-								paddingTop: 2,
-								paddingBottom: 2,
-								bgcolor: 'background.paper',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								p: 2,
 							}}
 						>
-							<Alert severity="error">{error}</Alert>
+							<Button
+								sx={{ width: 200 }}
+								type="submit"
+								color="primary"
+								variant="contained"
+							>
+								Sačuvaj podatke
+							</Button>
 						</Box>
-					)}
-					<Divider />
-					<CardContent>
-						<Grid container spacing={3}>
-							<Grid item md={6} xs={12}>
-								<TextField
-									error={fieldErrors?.firstName?.error ? true : false}
-									helperText={fieldErrors?.firstName?.msg}
-									fullWidth
-									label="Ime"
-									name="firstName"
-									onChange={handleChange}
-									required
-									value={userValues.firstName}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									error={fieldErrors?.lastName?.error ? true : false}
-									helperText={fieldErrors?.lastName?.msg}
-									fullWidth
-									label="Prezime"
-									name="lastName"
-									onChange={handleChange}
-									required
-									value={userValues.lastName}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									error={fieldErrors?.email?.error ? true : false}
-									helperText={fieldErrors?.email?.msg}
-									fullWidth
-									label="Email"
-									name="email"
-									onChange={handleChange}
-									required
-									value={userValues.email}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									type={'number'}
-									error={fieldErrors?.phone?.error ? true : false}
-									helperText={fieldErrors?.phone?.msg}
-									fullWidth
-									label="Broj telefona"
-									name="phone"
-									onChange={handleChange}
-									value={userValues.phone}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									error={fieldErrors?.address?.error ? true : false}
-									helperText={fieldErrors?.address?.msg}
-									fullWidth
-									label="Adresa"
-									name="address"
-									onChange={handleChange}
-									required
-									value={userValues.address}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									error={fieldErrors?.city?.error ? true : false}
-									helperText={fieldErrors?.city?.msg}
-									fullWidth
-									label="Grad"
-									name="city"
-									onChange={handleChange}
-									required
-									value={userValues.city}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}>
-								<TextField
-									type={'number'}
-									error={fieldErrors?.postNumber?.error ? true : false}
-									helperText={fieldErrors?.postNumber?.msg}
-									fullWidth
-									label="Broj pošte"
-									name="postNumber"
-									onChange={handleChange}
-									required
-									value={userValues.postNumber}
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid item md={6} xs={12}></Grid>
-							{admin && (
-								<>
-									<Grid item md={6} xs={12}>
-										<InputLabel>Odaberi status</InputLabel>
-										<TextField
-											sx={{
-												backgroundColor: getColor(userValues.role),
-												color: 'white',
-												borderRadius: 1,
-											}}
-											fullWidth
-											//	label="Select Role"
-											name="role"
-											onChange={handleChange}
-											required
-											select
-											SelectProps={{ native: true }}
-											value={userValues.role}
-											variant="outlined"
-										>
-											{roles.map((role) => (
-												<option
-													style={{ backgroundColor: role.hex }}
-													key={role.name}
-													value={role.name}
-												>
-													{role.name}
-												</option>
-											))}
-										</TextField>
-									</Grid>
-
-									<Grid item md={6} xs={12}>
-										<InputLabel>Odaberi registraciju</InputLabel>
-										<TextField
-											sx={{
-												backgroundColor: userValues.isActive ? 'green' : 'red',
-												color: 'white',
-												borderRadius: 1,
-											}}
-											fullWidth
-											//	label="Status korisnika"
-											name="isActive"
-											onChange={handleChange}
-											required
-											select
-											SelectProps={{ native: true }}
-											value={userValues.isActive}
-											variant="outlined"
-										>
-											<option style={{ backgroundColor: 'green' }} value={true}>
-												Aktivan
-											</option>
-											<option style={{ backgroundColor: 'red' }} value={false}>
-												Isključen
-											</option>
-										</TextField>
-									</Grid>
-								</>
-							)}
+					</Card>
+				</form>
+				<Grid style={{ marginTop: 5 }} container spacing={1}>
+					<Grid item xs={12} sm={6}>
+						<Item>
+							<Button
+								sx={{ width: 200 }}
+								onClick={handleProducts}
+								color="warning"
+								variant="contained"
+							>
+								Sadnice
+							</Button>
+						</Item>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<Item>
+							<Button
+								sx={{ width: 200 }}
+								onClick={handleOrders}
+								color="secondary"
+								variant="contained"
+							>
+								Narudžbe
+							</Button>
+						</Item>
+					</Grid>
+					{admin && (
+						<Grid item xs={12} sm={6}>
+							<Item>
+								<Button
+									sx={{ width: 200 }}
+									color="success"
+									variant="contained"
+									onClick={handleUsers}
+								>
+									Korisnici
+								</Button>
+							</Item>
 						</Grid>
-					</CardContent>
-					<Divider />
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'flex-end',
-							p: 2,
-						}}
-					>
-						<Button type="submit" color="primary" variant="contained">
-							Save details
-						</Button>
-					</Box>
-				</Card>
-			</form>
-		</Box>
+					)}
+				</Grid>
+				<CustomizedSnackbars
+					open={open}
+					setOpen={setOpen}
+					handleSnackbar={handleSnackbar}
+				/>
+			</Box>
+		</>
 	);
 };
+
+function CustomizedSnackbars(props) {
+	const { open, setOpen } = props;
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpen(false);
+	};
+
+	return (
+		<Stack spacing={2} sx={{ width: '100%' }}>
+			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+					Korisnički profil je uspješno izmjenjen!
+				</Alert>
+			</Snackbar>
+		</Stack>
+	);
+}
 
 export default UserProfile;

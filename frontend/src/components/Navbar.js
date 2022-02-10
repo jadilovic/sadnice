@@ -110,18 +110,6 @@ const Navbar = (props) => {
 	];
 	let drawerAdmin = [
 		{
-			section: 'Profil',
-			icon: <PersonIcon />,
-			linkToSection: '/profile',
-			permission: 'member',
-		},
-		{
-			section: 'Korisnici',
-			icon: <PeopleOutlineIcon />,
-			linkToSection: '/users',
-			permission: 'admin',
-		},
-		{
 			section: 'Narudžbe',
 			icon: <FormatListNumberedIcon />,
 			linkToSection: '/orders',
@@ -131,6 +119,18 @@ const Navbar = (props) => {
 			section: 'Sadnice',
 			icon: <LibraryBooksIcon />,
 			linkToSection: '/create_product',
+			permission: 'admin',
+		},
+		{
+			section: 'Profil',
+			icon: <PersonIcon />,
+			linkToSection: '/profile',
+			permission: 'member',
+		},
+		{
+			section: 'Korisnici',
+			icon: <PeopleOutlineIcon />,
+			linkToSection: '/users',
 			permission: 'admin',
 		},
 		{
@@ -192,11 +192,11 @@ const Navbar = (props) => {
 		}
 	};
 
-	const handleMenuClick = (menuLink, category) => {
+	const handleMenuClick = (menuLink, categorySection) => {
 		if (screen.dynamicWidth < 600) {
 			setDrawerOpen(false);
 		}
-		localStorage.setItem('category', category);
+		localStorage.setItem('category', categorySection);
 		history.push(menuLink);
 	};
 

@@ -1,7 +1,6 @@
-const orderStatus = [
-	{ name: 'ongoing', hex: '#FFFF00' },
-	{ name: 'completed', hex: '#00FF00' },
-	{ name: 'canceled', hex: '#FF0000' },
+const roles = [
+	{ name: 'admin', hex: 'error' },
+	{ name: 'member', hex: 'info' },
 ];
 
-export default orderStatus;
+export default roles;

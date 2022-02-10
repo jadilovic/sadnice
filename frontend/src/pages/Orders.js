@@ -3,11 +3,12 @@ import { Typography, Box, Chip } from '@mui/material';
 import useAxiosOrders from '../utils/useAxiosOrders';
 import UserWindow from '../utils/UserWindow';
 import LoadingPage from '../components/LoadingPage';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
-import roles from '../data/roles';
+import statuses from '../data/statuses';
+import moment from 'moment';
 
 // {
 // 	field: 'fullName',
@@ -28,43 +29,57 @@ const Orders = () => {
 	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	const data = useLocalStorageHook();
+	moment.locale('bs');
 
 	const handleClick = (event, cellValue) => {
-		data.saveSelectedUserId(cellValue.row._id);
+		data.saveSelectedUserId(cellValue.row.createdBy);
 		history.push('/profile');
 	};
 
-	const getColor = (selectedRole) => {
-		const role = roles.find((role) => role.name === selectedRole);
-		return role.hex;
+	const handleOrder = (event, orderValues) => {
+		console.log(orderValues);
+		localStorage.setItem('order', JSON.stringify(orderValues));
+		history.push('/order');
+	};
+
+	const getColor = (selectedStatus) => {
+		const status = statuses.find((status) => status.name === selectedStatus);
+		return status.hex;
 	};
 
 	const columns = [
 		{ field: '_id', hide: true, flex: 1 },
-		{ field: 'firstName', headerName: 'First name' },
-		{ field: 'lastName', headerName: 'Last name', flex: 1 },
-		{ field: 'totalOrder', headerName: 'Vrijednost', flex: 1 },
 		{
-			field: 'city',
-			headerName: 'Grad',
+			field: 'orderNumber',
+			headerName: 'Br.',
 			flex: 1,
-		},
-		{
-			field: 'orderStatus',
-			headerName: '',
-			minWidth: 30,
+			align: 'center',
 			renderCell: (cellValues) => {
 				return (
-					<Chip
-						style={{
-							minWidth: 80,
-							backgroundColor: getColor(cellValues.row.orderStatus),
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={(event) => {
+							handleOrder(event, cellValues.row);
 						}}
-						label={cellValues.row.role}
-					/>
+					>
+						{cellValues.value}
+					</Button>
 				);
 			},
 		},
+		{
+			field: 'createdAt',
+			headerName: 'Datum',
+			flex: 1,
+			renderCell: (params) => (
+				<Typography variant="body2">
+					{moment(params.value).format('lll')}
+				</Typography>
+			),
+		},
+		{ field: 'firstName', headerName: 'Ime', flex: 1 },
+		{ field: 'lastName', headerName: 'Prezime', flex: 1 },
 		{
 			field: 'createdBy',
 			headerName: 'Korisnik',
@@ -74,39 +89,59 @@ const Orders = () => {
 					<Chip
 						style={{
 							minWidth: 80,
-							backgroundColor: `${
-								cellValues.row.createdBy === '62017af2ee92a0853a8c0021'
-									? 'blue'
-									: 'orange'
-							}`,
 						}}
+						color={`${
+							cellValues.row.createdBy === '62017af2ee92a0853a8c0021'
+								? 'default'
+								: 'info'
+						}`}
 						label={`${
 							cellValues.row.createdBy === '62017af2ee92a0853a8c0021'
 								? 'Gost'
 								: 'Član'
 						}`}
+						variant="outlined"
+						onClick={(event) => {
+							handleClick(event, cellValues);
+						}}
 					/>
 				);
 			},
 		},
 		{
-			field: 'edit',
-			headerName: 'Detalji',
+			field: 'totalOrder',
+			headerName: 'Vrijednost',
+			//	flex: 1,
+			align: 'right',
+			minWidth: 60,
+			renderCell: (cellValues) => {
+				return <Typography variant="body2">{cellValues.value} KM</Typography>;
+			},
+		},
+		{
+			field: 'orderStatus',
+			headerName: 'Status',
 			minWidth: 30,
 			renderCell: (cellValues) => {
 				return (
-					<Button
-						variant="contained"
-						color="primary"
-						onClick={(event) => {
-							handleClick(event, cellValues);
+					<Chip
+						style={{
+							maxWidth: 100,
 						}}
-					>
-						Pregled
-					</Button>
+						color={getColor(cellValues.row.orderStatus)}
+						label={`${
+							cellValues.row.orderStatus === 'ongoing'
+								? 'U pripremi'
+								: cellValues.row.orderStatus === 'completed'
+								? 'Ispruceno'
+								: 'Otkazano'
+						}`}
+						variant="filled"
+					/>
 				);
 			},
 		},
+		{ field: 'city', headerName: 'Grad', flex: 1 },
 	];
 
 	const displayOrders = async () => {
@@ -138,15 +173,16 @@ const Orders = () => {
 					width: '100%',
 				}}
 			>
-				<Typography>Narudžbe</Typography>
+				<Typography align="center">Lista narudžbi</Typography>
 				<div style={{ height: screen.dynamicHeight - 120, width: '100%' }}>
 					<DataGrid
 						getRowId={(row) => row._id}
 						rows={orders}
 						columns={columns}
-						pageSize={5}
-						rowsPerPageOptions={[5]}
-						checkboxSelection
+						pageSize={7}
+						rowsPerPageOptions={[7]}
+						components={{ Toolbar: GridToolbar }}
+						//	checkboxSelection
 					/>
 				</div>
 			</Box>
