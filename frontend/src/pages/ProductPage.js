@@ -11,6 +11,7 @@ import {
 	CardMedia,
 	Card,
 	Container,
+	Chip,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -256,13 +257,23 @@ const ProductPage = () => {
 										display: 'flex',
 									}}
 								>
-									<ButtonGroup variant="contained">
-										<Button onClick={decrease}>-</Button>
-										<Box m="auto" paddingLeft={2}>
-											{itemAmount}
-										</Box>
-										<Button onClick={increase}>+</Button>
-									</ButtonGroup>
+									{product.avialable ? (
+										<ButtonGroup variant="contained">
+											<Button onClick={decrease}>-</Button>
+											<Box m="auto" paddingLeft={2}>
+												{itemAmount}
+											</Box>
+											<Button onClick={increase}>+</Button>
+										</ButtonGroup>
+									) : (
+										<Chip
+											style={{
+												minWidth: 70,
+											}}
+											color="error"
+											label="Rasprodano"
+										/>
+									)}
 								</Grid>
 								<Grid
 									item

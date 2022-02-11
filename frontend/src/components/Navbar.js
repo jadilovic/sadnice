@@ -5,7 +5,6 @@ import { AppBar } from '@mui/material';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-// import bildit from '../images/bildit.png';
 import seedling from '../images/seedling.png';
 import UserMenu from './UserMenu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -25,6 +24,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import PersonIcon from '@mui/icons-material/Person';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import raspberry from '../images/raspberry.png';
 import tayberry from '../images/tayberry.png';
 import currant from '../images/currant.png';
@@ -115,7 +115,7 @@ const Navbar = (props) => {
 			permission: 'member',
 		},
 		{
-			section: 'Sadnice',
+			section: 'Dodaj Sadnicu',
 			icon: <LibraryBooksIcon />,
 			linkToSection: '/create_product',
 			permission: 'admin',
@@ -124,6 +124,12 @@ const Navbar = (props) => {
 			section: 'Korisnici',
 			icon: <PeopleOutlineIcon />,
 			linkToSection: '/users',
+			permission: 'admin',
+		},
+		{
+			section: 'Lista Sadnica',
+			icon: <ViewListIcon />,
+			linkToSection: '/products_list',
 			permission: 'admin',
 		},
 		{

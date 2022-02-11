@@ -65,6 +65,12 @@ const OrderSchema = new mongoose.Schema(
 			minlength: [4, 'Comment must be minimum 4 characters long'],
 			maxlength: [200, 'Comment can be maximum 100 characters long'],
 		},
+		acceptedConditions: {
+			type: String,
+			required: [true, 'Please accept web shop conditions'],
+			minlength: [8, 'Accepted must be minimum 8 characters long'],
+			maxlength: [8, 'Accepted can be maximum 100 characters long'],
+		},
 	},
 	{ timestamps: true }
 );

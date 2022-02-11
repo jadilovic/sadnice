@@ -5,6 +5,7 @@ import { AddressDetails } from '../components/AddressDetails';
 import UserWindow from '../utils/UserWindow';
 import TotalOrder from '../components/TotalOrder';
 import LoadingPage from '../components/LoadingPage';
+import { useHistory } from 'react-router-dom';
 
 const Address = () => {
 	const screen = UserWindow();
@@ -20,16 +21,21 @@ const Address = () => {
 		email: '',
 	});
 	const [loading, setLoading] = useState(true);
+	const history = useHistory();
 
 	useEffect(() => {
 		const localStorageShoppingCart = JSON.parse(
 			localStorage.getItem('shopping_cart')
 		);
-		setShoppingCart(localStorageShoppingCart);
-		setTotalOrder(Number(localStorage.getItem('total_order')));
-		const localStorageUser = JSON.parse(localStorage.getItem('user'));
-		setOrderAddress({ ...orderAddress, ...localStorageUser });
-		setLoading(false);
+		if (localStorageShoppingCart) {
+			setShoppingCart(localStorageShoppingCart);
+			setTotalOrder(Number(localStorage.getItem('total_order')));
+			const localStorageUser = JSON.parse(localStorage.getItem('user'));
+			setOrderAddress({ ...orderAddress, ...localStorageUser });
+			setLoading(false);
+		} else {
+			history.push('/products');
+		}
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (loading) {

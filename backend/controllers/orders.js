@@ -122,7 +122,6 @@ const updateOrder = async (req, res) => {
 	if (!order) {
 		throw new NotFoundError(`Order with id ${userId} was not found`);
 	}
-	console.log(order);
 	res.status(StatusCodes.OK).json({ order });
 };
 

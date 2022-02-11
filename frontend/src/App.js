@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-// import { HashRouter, Switch, Route } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Users from './pages/Users';
 import Signup from './pages/Signup';
-// import Home from './pages/Home';
-// import Edit from './pages/Edit';
 import UserProfile from './pages/UserProfile';
 import Error from './pages/Error';
 import Address from './pages/Address';
@@ -21,8 +18,9 @@ import CheckOut from './pages/CheckOut';
 import CreateProduct from './pages/CreateProduct';
 import ProductPage from './pages/ProductPage';
 import Orders from './pages/Orders';
-import OrderSummary from './pages/OrderSummary';
 import Print from './utils/Print';
+import ProductsList from './pages/ProductsList';
+import ProductEdit from './pages/ProductEdit';
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
@@ -56,7 +54,8 @@ const App = () => {
 					<PrivateRoute component={Restricted} path="/restricted" exact />
 					<PrivateRoute component={Orders} path="/orders" exact />
 					<AdminRoute component={CreateProduct} path="/create_product" exact />
-					{/* <AdminRoute component={Edit} path="/edit" exact /> */}
+					<AdminRoute component={ProductEdit} path="/product_edit" exact />
+					<AdminRoute component={ProductsList} path="/products_list" exact />
 					<AdminRoute component={Users} path="/users" exact />
 					<Route component={Error} path="/*" />
 				</Switch>

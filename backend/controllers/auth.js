@@ -22,6 +22,11 @@ const login = async (req, res) => {
 	if (!user) {
 		throw new UnauthenticatedError('User email is not valid');
 	}
+	if (!user.isActive) {
+		throw new UnauthenticatedError(
+			'Korisnički račun je isključen. Kontaktiratje administratora na 062 261 353 ili nastavite kupovinu kao gost'
+		);
+	}
 	const isPasswordCorrect = await user.comparePasswords(password);
 
 	if (!isPasswordCorrect) {

@@ -3,8 +3,8 @@ const useLocalStorageHook = () => {
 		return JSON.parse(localStorage.getItem('tasks') || '[]');
 	};
 
-	const saveCurrentTaskId = (taskId) => {
-		localStorage.setItem('currentTaskId', taskId);
+	const saveSelectedProductId = (productId) => {
+		localStorage.setItem('currentProductId', productId);
 	};
 
 	const saveSelectedUserId = (userId) => {
@@ -94,7 +94,7 @@ const useLocalStorageHook = () => {
 		getAllTasks,
 		addNewTaskObjectToArrayAndSave,
 		deleteTaskAndUpdateTasksList,
-		saveCurrentTaskId,
+		saveSelectedProductId,
 		getCurrentTaskObject,
 		saveCurrentTaskObject,
 		saveSelectedUserId,

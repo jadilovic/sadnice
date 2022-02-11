@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/bs';
-import { getUserData } from '../auth/Authentication';
+import { getUserData, isAuthenticated } from '../auth/Authentication';
 import { useHistory } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import {
@@ -63,8 +63,10 @@ const OrderSummary = React.forwardRef((props, ref) => {
 		setLoading(true);
 		const localStorageOrder = JSON.parse(localStorage.getItem('order'));
 		const user = getUserData();
-		if (user.role === 'admin') {
-			setAdmin(true);
+		if (isAuthenticated()) {
+			if (user.role === 'admin') {
+				setAdmin(true);
+			}
 		}
 		setOrder(localStorageOrder);
 		setShoppingCart(localStorageOrder.shoppingCart);

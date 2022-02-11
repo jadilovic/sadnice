@@ -44,16 +44,35 @@ const useAxiosProducts = () => {
 			});
 	};
 
-	const updateTask = async (editedTask) => {
-		const { _id, name, currentStatus, description, avatarColor, avatarIcon } =
-			editedTask;
+	const updateProduct = async (editedProduct) => {
+		console.log(editedProduct);
+		const {
+			_id,
+			title,
+			category,
+			description,
+			imageUrl,
+			price,
+			packaging,
+			age,
+			available,
+		} = editedProduct;
 		const headers = {
 			Authorization: `Bearer ${getUserToken()}`,
 		};
 		return axios
 			.patch(
-				`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${_id}`,
-				{ name, currentStatus, description, avatarColor, avatarIcon },
+				`${process.env.REACT_APP_SERVER_URL}/api/v1/products/${_id}`,
+				{
+					title,
+					category,
+					description,
+					imageUrl,
+					price,
+					packaging,
+					age,
+					available,
+				},
 				{
 					headers,
 				}
@@ -136,7 +155,7 @@ const useAxiosProducts = () => {
 		getAllProducts,
 		deleteTask,
 		getProduct,
-		updateTask,
+		updateProduct,
 		getRoles,
 		deleteCloudinaryImage,
 		createProduct,

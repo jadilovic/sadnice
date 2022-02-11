@@ -97,10 +97,30 @@ const getProduct = async (req, res) => {
 			available: 1,
 			age: 1,
 			packaging: 1,
+			category: 1,
 		}
 	);
 	if (!product) {
 		throw new NotFoundError(`No product found with id ${selectedProductId}`);
+	}
+	res.status(StatusCodes.OK).json({ product });
+};
+
+const updateProduct = async (req, res) => {
+	const {
+		params: { id: productId },
+	} = req;
+
+	const product = await Product.findByIdAndUpdate(
+		{ _id: productId },
+		req.body,
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+	if (!product) {
+		throw new NotFoundError(`Product with id ${productId} was not found`);
 	}
 	res.status(StatusCodes.OK).json({ product });
 };
@@ -139,38 +159,12 @@ const emailExists = async (email, userId) => {
 		return 'new';
 	}
 };
-
-const updateUser = async (req, res) => {
-	const {
-		body: { firstName, lastName, email },
-		//	user: { userId },
-		params: { id: userId },
-	} = req;
-	const userEmailStatus = await emailExists(email, userId);
-
-	if (userEmailStatus === 'exists') {
-		throw new BadRequestError(
-			'ValidationError: email-Entered email already exists. Please enter different email.'
-		);
-	}
-	if (userEmailStatus === 'current') {
-		delete req.body.email;
-	}
-
-	const user = await User.findByIdAndUpdate({ _id: userId }, req.body, {
-		new: true,
-		runValidators: true,
-	});
-	if (!user) {
-		throw new NotFoundError(`User with id ${userId} was not found`);
-	}
-	res.status(StatusCodes.OK).json({ user });
-};
 */
 
 module.exports = {
 	getAllProducts,
 	createProduct,
 	getProduct,
+	updateProduct,
 	deleteCloudinaryImage,
 };

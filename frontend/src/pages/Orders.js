@@ -65,6 +65,11 @@ const Orders = () => {
 		}
 		try {
 			const dbOrders = await mongoDB.getAllOrders([userId], []);
+			dbOrders.sort(function (a, b) {
+				// Turn your strings into dates, and then subtract them
+				// to get a value that is either negative, positive, or zero.
+				return new Date(b.createdAt) - new Date(a.createdAt);
+			});
 			setOrders(dbOrders);
 			setLoading(false);
 		} catch (err) {
@@ -112,8 +117,8 @@ const Orders = () => {
 		{
 			field: 'createdAt',
 			headerName: 'Datum',
-			//	flex: 1,
-			minWidth: 30,
+			flex: 1,
+			//	minWidth: 30,
 			renderCell: (params) => (
 				<Typography variant="body2">
 					{moment(params.value).format('lll')}
@@ -183,7 +188,7 @@ const Orders = () => {
 				);
 			},
 		},
-		{ field: 'city', headerName: 'Grad', minWidth: 30 },
+		{ field: 'city', headerName: 'Grad', flex: 1 },
 	];
 
 	console.log('user ID : ', category);
@@ -209,8 +214,8 @@ const Orders = () => {
 						getRowId={(row) => row._id}
 						rows={orders}
 						columns={columns}
-						pageSize={7}
-						rowsPerPageOptions={[7]}
+						pageSize={8}
+						rowsPerPageOptions={[8]}
 						components={{ Toolbar: GridToolbar }}
 						//	checkboxSelection
 					/>

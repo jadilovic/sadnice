@@ -15,6 +15,7 @@ import {
 	FormGroup,
 	FormHelperText,
 	FormControl,
+	Alert,
 } from '@mui/material';
 
 export const AddressDetails = (props) => {
@@ -25,9 +26,11 @@ export const AddressDetails = (props) => {
 		pay: false,
 		agree: false,
 	});
-	const [error, setError] = useState(false);
+	const [conditionsError, setConditionsError] = useState(false);
+	const [backendError, setBackendError] = useState(false);
 	const { pay, agree } = conditions;
 	const mongoDB = useAxiosOrders();
+	const [fieldErrors, setFieldErrors] = useState({});
 
 	const handleChange = (event) => {
 		setOrderAddress({
@@ -36,36 +39,74 @@ export const AddressDetails = (props) => {
 		});
 	};
 
+	const settingErrors = (errors) => {
+		let initialErrors = {
+			firstName: { error: false, msg: '' },
+			lastName: { error: false, msg: '' },
+			city: { error: false, msg: '' },
+			phone: { error: false, msg: '' },
+			address: { error: false, msg: '' },
+			postNumber: { error: false, msg: '' },
+			acceptedConditions: { error: false, msg: '' },
+		};
+		let errorsList = errors.replace('ValidationError: ', '');
+		errorsList = errorsList.split(', ');
+		errorsList.map((item) => {
+			const errorItem = item.split('-');
+			return (initialErrors[errorItem[0]] = {
+				error: true,
+				msg: errorItem[1],
+			});
+		});
+		if (initialErrors.acceptedConditions.error) {
+			setConditionsError(true);
+		}
+		setFieldErrors(initialErrors);
+		initialErrors = {};
+		setBackendError('');
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const checkError = [pay, agree].filter((v) => v).length !== 2;
+		setConditionsError(false);
 		if (checkError) {
-			setError(true);
+			orderAddress.acceptedConditions = '';
 		} else {
-			setError(false);
-			orderAddress.shoppingCart = shoppingCart;
-			orderAddress.totalOrder = totalOrder;
-			orderAddress.orderStatus = 'ongoing';
-			orderAddress.comment = 'Nema';
-			delete orderAddress.email;
-			delete orderAddress._id;
-			// check if isActive false
-			console.log('data : ', orderAddress);
-			try {
-				const order = await mongoDB.createOrder(orderAddress);
-				//	setOrderAddress({});
-				console.log(order);
-				localStorage.setItem('order', JSON.stringify(order));
-				localStorage.removeItem('shopping_cart');
-				localStorage.removeItem('category');
-				localStorage.removeItem('total_order');
-				localStorage.removeItem('product_id');
-				history.push('/order');
-			} catch (err) {
-				console.log(err.response);
-				//	setError(err.response.data.msg);
-			}
+			orderAddress.acceptedConditions = 'Accepted';
 		}
+		orderAddress.shoppingCart = shoppingCart;
+		orderAddress.totalOrder = totalOrder;
+		orderAddress.orderStatus = 'ongoing';
+		orderAddress.comment = 'Nema';
+		delete orderAddress.email;
+		delete orderAddress._id;
+		try {
+			const order = await mongoDB.createOrder(orderAddress);
+			localStorage.setItem('order', JSON.stringify(order));
+			localStorage.removeItem('shopping_cart');
+			localStorage.removeItem('category');
+			localStorage.removeItem('total_order');
+			localStorage.removeItem('product_id');
+			history.push('/order');
+		} catch (err) {
+			console.log(err.response.data.msg);
+			try {
+				if (err.response.data.msg.startsWith('ValidationError: ')) {
+					settingErrors(err.response.data.msg);
+				} else {
+					console.log('test');
+					setFieldErrors({});
+					setBackendError(err.response.data.msg);
+				}
+			} catch (error) {
+				console.log('ERROR : ', error);
+				setFieldErrors({});
+				setBackendError('Network error. Try again later.');
+			}
+			//	setError(err.response.data.msg);
+		}
+		//	}
 	};
 
 	const conditionsChange = (event) => {
@@ -76,7 +117,7 @@ export const AddressDetails = (props) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} autoComplete="off">
+		<form onSubmit={handleSubmit} autoComplete="off" noValidate>
 			<Card
 				sx={{
 					marginBottom: 2,
@@ -91,11 +132,24 @@ export const AddressDetails = (props) => {
 				>
 					Adresa dostave
 				</Typography>
+				{backendError && (
+					<Box
+						sx={{
+							paddingTop: 2,
+							paddingBottom: 2,
+							bgcolor: 'background.paper',
+						}}
+					>
+						<Alert severity="error">{backendError}</Alert>
+					</Box>
+				)}
 				<Divider />
 				<CardContent>
 					<Grid container spacing={3}>
 						<Grid item md={12} xs={12}>
 							<TextField
+								error={fieldErrors?.firstName?.error ? true : false}
+								helperText={fieldErrors?.firstName?.msg}
 								fullWidth
 								label="Ime"
 								name="firstName"
@@ -107,6 +161,8 @@ export const AddressDetails = (props) => {
 						</Grid>
 						<Grid item md={12} xs={12}>
 							<TextField
+								error={fieldErrors?.lastName?.error ? true : false}
+								helperText={fieldErrors?.lastName?.msg}
 								fullWidth
 								label="Prezime"
 								name="lastName"
@@ -118,6 +174,8 @@ export const AddressDetails = (props) => {
 						</Grid>
 						<Grid item md={12} xs={12}>
 							<TextField
+								error={fieldErrors?.address?.error ? true : false}
+								helperText={fieldErrors?.address?.msg}
 								fullWidth
 								label="Address"
 								name="address"
@@ -129,6 +187,8 @@ export const AddressDetails = (props) => {
 						</Grid>
 						<Grid item md={12} xs={12}>
 							<TextField
+								error={fieldErrors?.city?.error ? true : false}
+								helperText={fieldErrors?.city?.msg}
 								fullWidth
 								label="City"
 								name="city"
@@ -140,6 +200,8 @@ export const AddressDetails = (props) => {
 						</Grid>
 						<Grid item md={12} xs={12}>
 							<TextField
+								error={fieldErrors?.postNumber?.error ? true : false}
+								helperText={fieldErrors?.postNumber?.msg}
 								fullWidth
 								label="Post Number"
 								name="postNumber"
@@ -151,6 +213,8 @@ export const AddressDetails = (props) => {
 						</Grid>
 						<Grid item md={12} xs={12}>
 							<TextField
+								error={fieldErrors?.phone?.error ? true : false}
+								helperText={fieldErrors?.phone?.msg}
 								fullWidth
 								label="Phone Number"
 								name="phone"
@@ -165,12 +229,12 @@ export const AddressDetails = (props) => {
 				<Divider />
 				<FormControl
 					required
-					error={error}
+					error={conditionsError}
 					component="fieldset"
 					sx={{ m: 3 }}
 					variant="standard"
 				>
-					{error && (
+					{conditionsError && (
 						<FormHelperText component="legend">
 							Potvrdi prihvatanje uslova kupovine i plaćanja
 						</FormHelperText>
@@ -209,7 +273,7 @@ export const AddressDetails = (props) => {
 							label="Pročitao/la sam i slažem se s uslovima korištenja i odredbama web stranice."
 						/>
 					</FormGroup>
-					{error && (
+					{conditionsError && (
 						<FormHelperText component="legend">
 							Oba kvadratića treba markirati
 						</FormHelperText>
