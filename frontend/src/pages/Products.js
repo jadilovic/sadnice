@@ -43,7 +43,7 @@ const Products = () => {
 
 	const getProducts = async () => {
 		const categoryArr = [];
-		if (category === 'Home' || category === 'Profil') {
+		if (category === 'Home' || category === 'Profil' || 'Dodaj Sadnice') {
 			category = '';
 		}
 
@@ -179,6 +179,7 @@ const Products = () => {
 						}}
 					>
 						<Pagination
+							size="large"
 							page={currentPage}
 							count={count}
 							onChange={handlePageChange}

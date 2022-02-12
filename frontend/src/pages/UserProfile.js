@@ -21,6 +21,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import ConfirmDeleteUser from '../components/ConfirmDeleteUser';
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -52,6 +53,9 @@ const UserProfile = () => {
 	const [admin, setAdmin] = useState(false);
 	const mongoDB = useAxiosRequest();
 	const [open, setOpen] = React.useState(false);
+	const [confirmOpen, setConfirmOpen] = useState(false);
+	const [selectedUser, setSelectedUser] = useState({});
+	const [deleteError, setDeleteError] = useState('');
 
 	const handleSnackbar = () => {
 		setOpen(true);
@@ -94,7 +98,7 @@ const UserProfile = () => {
 		const user = getUserData();
 		if (selectedUserId) {
 			getUserObject(selectedUserId);
-			localStorage.removeItem('selectedUserId');
+			//	localStorage.removeItem('selectedUserId');
 		} else {
 			getUserObject(user._id);
 		}
@@ -180,6 +184,25 @@ const UserProfile = () => {
 		history.push('/orders');
 	};
 
+	const deleteUser = async (userId) => {
+		setLoading(true);
+		try {
+			await mongoDB.deleteUser(userId);
+			localStorage.removeItem('selectedUserId');
+			setLoading(false);
+			history.push('/users');
+		} catch (error) {
+			setDeleteError(error);
+			console.log(error.response.data.msg);
+		}
+	};
+
+	const handleDelete = () => {
+		const localStorageSelectedUserId = localStorage.getItem('selectedUserId');
+		setSelectedUser(localStorageSelectedUserId);
+		setConfirmOpen(true);
+	};
+
 	console.log('user values : ', userValues._id);
 
 	if (loading) {
@@ -212,6 +235,20 @@ const UserProfile = () => {
 								}}
 							>
 								<Alert severity="error">{error}</Alert>
+							</Box>
+						)}
+						{deleteError && (
+							<Box
+								sx={{
+									paddingTop: 2,
+									paddingBottom: 2,
+									bgcolor: 'background.paper',
+								}}
+							>
+								<Alert severity="error">
+									Korisnik nije izbrisan. Nije pronađen korisnik sa unesenim ID
+									brojem!
+								</Alert>
 							</Box>
 						)}
 						<Divider />
@@ -437,18 +474,32 @@ const UserProfile = () => {
 						</Item>
 					</Grid>
 					{admin && (
-						<Grid item xs={12} sm={6}>
-							<Item>
-								<Button
-									sx={{ width: 200 }}
-									color="success"
-									variant="contained"
-									onClick={handleUsers}
-								>
-									Korisnici
-								</Button>
-							</Item>
-						</Grid>
+						<>
+							<Grid item xs={12} sm={6}>
+								<Item>
+									<Button
+										sx={{ width: 200 }}
+										color="success"
+										variant="contained"
+										onClick={handleUsers}
+									>
+										Korisnici
+									</Button>
+								</Item>
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<Item>
+									<Button
+										sx={{ width: 200 }}
+										color="error"
+										variant="contained"
+										onClick={handleDelete}
+									>
+										Poništi korisnika
+									</Button>
+								</Item>
+							</Grid>
+						</>
 					)}
 				</Grid>
 				<CustomizedSnackbars
@@ -456,6 +507,14 @@ const UserProfile = () => {
 					setOpen={setOpen}
 					handleSnackbar={handleSnackbar}
 				/>
+				<div>
+					<ConfirmDeleteUser
+						deleteUser={deleteUser}
+						selectedUser={selectedUser}
+						setConfirmOpen={setConfirmOpen}
+						confirmOpen={confirmOpen}
+					/>
+				</div>
 			</Box>
 		</>
 	);

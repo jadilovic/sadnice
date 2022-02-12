@@ -221,7 +221,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												Product:
+												Naziv:
 											</Typography>
 										</Grid>
 										<Grid item xs={6}>
@@ -239,7 +239,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												Price:
+												Cijena:
 											</Typography>
 										</Grid>
 										<Grid item xs={6} paddingTop={0.5}>
@@ -258,7 +258,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												Amount:
+												Količina:
 											</Typography>
 										</Grid>
 										<Grid item xs={6} paddingTop={1}>
@@ -289,7 +289,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												Total:
+												Ukupno:
 											</Typography>
 										</Grid>
 										<Grid item xs={6} paddingTop={1}>
@@ -308,7 +308,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												Remove:
+												Poništi:
 											</Typography>
 										</Grid>
 										<Grid item xs={6}>

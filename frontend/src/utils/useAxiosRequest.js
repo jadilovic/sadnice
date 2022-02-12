@@ -208,22 +208,22 @@ const useAxiosRequest = () => {
 		}
 	};
 
-	const deleteTask = async (taskId) => {
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
-		try {
-			await axios
-				.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-					headers,
-				})
-				.then((res) => {
-					console.log('task deleted: ', res.data);
-				});
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
+	// const deleteTask = async (taskId) => {
+	// 	const headers = {
+	// 		Authorization: `Bearer ${getUserToken()}`,
+	// 	};
+	// 	try {
+	// 		await axios
+	// 			.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
+	// 				headers,
+	// 			})
+	// 			.then((res) => {
+	// 				console.log('task deleted: ', res.data);
+	// 			});
+	// 	} catch (err) {
+	// 		console.log(err.response);
+	// 	}
+	// };
 
 	// const deleteCloudinaryImage = async (publicId) => {
 	// 	const headers = {
@@ -282,9 +282,27 @@ const useAxiosRequest = () => {
 	// 	}
 	// };
 
+	const deleteUser = async (userId) => {
+		const headers = {
+			Authorization: `Bearer ${getUserToken()}`,
+		};
+		try {
+			return axios
+				.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/${userId}`, {
+					headers,
+				})
+				.then((res) => {
+					return res.data.user;
+				});
+		} catch (err) {
+			console.log(err);
+			return err.response.msg;
+		}
+	};
+
 	return {
 		getTaskStatuses,
-		deleteTask,
+		deleteUser,
 		getAllTasks,
 		createTask,
 		getTask,

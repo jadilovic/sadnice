@@ -6,25 +6,25 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ConfirmDialog(props) {
-	const { selectedOrder, confirmOpen, setConfirmOpen, deleteOrder } = props;
+export default function ConfirmDeleteUser(props) {
+	const { selectedUser, confirmOpen, setConfirmOpen, deleteUser } = props;
 
 	const handleClose = () => {
 		setConfirmOpen(false);
 	};
 
 	const handleYes = () => {
-		deleteOrder(selectedOrder._id);
+		deleteUser(selectedUser);
 		setConfirmOpen(false);
 	};
 
 	return (
 		<div>
 			<Dialog open={confirmOpen} onClose={handleClose}>
-				<DialogTitle>{'Poništi / ukloni narudžbu?'}</DialogTitle>
+				<DialogTitle>{'Poništi / ukloni korisnika?'}</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						{`Da li želite u potpunosti izbrisati narudžbu broj ${selectedOrder.orderNumber}?`}
+						{`Da li želite u potpunosti izbrisati korisnika broj ${selectedUser}?`}
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>

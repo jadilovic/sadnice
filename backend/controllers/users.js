@@ -75,6 +75,18 @@ const updateUser = async (req, res) => {
 	res.status(StatusCodes.OK).json({ user });
 };
 
+const deleteUser = async (req, res) => {
+	const {
+		//	user: { userId },
+		params: { id: selectedUserId },
+	} = req;
+	const user = await User.findByIdAndRemove({ _id: selectedUserId });
+	if (!user) {
+		throw new NotFoundError(`No user found with id ${selectedUserId}`);
+	}
+	res.status(StatusCodes.OK).json({ user });
+};
+
 const createRoles = async (req, res) => {
 	const role = await Role.create(req.body);
 	res.status(StatusCodes.CREATED).json({ role });
@@ -85,4 +97,11 @@ const getAllRoles = async (req, res) => {
 	res.status(StatusCodes.OK).json({ roles, length: roles.length });
 };
 
-module.exports = { getAllUsers, createRoles, getAllRoles, getUser, updateUser };
+module.exports = {
+	getAllUsers,
+	createRoles,
+	getAllRoles,
+	getUser,
+	updateUser,
+	deleteUser,
+};

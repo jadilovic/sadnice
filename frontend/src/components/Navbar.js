@@ -240,7 +240,7 @@ const Navbar = (props) => {
 						</Link>
 					</Typography>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Sadnice Web Shop
+						Sadnice Shop
 					</Typography>
 					<Typography>
 						<IconButton

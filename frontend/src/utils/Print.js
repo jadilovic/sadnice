@@ -114,8 +114,8 @@ const Print = () => {
 								}}
 							>
 								<Alert severity="error">
-									Narudžba nije izbrisana. Nije pronadjena narudžba sa
-									dostavljenim ID brojem!
+									Narudžba nije izbrisana. Nije pronađena narudžba sa unesenim
+									ID brojem!
 								</Alert>
 							</Box>
 						)}

@@ -314,7 +314,7 @@ const ProductPage = () => {
 							color="warning"
 							onClick={handleContinueShopping}
 						>
-							Nastaviti dodavanje sadnica
+							Nastaviti dodavanje
 						</Button>
 						<Button
 							variant="contained"
