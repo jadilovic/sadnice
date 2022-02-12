@@ -42,11 +42,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 function Copyright(props) {
 	return (
-		<Typography variant="body2" align="center" {...props}>
-			{'Copyright © '}
-			<a href="https://mui.com/">
-				Porodično poljoprivredno gazdinstvo Adilović
-			</a>
+		<Typography variant="body1" align="center" {...props}>
+			{'O nama: '}
+			<Link style={{ color: '#648381' }} to="/about" variant="body2">
+				{'Porodično poljoprivredno gazdinstvo Adilović'}
+			</Link>
+
 			{` ${new Date().getFullYear()}.`}
 		</Typography>
 	);
@@ -95,7 +96,7 @@ const Login = () => {
 				paddingLeft: screen.dynamicWidth < 600 ? 0 : 22,
 			}}
 		>
-			<RootStyle title="Login | BILD-IT Web Training">
+			<RootStyle title="Login | Web Shop">
 				<CssBaseline />
 				<Container maxWidth="sm">
 					<SectionStyle>
@@ -107,7 +108,7 @@ const Login = () => {
 							}}
 						>
 							<Typography sx={{ px: 5, mt: 3, mb: 3 }}>
-								Dobrodošli na stranice porodičnog poljoprivrednog gazdinstva
+								Dobrodošli na web shop porodičnog poljoprivrednog gazdinstva
 								Adilović!
 							</Typography>
 							<Typography variant="h6" sx={{ px: 5, mt: 0, mb: 2 }}>

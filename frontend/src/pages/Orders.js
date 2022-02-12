@@ -180,7 +180,7 @@ const Orders = () => {
 							cellValues.row.orderStatus === 'ongoing'
 								? 'U pripremi'
 								: cellValues.row.orderStatus === 'completed'
-								? 'Ispruceno'
+								? 'Ispručeno'
 								: 'Otkazano'
 						}`}
 						variant="filled"

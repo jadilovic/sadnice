@@ -8,7 +8,6 @@ const useAxiosProducts = () => {
 		categoryFilters,
 		packagingFilters
 	) => {
-		console.log('axios : ', ageFilters, categoryFilters, packagingFilters);
 		let querystring = '?';
 		ageFilters.forEach((age) => {
 			querystring = querystring.concat(`age=${age}&`);

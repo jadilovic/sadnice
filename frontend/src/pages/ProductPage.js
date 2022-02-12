@@ -39,7 +39,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const ProductPage = () => {
-	const [product, setProduct] = useState(null);
+	const [product, setProduct] = useState({});
 	const [itemAmount, setItemAmount] = useState(0);
 	const [shoppingCart, setShoppingCart] = useState([]);
 	const [shoppingCartLength, setShoppingCartLength] = useState(0);
@@ -50,10 +50,12 @@ const ProductPage = () => {
 	const history = useHistory();
 	const productsDB = useAxiosProducts();
 	const screen = UserWindow();
+	const [loading, setLoading] = useState(true);
 
 	const getProduct = async (id) => {
 		const data = await productsDB.getProduct(id);
 		setProduct(data.product);
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -127,9 +129,9 @@ const ProductPage = () => {
 			setCount(0);
 		}
 	};
-	console.log(product);
+	console.log(product.available);
 
-	if (!product) {
+	if (loading) {
 		return <LoadingPage />;
 	}
 
@@ -257,7 +259,7 @@ const ProductPage = () => {
 										display: 'flex',
 									}}
 								>
-									{product.avialable ? (
+									{product.available ? (
 										<ButtonGroup variant="contained">
 											<Button onClick={decrease}>-</Button>
 											<Box m="auto" paddingLeft={2}>
@@ -285,7 +287,7 @@ const ProductPage = () => {
 									<Button
 										onClick={() => order(product._id)}
 										variant="contained"
-										//	startIcon={<ShoppingCartIcon />}
+										disabled={!product.available}
 									>
 										Dodaj u korpu
 									</Button>
@@ -297,26 +299,22 @@ const ProductPage = () => {
 			</Box>
 			<div>
 				<Dialog open={open} onClose={handleContinueShopping}>
-					<DialogTitle
-						style={{ backgroundColor: 'darkgray' }}
-						color="yellow"
-						id="alert-dialog-title"
-					>
-						{`'${product.title}' has been added to your shopping cart!`}
+					<DialogTitle>
+						{`${product.category} ${product.title} sadnice su dodane u vašu korpu!`}
 					</DialogTitle>
-					<DialogContent style={{ backgroundColor: 'darkgray' }}>
-						<DialogContentText id="alert-dialog-description">
-							You can continue shopping and add more items to your shopping cart
-							or proceed to checkout.
+					<DialogContent>
+						<DialogContentText>
+							Možete nastaviti sa kupovinom i dodavati druge sadnice u korpu ili
+							želite finalizirati narudžbu.
 						</DialogContentText>
 					</DialogContent>
-					<DialogActions style={{ backgroundColor: 'darkgray' }}>
+					<DialogActions>
 						<Button
 							variant="contained"
 							color="warning"
 							onClick={handleContinueShopping}
 						>
-							Continue Shopping
+							Nastaviti dodavanje sadnica
 						</Button>
 						<Button
 							variant="contained"
@@ -324,14 +322,14 @@ const ProductPage = () => {
 							onClick={handleCheckout}
 							autoFocus
 						>
-							Go To Checkout
+							Finaliziranje narudžbe
 						</Button>
 					</DialogActions>
 				</Dialog>
 			</div>
 			<div>
 				<Dialog open={openImages} onClose={handleCloseImages}>
-					<DialogTitle id="alert-dialog-title">
+					<DialogTitle>
 						{product.title}, {product.price} KM
 					</DialogTitle>
 					<DialogContent onClick={imageCount}>

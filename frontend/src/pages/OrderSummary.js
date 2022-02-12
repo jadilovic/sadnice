@@ -292,11 +292,7 @@ const OrderSummary = React.forwardRef((props, ref) => {
 										onChange={handleChange}
 									/>
 									{admin && (
-										<Button
-											type="submit"
-											variant="contained"
-											sx={{ mt: 3, mb: 2 }}
-										>
+										<Button type="submit" variant="contained">
 											Dodaj novi status / komentar
 										</Button>
 									)}

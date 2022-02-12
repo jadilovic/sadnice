@@ -125,9 +125,22 @@ const updateOrder = async (req, res) => {
 	res.status(StatusCodes.OK).json({ order });
 };
 
+const deleteOrder = async (req, res) => {
+	const {
+		//	user: { userId },
+		params: { id: orderId },
+	} = req;
+	const order = await Order.findByIdAndRemove({ _id: orderId });
+	if (!order) {
+		throw new NotFoundError(`No order found with id ${orderId}`);
+	}
+	res.status(StatusCodes.OK).json({ order });
+};
+
 module.exports = {
 	getAllOrders,
 	createOrder,
 	getOrder,
 	updateOrder,
+	deleteOrder,
 };

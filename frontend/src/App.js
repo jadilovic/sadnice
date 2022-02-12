@@ -21,6 +21,7 @@ import Orders from './pages/Orders';
 import Print from './utils/Print';
 import ProductsList from './pages/ProductsList';
 import ProductEdit from './pages/ProductEdit';
+import About from './pages/About';
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
@@ -50,6 +51,7 @@ const App = () => {
 					<Route component={Address} path="/address" exact />
 					<Route component={Products} path="/products" exact />
 					<Route component={Print} path="/order" exact />
+					<Route component={About} path="/about" exact />
 					<PrivateRoute component={UserProfile} path="/profile" exact />
 					<PrivateRoute component={Restricted} path="/restricted" exact />
 					<PrivateRoute component={Orders} path="/orders" exact />

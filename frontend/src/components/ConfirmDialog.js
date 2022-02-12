@@ -1,40 +1,46 @@
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-const ConfirmDialog = (props) => {
-	const { title, children, open, setOpen, onConfirm } = props;
+export default function ConfirmDialog(props) {
+	const { selectedOrder, confirmOpen, setConfirmOpen, deleteOrder } = props;
+
+	const handleClose = () => {
+		setConfirmOpen(false);
+	};
+
+	const handleYes = () => {
+		deleteOrder(selectedOrder._id);
+		setConfirmOpen(false);
+	};
+
 	return (
-		<Dialog
-			open={open}
-			onClose={() => setOpen(false)}
-			aria-labelledby="confirm-dialog"
-		>
-			<DialogTitle id="confirm-dialog">{title}</DialogTitle>
-			<DialogContent>{children}</DialogContent>
-			<DialogActions>
-				<Button
-					variant="contained"
-					onClick={() => setOpen(false)}
-					color="primary"
-				>
-					No
-				</Button>
-				<Button
-					variant="contained"
-					color="error"
-					onClick={() => {
-						setOpen(false);
-						onConfirm();
-					}}
-				>
-					Delete
-				</Button>
-			</DialogActions>
-		</Dialog>
+		<div>
+			<Dialog open={confirmOpen} onClose={handleClose}>
+				<DialogTitle>{'Poništi / ukloni narudžbu?'}</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						{`Da li zelite u potpunosti izbrisati narudzbu broj ${selectedOrder.orderNumber}?`}
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button variant="contained" color="success" onClick={handleYes}>
+						Da
+					</Button>
+					<Button
+						variant="contained"
+						color="error"
+						onClick={handleClose}
+						autoFocus
+					>
+						Ne
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
 	);
-};
-export default ConfirmDialog;
+}

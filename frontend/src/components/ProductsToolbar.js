@@ -22,6 +22,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function ProductsToolbar(props) {
 	const history = useHistory();
 	const {
+		setCount,
+		setCurrentPage,
 		category,
 		products,
 		setFilteredProducts,
@@ -36,11 +38,15 @@ export default function ProductsToolbar(props) {
 		setShoppingCartLength(props.shoppingCart.length);
 	}, [props.shoppingCart.length]);
 
+	console.log('product toolbar');
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
 					<ProductFilters
+						setCount={setCount}
+						setCurrentPage={setCurrentPage}
 						category={category}
 						products={products}
 						setFilteredProducts={setFilteredProducts}

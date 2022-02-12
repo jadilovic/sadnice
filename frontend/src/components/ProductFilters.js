@@ -24,6 +24,8 @@ import IconButton from '@mui/material/IconButton';
 export default function ProductFilters(props) {
 	const mongoDB = useAxiosProducts();
 	const {
+		setCount,
+		setCurrentPage,
 		category,
 		products,
 		setFilteredProducts,
@@ -65,6 +67,9 @@ export default function ProductFilters(props) {
 				selectedPackaging
 			);
 			console.log('filtered products : ', filteredProducts);
+			const totalPageCount = Math.ceil(filteredProducts.length / 6);
+			setCount(totalPageCount);
+			setCurrentPage(1);
 			setFilteredProducts(filteredProducts);
 			let filtersMessage = '';
 			if (filteredProducts.length > 0) {

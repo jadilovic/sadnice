@@ -184,7 +184,7 @@ const ProductsList = () => {
 					width: '100%',
 				}}
 			>
-				<Typography align="center">Lista registrovanih korisnika</Typography>
+				<Typography align="center">Lista sadnica u ponudi</Typography>
 				<div style={{ height: screen.dynamicHeight - 120, width: '100%' }}>
 					<DataGrid
 						getRowId={(row) => row._id}

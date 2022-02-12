@@ -70,20 +70,24 @@ const useAxiosOrders = () => {
 		}
 	};
 
-	const deleteTask = async (taskId) => {
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
+	const deleteOrder = async (orderId) => {
+		// const headers = {
+		// 	Authorization: `Bearer ${getUserToken()}`,
+		// };
 		try {
-			await axios
-				.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-					headers,
-				})
+			return axios
+				.delete(
+					`${process.env.REACT_APP_SERVER_URL}/api/v1/orders/${orderId}`,
+					{
+						//	headers,
+					}
+				)
 				.then((res) => {
-					console.log('task deleted: ', res.data);
+					return res.data.order;
 				});
 		} catch (err) {
-			console.log(err.response);
+			console.log(err);
+			return err.response.msg;
 		}
 	};
 
@@ -131,7 +135,7 @@ const useAxiosOrders = () => {
 
 	return {
 		getAllOrders,
-		deleteTask,
+		deleteOrder,
 		getProduct,
 		updateOrder,
 		getRoles,

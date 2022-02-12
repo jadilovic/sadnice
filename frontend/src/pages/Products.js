@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import {
 	Box,
 	Container,
@@ -24,9 +24,22 @@ const Products = () => {
 	const [filteredProducts, setFilteredProducts] = useState([]);
 	const [selectedFilters, setSelectedFilters] = useState('');
 	const [openFilter, setOpenFilter] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [count, setCount] = useState(0);
 	let category = localStorage.getItem('category')
 		? localStorage.getItem('category')
 		: '';
+	let PageSize = 6;
+
+	const currentProducts = useMemo(() => {
+		const firstPageIndex = (currentPage - 1) * PageSize;
+		const lastPageIndex = firstPageIndex + PageSize;
+		return filteredProducts.slice(firstPageIndex, lastPageIndex);
+	}, [currentPage, filteredProducts, category]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	const handlePageChange = (event, value) => {
+		setCurrentPage(value);
+	};
 
 	const getProducts = async () => {
 		const categoryArr = [];
@@ -46,11 +59,14 @@ const Products = () => {
 			[...categoryArr],
 			['']
 		);
+		const totalPageCount = Math.ceil(products.length / PageSize);
+		setCount(totalPageCount);
+		setCurrentPage(1);
 		setProducts(products);
 		setFilteredProducts(products);
 		setSelectedFilters('');
 		setLoading(false);
-		console.log('finished loading', category);
+		console.log('finished loading', products);
 	};
 
 	useEffect(() => {
@@ -82,8 +98,6 @@ const Products = () => {
 		setOpenFilter(false);
 	};
 
-	console.log(category);
-
 	if (loading) {
 		return <LoadingPage />;
 	}
@@ -100,6 +114,8 @@ const Products = () => {
 			>
 				<Container maxWidth={false}>
 					<ProductsToolbar
+						setCount={setCount}
+						setCurrentPage={setCurrentPage}
 						category={category === 'Home' ? '' : category}
 						products={products}
 						setFilteredProducts={setFilteredProducts}
@@ -109,7 +125,7 @@ const Products = () => {
 						setSelectedFilters={setSelectedFilters}
 						shoppingCart={shoppingCart}
 					/>
-					{filteredProducts.length < 1 && (
+					{currentProducts.length < 1 && (
 						<Grid item xs={12} sm={12} lg={12}>
 							<Paper
 								component="form"
@@ -147,7 +163,7 @@ const Products = () => {
 					)}
 					<Box sx={{ pt: 3 }}>
 						<Grid container spacing={3}>
-							{filteredProducts.map((product, index) => (
+							{currentProducts.map((product, index) => (
 								<Grid item key={index} lg={4} md={6} xs={12}>
 									<ProductCard product={product} />
 								</Grid>
@@ -159,9 +175,14 @@ const Products = () => {
 							display: 'flex',
 							justifyContent: 'center',
 							pt: 3,
+							pb: 4,
 						}}
 					>
-						<Pagination color="primary" count={3} size="small" />
+						<Pagination
+							page={currentPage}
+							count={count}
+							onChange={handlePageChange}
+						/>
 					</Box>
 				</Container>
 			</Box>
