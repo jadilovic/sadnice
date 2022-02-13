@@ -170,7 +170,7 @@ const ProductPage = () => {
 									</IconButton>
 								</>
 							}
-							title={product.title}
+							title={`${product.category} ${product.title}`}
 							subheader={`Cijena: ${product.price} KM`}
 						/>
 						<Grid container spacing={0.5}>

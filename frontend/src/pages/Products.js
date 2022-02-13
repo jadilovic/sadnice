@@ -34,8 +34,9 @@ const Products = () => {
 	const currentProducts = useMemo(() => {
 		const firstPageIndex = (currentPage - 1) * PageSize;
 		const lastPageIndex = firstPageIndex + PageSize;
+		setLoading(false);
 		return filteredProducts.slice(firstPageIndex, lastPageIndex);
-	}, [currentPage, filteredProducts, category]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [currentPage, filteredProducts]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handlePageChange = (event, value) => {
 		setCurrentPage(value);
@@ -43,7 +44,11 @@ const Products = () => {
 
 	const getProducts = async () => {
 		const categoryArr = [];
-		if (category === 'Home' || category === 'Profil' || 'Dodaj Sadnice') {
+		if (
+			category === 'Home' ||
+			category === 'Profil' ||
+			category === 'Dodaj Sadnice'
+		) {
 			category = '';
 		}
 
@@ -65,7 +70,6 @@ const Products = () => {
 		setProducts(products);
 		setFilteredProducts(products);
 		setSelectedFilters('');
-		setLoading(false);
 		console.log('finished loading', products);
 	};
 
@@ -81,9 +85,10 @@ const Products = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
+		console.log('test in use effect category');
 		if (isMounted.current) {
+			console.log('test out of use effect category');
 			setLoading(true);
-			console.log('category use effect : ', category);
 			getProducts();
 		} else {
 			isMounted.current = true;

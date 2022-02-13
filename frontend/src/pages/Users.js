@@ -85,8 +85,8 @@ const Users = () => {
 		},
 		{
 			field: 'edit',
-			headerName: 'Edit',
-			minWidth: 30,
+			headerName: 'Info / Edit',
+			minWidth: 100,
 			renderCell: (cellValues) => {
 				return (
 					<Button
@@ -96,7 +96,7 @@ const Users = () => {
 							handleClick(event, cellValues);
 						}}
 					>
-						Edit
+						Info / Edit
 					</Button>
 				);
 			},

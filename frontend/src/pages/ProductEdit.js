@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useAxiosRequest from '../utils/useAxiosRequest';
 import useAxiosProducts from '../utils/useAxiosProducts';
 import { Link, useHistory } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
@@ -35,7 +34,6 @@ function Copyright() {
 
 const CreateProduct = () => {
 	const history = useHistory();
-	const mongoDB = useAxiosRequest();
 	const productDB = useAxiosProducts();
 	const [error, setError] = useState(null);
 	const [fieldErrors, setFieldErrors] = useState({});

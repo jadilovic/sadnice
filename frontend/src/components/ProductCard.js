@@ -37,7 +37,7 @@ const ProductCard = ({ product, shoppingCart, setShoppingCart }) => {
 							}}
 						>
 							<Typography align="center" gutterBottom variant="body1">
-								{product.title}
+								{`${product.category} ${product.title}`}
 							</Typography>
 						</Grid>
 						<Grid

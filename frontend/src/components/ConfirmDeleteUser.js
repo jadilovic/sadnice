@@ -14,7 +14,7 @@ export default function ConfirmDeleteUser(props) {
 	};
 
 	const handleYes = () => {
-		deleteUser(selectedUser);
+		deleteUser(selectedUser._id);
 		setConfirmOpen(false);
 	};
 
@@ -24,7 +24,7 @@ export default function ConfirmDeleteUser(props) {
 				<DialogTitle>{'Poništi / ukloni korisnika?'}</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						{`Da li želite u potpunosti izbrisati korisnika broj ${selectedUser}?`}
+						{`Da li želite u potpunosti izbrisati korisnika ${selectedUser.firstName} ${selectedUser.lastName}?`}
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>

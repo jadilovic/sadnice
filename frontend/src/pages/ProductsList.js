@@ -7,7 +7,6 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
-import roles from '../data/roles';
 
 // {
 // 	field: 'fullName',
@@ -32,11 +31,6 @@ const ProductsList = () => {
 	const handleClick = (event, cellValue) => {
 		data.saveSelectedProductId(cellValue.row._id);
 		history.push('/product_edit');
-	};
-
-	const getColor = (selectedRole) => {
-		const role = roles.find((role) => role.name === selectedRole);
-		return role.hex;
 	};
 
 	const columns = [

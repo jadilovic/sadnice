@@ -98,7 +98,7 @@ const UserProfile = () => {
 		const user = getUserData();
 		if (selectedUserId) {
 			getUserObject(selectedUserId);
-			//	localStorage.removeItem('selectedUserId');
+			localStorage.removeItem('selectedUserId');
 		} else {
 			getUserObject(user._id);
 		}
@@ -188,7 +188,6 @@ const UserProfile = () => {
 		setLoading(true);
 		try {
 			await mongoDB.deleteUser(userId);
-			localStorage.removeItem('selectedUserId');
 			setLoading(false);
 			history.push('/users');
 		} catch (error) {
@@ -198,12 +197,9 @@ const UserProfile = () => {
 	};
 
 	const handleDelete = () => {
-		const localStorageSelectedUserId = localStorage.getItem('selectedUserId');
-		setSelectedUser(localStorageSelectedUserId);
+		setSelectedUser(userValues);
 		setConfirmOpen(true);
 	};
-
-	console.log('user values : ', userValues._id);
 
 	if (loading) {
 		return <LoadingPage />;

@@ -178,7 +178,6 @@ const Navbar = (props) => {
 
 	useEffect(() => {
 		history.listen(() => {
-			console.log(window.location.pathname);
 			setAuthenticated(isAuthenticated());
 		});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps

@@ -98,8 +98,6 @@ export default function ProductFilters(props) {
 		onCloseFilter();
 	};
 
-	console.log('filters : ', selectedAge, selectedPackaging);
-
 	return (
 		<>
 			<IconButton

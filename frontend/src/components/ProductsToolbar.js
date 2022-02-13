@@ -38,8 +38,6 @@ export default function ProductsToolbar(props) {
 		setShoppingCartLength(props.shoppingCart.length);
 	}, [props.shoppingCart.length]);
 
-	console.log('product toolbar');
-
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
