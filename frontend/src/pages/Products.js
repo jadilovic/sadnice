@@ -144,7 +144,7 @@ const Products = () => {
 								}}
 							>
 								<Typography variant="p">
-									Nisu pronadjene trazene sadnice
+									Nisu pronađene tražene sadnice
 								</Typography>
 							</Paper>
 						</Grid>

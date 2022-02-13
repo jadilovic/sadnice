@@ -57,6 +57,10 @@ export default function ProductFilters(props) {
 		}
 	};
 
+	const getTotalPageCount = (productsArrLength) => {
+		return Math.ceil(productsArrLength / 6);
+	};
+
 	const handleFilter = async () => {
 		console.log(selectedAge, selectedPackaging);
 		if (selectedAge.length > 0 || selectedPackaging.length > 0) {
@@ -66,8 +70,8 @@ export default function ProductFilters(props) {
 				[category],
 				selectedPackaging
 			);
-			console.log('filtered products : ', filteredProducts);
-			const totalPageCount = Math.ceil(filteredProducts.length / 6);
+			const totalPageCount = getTotalPageCount(filteredProducts.length);
+			console.log('total page count : ', totalPageCount);
 			setCount(totalPageCount);
 			setCurrentPage(1);
 			setFilteredProducts(filteredProducts);
@@ -92,6 +96,9 @@ export default function ProductFilters(props) {
 	const clearFilter = () => {
 		setSelectedPackaging([]);
 		setSelectedAge([]);
+		const totalPageCount = getTotalPageCount(products.length);
+		setCount(totalPageCount);
+		setCurrentPage(1);
 		setFilteredProducts(products);
 		setSelectedFilters('');
 		localStorage.removeItem('category');
@@ -111,7 +118,7 @@ export default function ProductFilters(props) {
 				<FilterListIcon />
 			</IconButton>
 			<IconButton
-				onClick={clearFilter}
+				onClick={() => clearFilter()}
 				size="large"
 				edge="start"
 				color="inherit"

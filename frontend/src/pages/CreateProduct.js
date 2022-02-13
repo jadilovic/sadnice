@@ -131,7 +131,7 @@ const CreateProduct = () => {
 					<CategoryIcon />
 				</Avatar>
 				<Typography component="h1" variant="h5">
-					Create New Product
+					Kreiraj novu sadnicu
 				</Typography>
 				<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
 					{error && (
@@ -173,10 +173,8 @@ const CreateProduct = () => {
 						</Grid>
 						<Grid item xs={12} sm={9}>
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">Category</InputLabel>
+								<InputLabel>Category</InputLabel>
 								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
 									value={category}
 									label="Category"
 									onChange={changeCategory}
