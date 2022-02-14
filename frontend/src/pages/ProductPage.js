@@ -171,7 +171,7 @@ const ProductPage = () => {
 								</>
 							}
 							title={`${product.category} ${product.title}`}
-							subheader={`Cijena: ${product.price} KM`}
+							subheader={`Cijena: ${product.price.toFixed(2)} KM`}
 						/>
 						<Grid container spacing={0.5}>
 							<Grid

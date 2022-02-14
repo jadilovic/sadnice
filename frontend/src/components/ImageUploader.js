@@ -91,7 +91,7 @@ const ImageUploader = (props) => {
 									color="warning"
 									component="label"
 								>
-									{`Discard image ${number}`}
+									{`Izbriši sliku ${number}`}
 								</Button>
 							</Box>
 						) : (
@@ -103,7 +103,7 @@ const ImageUploader = (props) => {
 									component="label"
 									color="success"
 								>
-									{`Select image ${number}`}
+									{`Odaberi sliku ${number}`}
 									<input type="file" hidden onChange={(e) => uploadImage(e)} />
 								</Button>
 							</div>

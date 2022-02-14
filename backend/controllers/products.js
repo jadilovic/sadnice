@@ -126,13 +126,11 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteCloudinaryImage = async (req, res) => {
-	console.log('cloudinary');
 	const {
 		//	user: { userId },
 		params: { id: publicId },
 	} = req;
 	cloudinary.uploader.destroy(publicId, function (result) {
-		console.log('deleted: ', result);
 		res.status(StatusCodes.OK).json({ result });
 	});
 	/*

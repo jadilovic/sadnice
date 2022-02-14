@@ -28,7 +28,7 @@ const TotalOrder = (props) => {
 						<Typography align="left">Sadnica ukupno:</Typography>
 					</Grid>
 					<Grid item xs={6}>
-						<Typography align="right">{totalOrder} KM</Typography>
+						<Typography align="right">{totalOrder.toFixed(2)} KM</Typography>
 					</Grid>
 					<Grid item xs={12}>
 						<Divider orientation="horizontal" flexItem />
@@ -37,7 +37,7 @@ const TotalOrder = (props) => {
 						<Typography align="left">Dostava:</Typography>
 					</Grid>
 					<Grid item xs={6}>
-						<Typography align="right">10 KM</Typography>
+						<Typography align="right">10.00 KM</Typography>
 					</Grid>
 					<Grid item xs={12}>
 						<Typography sx={{ paddingRight: 10 }}>
@@ -55,7 +55,7 @@ const TotalOrder = (props) => {
 					</Grid>
 					<Grid item xs={6}>
 						<Typography style={{ fontWeight: 600 }} align="right">
-							{totalOrder + 10} KM
+							{(totalOrder + 10).toFixed(2)} KM
 						</Typography>
 					</Grid>
 				</Grid>

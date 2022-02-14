@@ -166,6 +166,11 @@ const UserProfile = () => {
 				setFieldErrors({});
 				setError('Network error. Try again later.');
 			}
+			for (let i = 0; i < propertiesArray.length; i++) {
+				if (userValues[propertiesArray[i]] === null) {
+					userValues[propertiesArray[i]] = '';
+				}
+			}
 			setLoading(false);
 		}
 	};
@@ -200,6 +205,8 @@ const UserProfile = () => {
 		setSelectedUser(userValues);
 		setConfirmOpen(true);
 	};
+
+	console.log('user values email : ', userValues.email);
 
 	if (loading) {
 		return <LoadingPage />;

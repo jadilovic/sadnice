@@ -48,7 +48,7 @@ const ProductCard = ({ product, shoppingCart, setShoppingCart }) => {
 							}}
 						>
 							<Typography align="center" gutterBottom variant="body1">
-								Cijena: {product.price} KM
+								Cijena: {product.price.toFixed(2)} KM
 							</Typography>
 						</Grid>
 					</Grid>

@@ -26,7 +26,7 @@ function Copyright() {
 			color="text.secondary"
 			align="center"
 		>
-			{`Products Online ${new Date().getFullYear()}.`}
+			{`Sadnice Web Shop ${new Date().getFullYear()}.`}
 		</Typography>
 	);
 }
@@ -247,12 +247,12 @@ const CreateProduct = () => {
 						variant="contained"
 						sx={{ mt: 3, mb: 2 }}
 					>
-						Create Product
+						Kreiraj novu sadnicu
 					</Button>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
 							<Link style={{ color: '#648381' }} to="/products" variant="body2">
-								Go to products
+								Pregled sadnica u ponudi
 							</Link>
 						</Grid>
 					</Grid>

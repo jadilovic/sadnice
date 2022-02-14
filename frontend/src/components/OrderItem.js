@@ -63,7 +63,7 @@ export const OrderItem = (props) => {
 					{`${product.category} ${product.title}`}
 				</Box>
 				<Box component="span" sx={{ color: 'primary.main', fontSize: 18 }}>
-					{`${product.price} KM`}
+					{`${product.price.toFixed(2)} KM`}
 				</Box>
 				<Box component="span" sx={{ color: 'primary.main', fontSize: 16 }}>
 					{`Komada: ${item.amount}`}

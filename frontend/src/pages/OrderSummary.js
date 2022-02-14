@@ -162,13 +162,15 @@ const OrderSummary = React.forwardRef((props, ref) => {
 											{productDetails.category} {productDetails.title}
 										</TableCell>
 										<TableCell align="center">
-											{productDetails.price} KM
+											{productDetails.price.toFixed(2)} KM
 										</TableCell>
 										<TableCell align="center">
 											<Box m="auto">{product.amount}</Box>
 										</TableCell>
 										<TableCell align="right">
-											{`${product.amount * productDetails.price} KM`}
+											{`${(product.amount * productDetails.price).toFixed(
+												2
+											)} KM`}
 										</TableCell>
 									</TableRow>
 								);
@@ -181,15 +183,19 @@ const OrderSummary = React.forwardRef((props, ref) => {
 						<TableBody>
 							<TableRow>
 								<TableCell>Ukupno sadnice:</TableCell>
-								<TableCell align="right">{`${totalOrder} KM`}</TableCell>
+								<TableCell align="right">{`${totalOrder.toFixed(
+									2
+								)} KM`}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Standardna dostava brzom poštom:</TableCell>
-								<TableCell align="right">{`10 KM`}</TableCell>
+								<TableCell align="right">{`10.00 KM`}</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell>Ukupno:</TableCell>
-								<TableCell align="right">{`${totalOrder + 10} KM`}</TableCell>
+								<TableCell align="right">{`${(totalOrder + 10).toFixed(
+									2
+								)} KM`}</TableCell>
 							</TableRow>
 						</TableBody>
 					</Table>

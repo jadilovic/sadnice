@@ -25,7 +25,7 @@ const ProductSchema = mongoose.Schema(
 		price: {
 			type: Number,
 			required: [true, 'Please enter product price'],
-			min: [1, 'Minimum price is 1'],
+			min: [0.3, 'Minimum price is 0.3'],
 			max: [100, 'Maximum price is 100'],
 		},
 		category: {

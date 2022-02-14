@@ -58,7 +58,8 @@ const updateUser = async (req, res) => {
 
 	if (userEmailStatus === 'exists') {
 		throw new BadRequestError(
-			'ValidationError: email-Entered email already exists. Please enter different email.'
+			//	'ValidationError: email-Entered email already exists. Please enter different email.'
+			'ValidationError: email-Uneseni email već postoji molim vas unesite novi email!'
 		);
 	}
 	if (userEmailStatus === 'current') {

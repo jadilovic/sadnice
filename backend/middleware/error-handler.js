@@ -12,9 +12,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
 	if (err.code && err.code === 11000) {
 		customError.statusCode = 400;
-		customError.msg = `ValidationError: email-Entered ${Object.keys(
+		// customError.msg = `ValidationError: email-Entered ${Object.keys(
+		// 	err.keyValue
+		// )} already exists please enter new email address!`;
+		customError.msg = `ValidationError: email-Uneseni ${Object.keys(
 			err.keyValue
-		)} already exists please enter new email address!`;
+		)} već postoji, molim vas unesite novi email!`;
 	}
 
 	if (err.name === 'CastError') {
@@ -35,7 +38,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 						{ email: 1 }
 					);
 					if (existingEmail.length > 0) {
-						customError.msg = `${customError.msg}, email-Entered email already exists please enter new email address`;
+						//	customError.msg = `${customError.msg}, email-Entered email already exists please enter new email address`;
+						customError.msg = `${customError.msg}, email-Uneseni email već postoji molim vas unesite novi email!`;
 					}
 				} catch (error) {
 					console.log('NETWORK ERROR : : : ', error);

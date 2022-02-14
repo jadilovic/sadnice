@@ -164,7 +164,7 @@ const CheckOut = () => {
 										</TableCell>
 										<TableCell align="left">{`${productDetails.category} ${productDetails.title}`}</TableCell>
 										<TableCell align="right">
-											{productDetails.price} KM
+											{productDetails.price.toFixed(2)} KM
 										</TableCell>
 										<TableCell align="center">
 											<ButtonGroup size="small" variant="contained">
@@ -174,7 +174,9 @@ const CheckOut = () => {
 											</ButtonGroup>
 										</TableCell>
 										<TableCell align="center">
-											{`${product.amount * productDetails.price} KM`}
+											{`${(product.amount * productDetails.price).toFixed(
+												2
+											)} KM`}
 										</TableCell>
 									</TableRow>
 								);
@@ -185,17 +187,19 @@ const CheckOut = () => {
 								<TableCell rowSpan={3} />
 								<TableCell rowSpan={3} />
 								<TableCell align="left">Ukupna cijena sadnica:</TableCell>
-								<TableCell align="center">{totalOrder} KM</TableCell>
+								<TableCell align="center">{totalOrder.toFixed(2)} KM</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell align="left">
 									Standardna dostava brzom poštom:
 								</TableCell>
-								<TableCell align="center">10 KM</TableCell>
+								<TableCell align="center">10.00 KM</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell align="left">Sve ukupno:</TableCell>
-								<TableCell align="center">{totalOrder + 10} KM</TableCell>
+								<TableCell align="center">
+									{(totalOrder + 10).toFixed(2)} KM
+								</TableCell>
 							</TableRow>
 						</TableBody>
 					</Table>
@@ -248,7 +252,7 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												{productDetails.price} KM
+												{productDetails.price.toFixed(2)} KM
 											</Typography>
 										</Grid>
 										<Grid item xs={6} paddingTop={1}>
@@ -298,7 +302,10 @@ const CheckOut = () => {
 												color="textPrimary"
 												variant="body1"
 											>
-												{`${product.amount * productDetails.price}`} KM
+												{`${(product.amount * productDetails.price).toFixed(
+													2
+												)}`}
+												KM
 											</Typography>
 										</Grid>
 										<Grid item xs={6}>

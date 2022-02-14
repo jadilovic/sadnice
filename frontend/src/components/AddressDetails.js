@@ -177,7 +177,7 @@ export const AddressDetails = (props) => {
 								error={fieldErrors?.address?.error ? true : false}
 								helperText={fieldErrors?.address?.msg}
 								fullWidth
-								label="Address"
+								label="Adresa"
 								name="address"
 								onChange={handleChange}
 								required
@@ -190,7 +190,7 @@ export const AddressDetails = (props) => {
 								error={fieldErrors?.city?.error ? true : false}
 								helperText={fieldErrors?.city?.msg}
 								fullWidth
-								label="City"
+								label="Grad"
 								name="city"
 								onChange={handleChange}
 								required
@@ -203,7 +203,7 @@ export const AddressDetails = (props) => {
 								error={fieldErrors?.postNumber?.error ? true : false}
 								helperText={fieldErrors?.postNumber?.msg}
 								fullWidth
-								label="Post Number"
+								label="Poštanski broj"
 								name="postNumber"
 								onChange={handleChange}
 								required
@@ -216,7 +216,7 @@ export const AddressDetails = (props) => {
 								error={fieldErrors?.phone?.error ? true : false}
 								helperText={fieldErrors?.phone?.msg}
 								fullWidth
-								label="Phone Number"
+								label="Broj telefona"
 								name="phone"
 								onChange={handleChange}
 								required
@@ -235,7 +235,7 @@ export const AddressDetails = (props) => {
 					variant="standard"
 				>
 					{conditionsError && (
-						<FormHelperText component="legend">
+						<FormHelperText component="p">
 							Potvrdi prihvatanje uslova kupovine i plaćanja
 						</FormHelperText>
 					)}
@@ -274,7 +274,7 @@ export const AddressDetails = (props) => {
 						/>
 					</FormGroup>
 					{conditionsError && (
-						<FormHelperText component="legend">
+						<FormHelperText component="p">
 							Oba kvadratića treba markirati
 						</FormHelperText>
 					)}

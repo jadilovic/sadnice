@@ -1,8 +1,9 @@
 import OrderSummary from '../pages/OrderSummary';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { Box, Button, Container, Typography, Alert } from '@mui/material';
 import UserWindow from '../utils/UserWindow';
+import { getUserData } from '../auth/Authentication';
 import useAxiosOrders from './useAxiosOrders';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -27,6 +28,16 @@ const Print = () => {
 	const ordersDB = useAxiosOrders();
 	const [loading, setLoading] = useState(false);
 	const [deleteError, setDeleteError] = useState('');
+	const [admin, setAdmin] = useState(false);
+
+	useEffect(() => {
+		const user = getUserData();
+		if (user) {
+			if (user.role === 'admin') {
+				setAdmin(true);
+			}
+		}
+	}, []);
 
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current,
@@ -119,18 +130,20 @@ const Print = () => {
 								</Alert>
 							</Box>
 						)}
-						<Grid item xs={12}>
-							<Item>
-								<Button
-									type="submit"
-									variant="contained"
-									color="error"
-									onClick={handleDelete}
-								>
-									Poništi / ukloni narudžbu
-								</Button>
-							</Item>
-						</Grid>
+						{admin && (
+							<Grid item xs={12}>
+								<Item>
+									<Button
+										type="submit"
+										variant="contained"
+										color="error"
+										onClick={handleDelete}
+									>
+										Poništi / ukloni narudžbu
+									</Button>
+								</Item>
+							</Grid>
+						)}
 					</Grid>
 				</Container>
 				<div>
