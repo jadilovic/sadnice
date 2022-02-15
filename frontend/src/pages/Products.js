@@ -47,7 +47,7 @@ const Products = () => {
 		if (
 			category === 'Home' ||
 			category === 'Profil' ||
-			category === 'Dodaj Sadnice'
+			category === 'Dodaj Sadnicu'
 		) {
 			category = '';
 		}

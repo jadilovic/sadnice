@@ -59,26 +59,31 @@ const useAxiosProducts = () => {
 		const headers = {
 			Authorization: `Bearer ${getUserToken()}`,
 		};
-		return axios
-			.patch(
-				`${process.env.REACT_APP_SERVER_URL}/api/v1/products/${_id}`,
-				{
-					title,
-					category,
-					description,
-					imageUrl,
-					price,
-					packaging,
-					age,
-					available,
-				},
-				{
-					headers,
-				}
-			)
-			.then((res) => {
-				return res.data;
-			});
+		try {
+			return axios
+				.patch(
+					`${process.env.REACT_APP_SERVER_URL}/api/v1/products/${_id}`,
+					{
+						title,
+						category,
+						description,
+						imageUrl,
+						price,
+						packaging,
+						age,
+						available,
+					},
+					{
+						headers,
+					}
+				)
+				.then((res) => {
+					console.log(res.data.product);
+					return res.data;
+				});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const getRoles = async () => {

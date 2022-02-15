@@ -262,8 +262,14 @@ const ProductPage = () => {
 									{product.available ? (
 										<ButtonGroup variant="contained">
 											<Button onClick={decrease}>-</Button>
-											<Box m="auto" paddingLeft={2}>
-												{itemAmount}
+											<Box m="auto">
+												<Typography
+													align="center"
+													color="textPrimary"
+													variant="body1"
+												>
+													{itemAmount}
+												</Typography>
 											</Box>
 											<Button onClick={increase}>+</Button>
 										</ButtonGroup>

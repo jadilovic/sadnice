@@ -89,11 +89,9 @@ const CreateProduct = () => {
 		});
 		setFieldErrors(initialErrors);
 		initialErrors = {};
-		setError('');
 	};
 
 	const submitData = async (productData) => {
-		console.log(productData);
 		try {
 			await mongoDB.createProduct(productData);
 			history.push('/products');
@@ -113,6 +111,8 @@ const CreateProduct = () => {
 			}
 		}
 	};
+
+	console.log(fieldErrors);
 
 	return (
 		<Container component="main" maxWidth="md">

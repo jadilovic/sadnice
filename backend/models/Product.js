@@ -31,7 +31,7 @@ const ProductSchema = mongoose.Schema(
 		category: {
 			type: String,
 			required: [true, 'Please select category'],
-			minlength: [5, 'Category must be minimum 5 characters long'],
+			minlength: [4, 'Category must be minimum 4 characters long'],
 			maxlength: [30, 'Category can be maximum 30 characters long'],
 		},
 		packaging: {
