@@ -47,9 +47,6 @@ const ImageUploader = (props) => {
 		setUrl([...url]);
 	};
 
-	console.log('urls : ', url);
-	console.log('ids : ', publicId);
-
 	return (
 		<Container maxWidth="xs">
 			{buttons.map((number, index) => {

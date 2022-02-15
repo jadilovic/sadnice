@@ -17,7 +17,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 		// )} already exists please enter new email address!`;
 		customError.msg = `ValidationError: email-Uneseni ${Object.keys(
 			err.keyValue
-		)} već postoji, molim vas unesite novi email!`;
+		)} već postoji, molim vasTEST TEST  unesite novi email!`;
 	}
 
 	if (err.name === 'CastError') {

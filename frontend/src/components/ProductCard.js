@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import ages from '../data/ages';
 import {
 	Grid,
 	Card,
@@ -17,12 +18,17 @@ const ProductCard = ({ product, shoppingCart, setShoppingCart }) => {
 		history.push('/product');
 	};
 
+	const getAgeName = (number) => {
+		const age = ages.find((age) => age.value === number);
+		return age.name;
+	};
+
 	return (
 		<Card>
 			<CardActionArea onClick={() => handleProduct(product._id)}>
 				<CardMedia
 					component="img"
-					height="140"
+					height="130"
 					//	image="/static/images/cards/contemplative-reptile.jpg"
 					alt="seedling image"
 					src={product.imageUrl[0]}
@@ -49,6 +55,30 @@ const ProductCard = ({ product, shoppingCart, setShoppingCart }) => {
 						>
 							<Typography align="center" gutterBottom variant="body1">
 								Cijena: {product.price.toFixed(2)} KM
+							</Typography>
+						</Grid>
+					</Grid>
+					<Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
+						<Grid
+							item
+							sx={{
+								alignItems: 'center',
+								display: 'flex',
+							}}
+						>
+							<Typography align="center" gutterBottom variant="body2">
+								{`${getAgeName(product.age)}`}
+							</Typography>
+						</Grid>
+						<Grid
+							item
+							sx={{
+								alignItems: 'center',
+								display: 'flex',
+							}}
+						>
+							<Typography align="center" gutterBottom variant="body2">
+								{product.packaging}
 							</Typography>
 						</Grid>
 					</Grid>
