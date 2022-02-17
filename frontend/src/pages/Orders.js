@@ -36,6 +36,7 @@ const Orders = () => {
 
 	const handleClick = (event, cellValue) => {
 		data.saveSelectedUserId(cellValue.row.createdBy);
+		localStorage.removeItem('category');
 		history.push('/profile');
 	};
 

@@ -267,7 +267,6 @@ const Navbar = (props) => {
 					)}
 				</Toolbar>
 			</AppBar>
-			{/* {authenticated && ( */}
 			<ClickAwayListener onClickAway={handleClickAway}>
 				<Drawer
 					variant="persistent"
@@ -296,7 +295,6 @@ const Navbar = (props) => {
 									button
 									key={index}
 								>
-									{/* <ListItemIcon>{menuItem.icon}</ListItemIcon> */}
 									<img
 										style={{ width: '30px', height: '30px', marginRight: 25 }}
 										src={menuItem.icon}
@@ -324,7 +322,6 @@ const Navbar = (props) => {
 					</Box>
 				</Drawer>
 			</ClickAwayListener>
-			{/* )} */}
 		</Box>
 	);
 };

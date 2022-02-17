@@ -1,4 +1,3 @@
-// src/pages/Error.js
 import React from 'react';
 import { Button, CardMedia, CssBaseline } from '@mui/material';
 import Grid from '@mui/material/Grid';

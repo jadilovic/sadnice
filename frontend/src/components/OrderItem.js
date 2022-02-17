@@ -30,7 +30,6 @@ export const OrderItem = (props) => {
 				marginRight: { sm: 0, md: 2, lg: 2 },
 				display: 'flex',
 				flexDirection: { xs: 'row', md: 'row', lg: 'row' },
-				// alignItems: 'center',
 				overflow: 'hidden',
 				borderRadius: '12px',
 				boxShadow: 1,

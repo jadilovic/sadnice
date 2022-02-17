@@ -38,7 +38,6 @@ const ImageUploader = (props) => {
 		})
 			.then((resp) => resp.json())
 			.then((data) => {
-				// url.push(data.url)
 				setUrl([...url, data.url]);
 				extractPublicId(data.url);
 			})

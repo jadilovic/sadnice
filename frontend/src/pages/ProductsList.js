@@ -8,18 +8,6 @@ import { Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import useLocalStorageHook from '../utils/useLocalStorageHook';
 
-// {
-// 	field: 'fullName',
-// 	headerName: 'Full name',
-// 	description: 'This column has a value getter and is not sortable.',
-// 	sortable: false,
-// 	flex: 1,
-// 	valueGetter: (params) =>
-// 		`${params.getValue(params.id, 'firstName') || ''} ${
-// 			params.getValue(params.id, 'lastName') || ''
-// 		}`,
-// },
-
 const ProductsList = () => {
 	const screen = UserWindow();
 	const mongoDB = useAxiosProducts();

@@ -7,7 +7,6 @@ import {
 	Paper,
 	Typography,
 } from '@mui/material';
-// import products from '../data/products';
 import ProductsToolbar from '../components/ProductsToolbar';
 import ProductCard from '../components/ProductCard';
 import UserWindow from '../utils/UserWindow';
