@@ -11,7 +11,7 @@ const {
 } = require('../controllers/products');
 
 router.route('/').post(createProduct).get(getAllProducts);
-router.route('/:id').get(getProduct).patch(updateProduct); //.delete(deleteTask);
+router.route('/:id').get(getProduct).patch(updateProduct); //.delete(deleteProduct);
 router.route('/images/:id').delete(deleteCloudinaryImage);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import useAxiosRequest from '../utils/useAxiosRequest';
 import { Link, useHistory } from 'react-router-dom';
+import useAxiosProducts from '../utils/useAxiosProducts';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -33,7 +33,7 @@ function Copyright() {
 
 const CreateProduct = () => {
 	const history = useHistory();
-	const mongoDB = useAxiosRequest();
+	const productDB = useAxiosProducts();
 	const [error, setError] = useState(null);
 	const [fieldErrors, setFieldErrors] = useState({});
 	const [imageUrl, setImageUrl] = useState([]);
@@ -93,7 +93,7 @@ const CreateProduct = () => {
 
 	const submitData = async (productData) => {
 		try {
-			await mongoDB.createProduct(productData);
+			await productDB.createProduct(productData);
 			history.push('/products');
 		} catch (err) {
 			console.log(err.response);
@@ -193,7 +193,7 @@ const CreateProduct = () => {
 								<Select value={age} label="Age" onChange={changeAge}>
 									<MenuItem value={1}>Jedna</MenuItem>
 									<MenuItem value={2}>Dvije</MenuItem>
-									<MenuItem value={3}>Dvije</MenuItem>
+									<MenuItem value={3}>Tri</MenuItem>
 									<MenuItem value={4}>Četiri</MenuItem>
 								</Select>
 							</FormControl>

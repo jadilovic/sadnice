@@ -52,14 +52,11 @@ const CreateProduct = () => {
 	const [imageUrl, setImageUrl] = useState([]);
 
 	const changeValue = (event) => {
-		console.log(event.target.name);
-		console.log(event.target.value);
 		setProductEdit({ ...productEdit, [event.target.name]: event.target.value });
 	};
 
 	const getProductObject = async (productId) => {
 		const data = await productDB.getProduct(productId);
-		console.log(data.product);
 		setImageUrl(data.product.imageUrl);
 		setProductEdit(data.product);
 		setLoading(false);
@@ -98,7 +95,6 @@ const CreateProduct = () => {
 	};
 
 	const submitData = async (productData) => {
-		console.log(productData);
 		try {
 			await productDB.updateProduct(productData);
 			history.push('/products_list');
@@ -118,8 +114,6 @@ const CreateProduct = () => {
 			}
 		}
 	};
-
-	console.log('product edit category : ', productEdit);
 
 	if (loading) {
 		return <LoadingPage />;
@@ -189,7 +183,6 @@ const CreateProduct = () => {
 						<Grid item xs={12} sm={9}>
 							<FormControl fullWidth>
 								<InputLabel>Category</InputLabel>
-								{console.log(productEdit.category)}
 								<Select
 									name="category"
 									value={productEdit.category}
@@ -217,7 +210,7 @@ const CreateProduct = () => {
 								>
 									<MenuItem value={1}>Jedna</MenuItem>
 									<MenuItem value={2}>Dvije</MenuItem>
-									<MenuItem value={3}>Dvije</MenuItem>
+									<MenuItem value={3}>Tri</MenuItem>
 									<MenuItem value={4}>Četiri</MenuItem>
 								</Select>
 							</FormControl>

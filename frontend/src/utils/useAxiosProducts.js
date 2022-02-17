@@ -18,7 +18,6 @@ const useAxiosProducts = () => {
 		packagingFilters.forEach((packaging) => {
 			querystring = querystring.concat(`packaging=${packaging}&`);
 		});
-		//	console.log('querystring: ', querystring);
 		return axios({
 			method: 'GET',
 			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/products${querystring}`,
@@ -44,7 +43,6 @@ const useAxiosProducts = () => {
 	};
 
 	const updateProduct = async (editedProduct) => {
-		console.log(editedProduct);
 		const {
 			_id,
 			title,
@@ -78,7 +76,6 @@ const useAxiosProducts = () => {
 					}
 				)
 				.then((res) => {
-					console.log(res.data.product);
 					return res.data;
 				});
 		} catch (error) {
@@ -100,23 +97,6 @@ const useAxiosProducts = () => {
 		} catch (err) {
 			console.log(err.response);
 			return err.response.data.msg;
-		}
-	};
-
-	const deleteTask = async (taskId) => {
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
-		try {
-			await axios
-				.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/tasks/${taskId}`, {
-					headers,
-				})
-				.then((res) => {
-					console.log('task deleted: ', res.data);
-				});
-		} catch (err) {
-			console.log(err.response);
 		}
 	};
 
@@ -157,13 +137,11 @@ const useAxiosProducts = () => {
 
 	return {
 		getAllProducts,
-		deleteTask,
 		getProduct,
 		updateProduct,
 		getRoles,
 		deleteCloudinaryImage,
 		createProduct,
-		//	filterTasks,
 	};
 };
 

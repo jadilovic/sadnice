@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Card, CardMedia } from '@mui/material';
 import { Box } from '@mui/system';
 import useAxiosProducts from '../utils/useAxiosProducts';
@@ -16,8 +16,15 @@ const ImageUploader = (props) => {
 		const lastSlash = imageUrl.lastIndexOf('/');
 		const lastDot = imageUrl.lastIndexOf('.');
 		const extractedValue = imageUrl.substring(lastSlash + 1, lastDot);
-		setPublicId([...publicId, extractedValue]);
+		publicId.push(extractedValue);
+		setPublicId([...publicId]);
 	};
+
+	useEffect(() => {
+		url.forEach((element) => {
+			extractPublicId(element);
+		});
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const uploadImage = (e) => {
 		const data = new FormData();

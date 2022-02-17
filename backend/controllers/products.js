@@ -5,7 +5,6 @@ const { StatusCodes } = require('http-status-codes');
 var cloudinary = require('cloudinary').v2;
 
 // Change cloud name, API Key, and API Secret below
-
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	api_key: process.env.CLOUDINARY_API_KEY,
@@ -126,37 +125,12 @@ const updateProduct = async (req, res) => {
 
 const deleteCloudinaryImage = async (req, res) => {
 	const {
-		//	user: { userId },
 		params: { id: publicId },
 	} = req;
 	cloudinary.uploader.destroy(publicId, function (result) {
 		res.status(StatusCodes.OK).json({ result });
 	});
-	/*
-	const task = await Task.findByIdAndRemove({ _id: taskId, createdBy: userId });
-	if (!task) {
-		throw new NotFoundError(`No task found with id ${taskId}`);
-	}
-	
-	res.status(StatusCodes.OK).json({ task });
-	*/
 };
-/*
-const emailExists = async (email, userId) => {
-	const userObject = await User.findOne({
-		email: email,
-	});
-	if (userObject) {
-		if (userObject._id.toString() === userId) {
-			return 'current';
-		} else {
-			return 'exists';
-		}
-	} else {
-		return 'new';
-	}
-};
-*/
 
 module.exports = {
 	getAllProducts,

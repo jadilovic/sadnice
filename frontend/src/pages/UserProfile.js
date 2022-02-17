@@ -152,12 +152,10 @@ const UserProfile = () => {
 			setFieldErrors({});
 			getUserObject(editedUser.user._id);
 		} catch (err) {
-			console.log(err.response.data.msg);
 			try {
 				if (err.response.data.msg.startsWith('ValidationError: ')) {
 					settingErrors(err.response.data.msg);
 				} else {
-					console.log('test');
 					setFieldErrors({});
 					setError(err.response.data.msg);
 				}
@@ -205,8 +203,6 @@ const UserProfile = () => {
 		setSelectedUser(userValues);
 		setConfirmOpen(true);
 	};
-
-	console.log('user values email : ', userValues.email);
 
 	if (loading) {
 		return <LoadingPage />;

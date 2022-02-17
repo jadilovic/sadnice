@@ -11,7 +11,6 @@ const useAxiosOrders = () => {
 		categoryFilters.forEach((category) => {
 			querystring = querystring.concat(`category=${category}&`);
 		});
-		//	console.log('querystring: ', querystring);
 		return axios({
 			method: 'GET',
 			url: `${process.env.REACT_APP_SERVER_URL}/api/v1/orders${querystring}`,
@@ -91,28 +90,7 @@ const useAxiosOrders = () => {
 		}
 	};
 
-	const deleteCloudinaryImage = async (publicId) => {
-		const headers = {
-			Authorization: `Bearer ${getUserToken()}`,
-		};
-		try {
-			await axios
-				.delete(
-					`${process.env.REACT_APP_SERVER_URL}/api/v1/products/images/${publicId}`,
-					{
-						headers,
-					}
-				)
-				.then((res) => {
-					console.log('image deleted: ', res.data);
-				});
-		} catch (err) {
-			console.log(err.response);
-		}
-	};
-
 	const createOrder = async (newOrder) => {
-		console.log('test create order');
 		if (getUserData()?._id) {
 			newOrder.createdBy = getUserData()._id;
 		} else {
@@ -128,7 +106,6 @@ const useAxiosOrders = () => {
 			// 	authorization: `Bearer ${getUserToken()}`,
 			// },
 		}).then((res) => {
-			console.log('order created: ', res.data);
 			return res.data.order;
 		});
 	};
@@ -139,7 +116,6 @@ const useAxiosOrders = () => {
 		getProduct,
 		updateOrder,
 		getRoles,
-		deleteCloudinaryImage,
 		createOrder,
 		//	filterTasks,
 	};

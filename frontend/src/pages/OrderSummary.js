@@ -53,7 +53,6 @@ const OrderSummary = React.forwardRef((props, ref) => {
 	};
 
 	useEffect(() => {
-		console.log('useEffect test on products ');
 		setComment(order.comment);
 		setOrderStatus(order.orderStatus);
 		setLoading(false);
@@ -86,12 +85,7 @@ const OrderSummary = React.forwardRef((props, ref) => {
 	const submitData = async (e) => {
 		e.preventDefault();
 		try {
-			const updatedOrder = await ordersDB.updateOrder(
-				order._id,
-				comment,
-				orderStatus
-			);
-			console.log(updatedOrder);
+			await ordersDB.updateOrder(order._id, comment, orderStatus);
 			history.push('/orders');
 		} catch (err) {
 			console.log(err);
@@ -106,15 +100,12 @@ const OrderSummary = React.forwardRef((props, ref) => {
 	const handleOrderStatusChange = (event) => {
 		event.preventDefault();
 		setOrderStatus(event.target.value);
-		//	setChangeBicycleStatus(!changeBicycleStatus);
 	};
 
 	const getStatusColor = () => {
 		const statusObject = statuses.find((status) => orderStatus === status.name);
 		return statusObject.color;
 	};
-
-	console.log(comment);
 
 	if (loading) {
 		return <LoadingPage />;

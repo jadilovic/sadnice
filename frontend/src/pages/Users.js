@@ -74,7 +74,6 @@ const Users = () => {
 					<Chip
 						style={{
 							minWidth: 80,
-							//	backgroundColor: `${cellValues.row.isActive ? 'green' : 'red'}`,
 						}}
 						label={`${cellValues.row.isActive ? 'Yes' : 'No'}`}
 						color={`${cellValues.row.isActive ? 'success' : 'error'}`}

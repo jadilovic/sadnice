@@ -129,7 +129,6 @@ const ProductPage = () => {
 			setCount(0);
 		}
 	};
-	console.log(product.available);
 
 	if (loading) {
 		return <LoadingPage />;

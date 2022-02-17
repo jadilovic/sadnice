@@ -83,7 +83,6 @@ const ProductsList = () => {
 			field: 'available',
 			headerName: 'Na stanju',
 			align: 'center',
-			//	flex: 1,
 			renderCell: (cellValues) => {
 				return (
 					<Chip
@@ -97,65 +96,11 @@ const ProductsList = () => {
 				);
 			},
 		},
-		// {
-		// 	field: 'role',
-		// 	headerName: 'Role',
-		// 	minWidth: 30,
-		// 	renderCell: (cellValues) => {
-		// 		return (
-		// 			<Chip
-		// 				style={{
-		// 					minWidth: 80,
-		// 				}}
-		// 				color={getColor(cellValues.value)}
-		// 				label={cellValues.row.role}
-		// 				variant="filled"
-		// 			/>
-		// 		);
-		// 	},
-		// },
-		// {
-		// 	field: 'isActive',
-		// 	headerName: 'Active',
-		// 	minWidth: 30,
-		// 	renderCell: (cellValues) => {
-		// 		return (
-		// 			<Chip
-		// 				style={{
-		// 					minWidth: 80,
-		// 					//	backgroundColor: `${cellValues.row.isActive ? 'green' : 'red'}`,
-		// 				}}
-		// 				label={`${cellValues.row.isActive ? 'Yes' : 'No'}`}
-		// 				color={`${cellValues.row.isActive ? 'success' : 'error'}`}
-		// 				variant="outlined"
-		// 			/>
-		// 		);
-		// 	},
-		// },
-		// {
-		// 	field: 'edit',
-		// 	headerName: 'Edit',
-		// 	minWidth: 30,
-		// 	renderCell: (cellValues) => {
-		// 		return (
-		// 			<Button
-		// 				variant="contained"
-		// 				color="primary"
-		// 				onClick={(event) => {
-		// 					handleClick(event, cellValues);
-		// 				}}
-		// 			>
-		// 				Edit
-		// 			</Button>
-		// 		);
-		// 	},
-		// },
 	];
 
 	const displayUsers = async () => {
 		try {
 			const dbProducts = await mongoDB.getAllProducts([], [], []);
-			console.log(dbProducts);
 			setProducts(dbProducts);
 			setLoading(false);
 		} catch (err) {

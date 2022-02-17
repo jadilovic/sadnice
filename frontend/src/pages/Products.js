@@ -70,7 +70,6 @@ const Products = () => {
 		setProducts(products);
 		setFilteredProducts(products);
 		setSelectedFilters('');
-		console.log('finished loading', products);
 	};
 
 	useEffect(() => {
@@ -85,9 +84,7 @@ const Products = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		console.log('test in use effect category');
 		if (isMounted.current) {
-			console.log('test out of use effect category');
 			setLoading(true);
 			getProducts();
 		} else {
