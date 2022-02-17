@@ -61,7 +61,11 @@ const ProductsList = () => {
 			align: 'right',
 			minWidth: 60,
 			renderCell: (cellValues) => {
-				return <Typography variant="body2">{cellValues.value} KM</Typography>;
+				return (
+					<Typography variant="body2">
+						{cellValues.value.toFixed(2)} KM
+					</Typography>
+				);
 			},
 		},
 		{
