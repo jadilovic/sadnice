@@ -19,7 +19,6 @@ import {
 } from '@mui/material';
 
 export const AddressDetails = (props) => {
-	//	const [values, setValues] = useState(props.orderAddress);
 	const history = useHistory();
 	const { setOrderAddress, orderAddress, shoppingCart, totalOrder } = props;
 	const [conditions, setConditions] = useState({
@@ -95,7 +94,6 @@ export const AddressDetails = (props) => {
 				if (err.response.data.msg.startsWith('ValidationError: ')) {
 					settingErrors(err.response.data.msg);
 				} else {
-					console.log('test');
 					setFieldErrors({});
 					setBackendError(err.response.data.msg);
 				}
@@ -104,9 +102,7 @@ export const AddressDetails = (props) => {
 				setFieldErrors({});
 				setBackendError('Network error. Try again later.');
 			}
-			//	setError(err.response.data.msg);
 		}
-		//	}
 	};
 
 	const conditionsChange = (event) => {

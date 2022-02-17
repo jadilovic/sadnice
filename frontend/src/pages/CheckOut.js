@@ -37,13 +37,11 @@ const CheckOut = () => {
 	const history = useHistory();
 
 	const calculateTotal = (cart) => {
-		console.log(products);
 		const totalPrice = cart.reduce((total, item) => {
 			return total + item.amount * getProductObject(item.id).price;
 		}, 0);
 		setTotalOrder(totalPrice);
 		localStorage.setItem('total_order', JSON.stringify(totalPrice));
-		console.log(totalPrice);
 	};
 
 	const getProducts = async () => {
@@ -93,8 +91,6 @@ const CheckOut = () => {
 		setShoppingCart([...shoppingCart]);
 		localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart));
 	};
-
-	console.log(shoppingCart);
 
 	if (products.length < 1) {
 		return <LoadingPage />;

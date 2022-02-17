@@ -21,7 +21,6 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function Restricted() {
 	const screen = UserWindow();
-	console.log('restricted');
 	return (
 		<RootStyle title="403 Access Denied | Restricted">
 			<Container>

@@ -20,7 +20,6 @@ const ImageUploader = (props) => {
 	};
 
 	const uploadImage = (e) => {
-		console.log('testing loading image');
 		const data = new FormData();
 		const image = e.target.files[0];
 		data.append('file', image);

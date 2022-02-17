@@ -185,7 +185,7 @@ const UserProfile = () => {
 	};
 
 	const handleOrders = () => {
-		localStorage.setItem('userOrders', userValues._id);
+		localStorage.setItem('userIdForOrders', userValues._id);
 		history.push('/orders');
 	};
 

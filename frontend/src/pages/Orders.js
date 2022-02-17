@@ -40,7 +40,6 @@ const Orders = () => {
 	};
 
 	const handleOrder = (event, orderValues) => {
-		console.log(orderValues);
 		localStorage.setItem('order', JSON.stringify(orderValues));
 		history.push('/order');
 	};
@@ -51,10 +50,10 @@ const Orders = () => {
 	};
 
 	const displayOrders = async () => {
-		const userOrders = localStorage.getItem('userOrders');
+		const userIdForOrders = localStorage.getItem('userIdForOrders');
 		let userId = '';
-		if (userOrders) {
-			userId = userOrders;
+		if (userIdForOrders) {
+			userId = userIdForOrders;
 		} else {
 			const user = getUserData();
 			if (user.role === 'admin') {
@@ -75,7 +74,7 @@ const Orders = () => {
 		} catch (err) {
 			console.log(err.response);
 		}
-		localStorage.removeItem('userOrders');
+		localStorage.removeItem('userIdForOrders');
 	};
 
 	useEffect(() => {
@@ -85,7 +84,6 @@ const Orders = () => {
 	useEffect(() => {
 		if (isMounted.current) {
 			setLoading(true);
-			console.log('category use effect : ', category);
 			displayOrders();
 		} else {
 			isMounted.current = true;
@@ -194,8 +192,6 @@ const Orders = () => {
 		},
 		{ field: 'city', headerName: 'Grad', flex: 1 },
 	];
-
-	console.log('user ID : ', category);
 
 	if (loading) {
 		return <LoadingPage />;

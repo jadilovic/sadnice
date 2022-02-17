@@ -112,8 +112,6 @@ const CreateProduct = () => {
 		}
 	};
 
-	console.log(fieldErrors);
-
 	return (
 		<Container component="main" maxWidth="md">
 			<CssBaseline />

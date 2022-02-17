@@ -4,17 +4,14 @@ const { BadRequestError, NotFoundError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 
 const createOrder = async (req, res) => {
-	// console.log(req.body.newOrder);
 	// req.body.newOrder.createdBy = req.user.userId;
 	const order = await Order.create(req.body.newOrder);
 	res.status(StatusCodes.CREATED).json({ order });
 };
 
 const getAllOrders = async (req, res) => {
-	// const products = await Product.find({});
 	let userFilters = [];
 	let categoryFilters = [];
-	// console.log('req.query: ', req.query);
 	if (req.query.userId) {
 		if (Array.isArray(req.query.userId)) {
 			userFilters = req.query.userId.map((id) => {

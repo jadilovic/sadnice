@@ -18,11 +18,9 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-	// const products = await Product.find({});
 	let ageFilters = [];
 	let categoryFilters = [];
 	let packagingFilters = [];
-	// console.log('req.query: ', req.query);
 	if (req.query.age) {
 		if (Array.isArray(req.query.age)) {
 			ageFilters = req.query.age.map((age) => {

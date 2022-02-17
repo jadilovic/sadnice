@@ -62,7 +62,6 @@ export default function ProductFilters(props) {
 	};
 
 	const handleFilter = async () => {
-		console.log(selectedAge, selectedPackaging);
 		if (selectedAge.length > 0 || selectedPackaging.length > 0) {
 			const filteredProducts = await mongoDB.getAllProducts(
 				// --- this is get request
@@ -71,7 +70,6 @@ export default function ProductFilters(props) {
 				selectedPackaging
 			);
 			const totalPageCount = getTotalPageCount(filteredProducts.length);
-			console.log('total page count : ', totalPageCount);
 			setCount(totalPageCount);
 			setCurrentPage(1);
 			setFilteredProducts(filteredProducts);
