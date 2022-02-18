@@ -300,8 +300,7 @@ const CheckOut = () => {
 											>
 												{`${(product.amount * productDetails.price).toFixed(
 													2
-												)}`}
-												KM
+												)} KM`}
 											</Typography>
 										</Grid>
 										<Grid item xs={6}>

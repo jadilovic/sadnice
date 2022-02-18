@@ -22,7 +22,7 @@ function Copyright(props) {
 			{...props}
 		>
 			{'Copyright © '}
-			<a color="inherit" href="https://mui.com/">
+			<a color="inherit" href="http://maline.yolasite.com/">
 				Porodično poljoprivredno gazdinstvo Adilović
 			</a>
 			{` ${new Date().getFullYear()}.`}
@@ -78,7 +78,6 @@ const Signup = () => {
 			login(newUserData.token, newUserData.user);
 			history.push('/products');
 		} catch (err) {
-			console.log(err);
 			try {
 				if (err.response.data.msg.startsWith('ValidationError: ')) {
 					settingErrors(err.response.data.msg);

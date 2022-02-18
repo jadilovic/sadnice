@@ -52,7 +52,7 @@ const Products = () => {
 		}
 
 		if (category === 'Ostalo') {
-			category = ['Lješnjak', 'Višnja'];
+			category = ['Lješnjak', 'Višnja', 'Drenjak'];
 			categoryArr.push(...category);
 		} else {
 			categoryArr.push(category);

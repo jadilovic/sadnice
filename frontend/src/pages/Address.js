@@ -6,6 +6,7 @@ import UserWindow from '../utils/UserWindow';
 import TotalOrder from '../components/TotalOrder';
 import LoadingPage from '../components/LoadingPage';
 import { useHistory } from 'react-router-dom';
+import useAxiosRequest from '../utils/useAxiosRequest';
 
 const Address = () => {
 	const screen = UserWindow();
@@ -22,6 +23,13 @@ const Address = () => {
 	});
 	const [loading, setLoading] = useState(true);
 	const history = useHistory();
+	const userDB = useAxiosRequest();
+
+	const getCurrentUserData = async (userId) => {
+		const data = await userDB.getUser(userId);
+		setOrderAddress({ ...orderAddress, ...data.user });
+		setLoading(false);
+	};
 
 	useEffect(() => {
 		const localStorageShoppingCart = JSON.parse(
@@ -31,8 +39,7 @@ const Address = () => {
 			setShoppingCart(localStorageShoppingCart);
 			setTotalOrder(Number(localStorage.getItem('total_order')));
 			const localStorageUser = JSON.parse(localStorage.getItem('user'));
-			setOrderAddress({ ...orderAddress, ...localStorageUser });
-			setLoading(false);
+			getCurrentUserData(localStorageUser._id);
 		} else {
 			history.push('/products');
 		}

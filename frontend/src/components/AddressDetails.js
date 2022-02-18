@@ -89,7 +89,6 @@ export const AddressDetails = (props) => {
 			localStorage.removeItem('product_id');
 			history.push('/order');
 		} catch (err) {
-			console.log(err.response.data.msg);
 			try {
 				if (err.response.data.msg.startsWith('ValidationError: ')) {
 					settingErrors(err.response.data.msg);

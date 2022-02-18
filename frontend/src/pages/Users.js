@@ -137,8 +137,8 @@ const Users = () => {
 						getRowId={(row) => row._id}
 						rows={users}
 						columns={columns}
-						pageSize={5}
-						rowsPerPageOptions={[5]}
+						pageSize={8}
+						rowsPerPageOptions={[8]}
 						components={{ Toolbar: GridToolbar }}
 						//	checkboxSelection
 					/>

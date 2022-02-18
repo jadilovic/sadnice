@@ -9,6 +9,7 @@ const categories = [
 	'Gođi',
 	'Lješnjak',
 	'Višnja',
+	'Drenjak',
 ];
 
 export default categories;
