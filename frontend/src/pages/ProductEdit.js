@@ -99,7 +99,6 @@ const CreateProduct = () => {
 			await productDB.updateProduct(productData);
 			history.push('/products_list');
 		} catch (err) {
-			console.log(err.data);
 			try {
 				if (err.response.data.msg.startsWith('ValidationError: ')) {
 					settingErrors(err.response.data.msg);

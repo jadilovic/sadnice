@@ -39,7 +39,12 @@ const Address = () => {
 			setShoppingCart(localStorageShoppingCart);
 			setTotalOrder(Number(localStorage.getItem('total_order')));
 			const localStorageUser = JSON.parse(localStorage.getItem('user'));
-			getCurrentUserData(localStorageUser._id);
+			if (localStorageUser?._id) {
+				getCurrentUserData(localStorageUser._id);
+			} else {
+				setOrderAddress({ ...orderAddress });
+				setLoading(false);
+			}
 		} else {
 			history.push('/products');
 		}
