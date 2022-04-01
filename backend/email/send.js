@@ -14,7 +14,15 @@ const send = (order, email) => {
 		from: process.env.EMAIL,
 		to: `adilovic79@yahoo.com, ${email}`,
 		subject: 'Potvrda vaše narudžbe broj: ' + order.orderNumber,
-		text: `Hvala na vašoj narudžbi sadnica broj: ${order.orderNumber}!\n${order.firstName} ${order.lastName}\n${order.address}\n${order.city} ${order.postNumber}\nTelefon: ${order.phone}\nUkupna vrijednost sadnica: ${order.totalOrder}KM\nStandardna dostava brzom poštom: 10KM\nZa provjeru stanja vaše narudžbe nazovite 062-261-353\nIli provjerite vas profil na https://sadnice.herokuapp.com/ ako ste registrovani korisnik.`,
+		text: `Hvala na vašoj narudžbi sadnica broj: ${order.orderNumber}!\n${
+			order.firstName
+		} ${order.lastName}\n${order.address}\n${order.city} ${
+			order.postNumber
+		}\nTelefon: ${
+			order.phone
+		}\nUkupna vrijednost sadnica: ${order.totalOrder.toFixed(
+			2
+		)}KM\nStandardna dostava brzom poštom: 10KM\nZa provjeru stanja vaše narudžbe nazovite 062-261-353\nIli provjerite vas profil na https://sadnice.herokuapp.com/ ako ste registrovani korisnik.`,
 	};
 
 	transporter.sendMail(mailOptions, function (error, info) {
