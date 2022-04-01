@@ -93,6 +93,7 @@ const useAxiosOrders = () => {
 	const createOrder = async (newOrder) => {
 		if (getUserData()?._id) {
 			newOrder.createdBy = getUserData()._id;
+			newOrder.email = getUserData().email;
 		} else {
 			newOrder.createdBy = '62017af2ee92a0853a8c0021';
 		}

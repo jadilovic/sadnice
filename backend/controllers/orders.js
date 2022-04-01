@@ -1,11 +1,15 @@
 const Order = require('../models/Order');
-require('dotenv').config();
 const { BadRequestError, NotFoundError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
+const sendEmail = require('../email/send');
 
 const createOrder = async (req, res) => {
 	// req.body.newOrder.createdBy = req.user.userId;
+	const email = req.body.newOrder.email;
 	const order = await Order.create(req.body.newOrder);
+	if (order) {
+		sendEmail(order, email);
+	}
 	res.status(StatusCodes.CREATED).json({ order });
 };
 
