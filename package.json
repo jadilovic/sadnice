@@ -2,6 +2,7 @@
 	"name": "backend",
 	"version": "1.0.0",
 	"description": "",
+	"main": "./backend/server.js",
 	"dependencies": {
 		"@mui/styles": "^5.4.1",
 		"bcryptjs": "^2.4.3",
@@ -34,9 +35,8 @@
 		"nodemon": "^2.0.14"
 	},
 	"scripts": {
-		"start": "nodemon backend/server.js",
-		"dev": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" ",
-		"heroku-postbuild": "cd frontend && npm install --only=dev && npm install && npm run build"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "concurrently \"cd ./backend && node server.js\" \"cd frontend && npm start\" "
 	},
 	"engines": {
 		"node": "14.x"
